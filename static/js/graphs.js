@@ -7,17 +7,19 @@ function makeGraphs(error, Data) {
     var ndx = crossfilter(Data);
 
     show_discovery_method(ndx);
+    show_discovery_facility(ndx);
     show_year_of_discovery(ndx);
+    show_orbital_period(ndx);
+    show_planetary_system(ndx);
     show_mass_correlation(ndx);
     show_radius_correlation(ndx);
-    show_orbital_period(ndx);
 
     dc.renderAll();
 }
 
 function show_discovery_method(ndx) {
 
-    var dim = ndx.dimension(dc.pluck('fpl_discmethod'));
+    var dim = ndx.dimension(dc.pluck('pl_discmethod'));
     var group = dim.group();
 
     dc.pieChart('#discovery-method')
@@ -25,16 +27,30 @@ function show_discovery_method(ndx) {
         .radius(90)
         .transitionDuration(1500)
         .dimension(dim)
-        .group(group);
+        .group(group)
+        .legend(dc.legend());
 
 }
 
-function show_year_of_discovery(ndx) {
-    var dim = ndx.dimension(dc.pluck('fpl_disc'));
+function show_discovery_facility(ndx) {
+    var dim = ndx.dimension(dc.pluck('pl_facility'));
     var group = dim.group();
 
-    var minYear = dim.bottom(1)[0].fpl_disc;
-    var maxYear = dim.top(1)[0].fpl_disc;
+    dc.pieChart('#discovery-facility')
+        .height(330)
+        .radius(90)
+        .transitionDuration(1500)
+        .dimension(dim)
+        .group(group)
+        .legend(dc.legend());
+}
+
+function show_year_of_discovery(ndx) {
+    var dim = ndx.dimension(dc.pluck('pl_disc'));
+    var group = dim.group();
+
+    var minYear = dim.bottom(1)[0].pl_disc;
+    var maxYear = dim.top(1)[0].pl_disc;
 
     dc.barChart("#year-of-discovery")
         .width(700)
@@ -51,7 +67,7 @@ function show_year_of_discovery(ndx) {
 function show_orbital_period(ndx) {
 
     var orbitalPeriod = ndx.dimension(function(d) {
-        var days = dc.fpl_orbper;
+        var days = d.pl_orbper;
         if (days <= 1) {
             return '< 1 day';
         }
@@ -72,20 +88,37 @@ function show_orbital_period(ndx) {
         .dimension(orbitalPeriod)
         .group(orbitalPeriodGroup)
         .transitionDuration(500)
-        .xAxisLabel("Orbital Period in days")
-        .xUnits(dc.units.ordinal);
+        .x(d3.scale.ordinal())
+        .xUnits(dc.units.ordinal)
+        .xAxisLabel("Orbital Period in days");
+}
+
+function show_planetary_system(ndx) {
+    var dim = ndx.dimension(dc.pluck('pl_pnum'));
+    var group = dim.group();
+
+    dc.barChart("#planetary-system")
+        .width(700)
+        .height(300)
+        .margins({ top: 10, right: 50, bottom: 30, left: 50 })
+        .dimension(dim)
+        .group(group)
+        .transitionDuration(500)
+        .x(d3.scale.ordinal())
+        .xUnits(dc.units.ordinal)
+        .xAxisLabel("Number of planets in system");
 }
 
 function show_mass_correlation(ndx) {
 
-    var planetMassDim = ndx.dimension(dc.pluck("fpl_bmasse"));
+    var planetMassDim = ndx.dimension(dc.pluck("pl_massj"));
     var planetStellarMassDim = ndx.dimension(function(d) {
-        return [d.fpl_bmasse, d.fst_mass];
+        return [d.pl_massj, d.st_mass];
     });
     var planetStellarMassDimGroup = planetStellarMassDim.group();
 
-    var minPlanetMass = planetMassDim.bottom(1)[0].fpl_bmasse;
-    var maxPlanetMass = planetMassDim.top(1)[0].fpl_bmasse;
+    var minPlanetMass = planetMassDim.bottom(1)[0].pl_massj;
+    var maxPlanetMass = planetMassDim.top(1)[0].pl_massj;
 
     dc.scatterPlot("#mass-correlation")
         .width(800)
@@ -107,14 +140,14 @@ function show_mass_correlation(ndx) {
 
 function show_radius_correlation(ndx) {
 
-    var planetMassDim = ndx.dimension(dc.pluck("fpl_rade"));
+    var planetMassDim = ndx.dimension(dc.pluck("pl_rade"));
     var planetStellarMassDim = ndx.dimension(function(d) {
-        return [d.fpl_rade, d.fst_rad];
+        return [d.pl_rade, d.st_rad];
     });
     var planetStellarMassDimGroup = planetStellarMassDim.group();
 
-    var minPlanetMass = planetMassDim.bottom(1)[0].fpl_rade;
-    var maxPlanetMass = planetMassDim.top(1)[0].fpl_rade;
+    var minPlanetMass = planetMassDim.bottom(1)[0].pl_rade;
+    var maxPlanetMass = planetMassDim.top(1)[0].pl_rade;
 
     dc.scatterPlot("#radius-correlation")
         .width(800)
