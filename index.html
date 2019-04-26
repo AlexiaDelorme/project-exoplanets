@@ -21,17 +21,49 @@
 
 <body>
 
+    <!---------------------------------------------------------------HEADER-->
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <a class="navbar-brand" href="#">Exoplanets Dashboard</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+        <div class="collapse navbar-collapse" id="navbarColor01">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Disovery</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Features</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Correlation</a>
+                </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="text" placeholder="Search">
+                <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+            </form>
+        </div>
+    </nav>
+
+    <!---------------------------------------------------------------DASHBOARD-->
+
     <section class="container-fluid">
 
         <h1>Exoplanets Dashboard</h1>
 
         <div class="row">
             <div class="col-md-12">
-                <h2> Method of Discovery</h2>
+                <h2> Method of Discovery & Discovery Facility</h2>
             </div>
-            <div class="col-md-12">
-                <div id="discovery-method"></div>
-            </div>
+            <div class="col-md-6" id="discovery-method"></div>
+
+            <div class="col-md-6" id="discovery-facility"></div>
         </div>
 
         <div class="row">
@@ -39,20 +71,26 @@
                 <h2> Years of Discovery</h2>
             </div>
 
-            <div class="col-md-6" id="year-of-discovery"></div>
-
+            <div class="col-md-12" id="year-of-discovery"></div>
 
         </div>
 
         <div class="row">
 
-            <div class="col-md-12">
+            <div class="col-md-6">
                 <h2> Orbital Period (days)</h2>
             </div>
 
-            <div class="col-md-12">
-                <div id="orbital-period"></div>
+            <div class="col-md-6">
+                <h2> Number (known) of planets in planetary system</h2>
             </div>
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-6" id="orbital-period"> </div>
+
+            <div class="col-md-6" id="planetary-system"> </div>
 
         </div>
 
@@ -93,6 +131,15 @@
         </div>
 
     </section>
+
+    <!---------------------------------------------------------------FOOTER-->
+
+    <footer class="container-fluid">
+        <div class="col-md-12">
+            <p class="copyright">&copy; Alexia Delorme</p>
+        </div>
+    </footer>
+
 
 </body>
 
