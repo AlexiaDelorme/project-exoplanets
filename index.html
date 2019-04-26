@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>The Exoplanets Dashboard</title>
 
-    <link rel="stylesheet" href="static/css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="https://bootswatch.com/4/lux/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="static/css/dc.min.css" type="text/css" />
     <link rel="stylesheet" href="static/css/style.css" type="text/css" />
 
@@ -21,10 +21,78 @@
 
 <body>
 
-    <section>
+    <section class="container-fluid">
+
         <h1>Exoplanets Dashboard</h1>
+
+        <div class="row">
+            <div class="col-md-12">
+                <h2> Method of Discovery</h2>
+            </div>
+            <div class="col-md-12">
+                <div id="discovery-method"></div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <h2> Years of Discovery</h2>
+            </div>
+
+            <div class="col-md-6" id="year-of-discovery"></div>
+
+
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-12">
+                <h2> Orbital Period (days)</h2>
+            </div>
+
+            <div class="col-md-12">
+                <div id="orbital-period"></div>
+            </div>
+
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-12">
+                <h2> Correlation between the mass of the planet and the mass of the stellar</h2>
+            </div>
+
+            <div class="col-md-12">
+                <div id="mass-correlation"></div>
+            </div>
+
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-12">
+                <h2> Correlation between the radius of the planet and the radius of the stellar</h2>
+            </div>
+
+            <div class="col-md-12">
+                <div id="radius-correlation"></div>
+            </div>
+
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-12">
+                <h2> Information about the selected planets</h2>
+            </div>
+
+            <div class="col-md-12">
+                <div id="table"></div>
+            </div>
+
+        </div>
+
     </section>
-    
 
 </body>
 
