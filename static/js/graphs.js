@@ -11,6 +11,7 @@ function makeGraphs(error, Data) {
     show_year_of_discovery(ndx);
     show_orbital_period(ndx);
     show_planetary_system(ndx);
+    show_mass_radius_correlation(ndx);
     show_mass_correlation(ndx);
     show_radius_correlation(ndx);
 
@@ -109,6 +110,35 @@ function show_planetary_system(ndx) {
         .xAxisLabel("Number of planets in system");
 }
 
+function show_mass_radius_correlation(ndx) {
+
+    var planetMassDim = ndx.dimension(dc.pluck("pl_masse"));
+    var planetMassRadDim = ndx.dimension(function(d) {
+        return [d.pl_masse, d.pl_rade]; 
+    });
+    var planetMassRadDimGroup = planetMassRadDim.group();
+
+    var minPlanetMass = planetMassDim.bottom(1)[0].pl_masse;
+    var maxPlanetMass = planetMassDim.top(1)[0].pl_masse;
+
+    dc.scatterPlot("#mass-radius-correlation")
+        .width(800)
+        .height(400)
+        .x(d3.scale.linear().domain([minPlanetMass, maxPlanetMass]))
+        .y(d3.scale.linear().domain([0, 6]))
+        .brushOn(false)
+        .symbolSize(2)
+        .clipPadding(1)
+        .xAxisLabel("Planet Mass (Earth Masses)")
+        .yAxisLabel("Planet Radius (Earth Radii)")
+        .title(function(d) {
+            return " Planet Mass = " + d.key[0] + " - Planet Radius = " + d.key[1];
+        })
+        .dimension(planetMassRadDim)
+        .group(planetMassRadDimGroup)
+        .margins({ top: 10, right: 50, bottom: 75, left: 75 });
+}
+
 function show_mass_correlation(ndx) {
 
     var planetMassDim = ndx.dimension(dc.pluck("pl_massj"));
@@ -128,8 +158,8 @@ function show_mass_correlation(ndx) {
         .brushOn(false)
         .symbolSize(2)
         .clipPadding(1)
-        .xAxisLabel("Planet Mass")
-        .yAxisLabel("Stellar Mass")
+        .xAxisLabel("Planet Mass (Jupiter Masses)")
+        .yAxisLabel("Stellar Mass (Solar Masses)")
         .title(function(d) {
             return " Planet Mass = " + d.key[0] + " - Stellar Mass = " + d.key[1];
         })
@@ -157,8 +187,8 @@ function show_radius_correlation(ndx) {
         .brushOn(false)
         .symbolSize(2)
         .clipPadding(1)
-        .xAxisLabel("Planet Radius")
-        .yAxisLabel("Stellar Radius")
+        .xAxisLabel("Planet Radius (Earth Radii)")
+        .yAxisLabel("Stellar Radius (Solar Radii)")
         .title(function(d) {
             return " Planet Radius = " + d.key[0] + " - Stellar Radius = " + d.key[1];
         })
