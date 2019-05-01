@@ -1,0 +1,42 @@
+.home-page {
+    @include full-bg("img/bg-1.jpg", white, 70vh)
+}
+
+.main-header {
+    color: white;
+    padding: 35vh;
+    font-size: 3rem;
+}
+
+.text-align {
+    text-align: center;
+}
+
+.header-position {
+    position: fixed;
+    width: 100vw;
+    z-index: 1;
+}
+
+.section-header {
+    padding-top: 15px;
+}
+
+svg {
+    @extend %MarginBottom;
+}
+
+footer {
+    text-align: center;
+    background-color: black;
+    color: white;
+    padding-top: 15px;
+
+    a {
+        color: white;
+    }
+    a:hover {
+        color: orange;
+        text-decoration: none;
+    }
+}

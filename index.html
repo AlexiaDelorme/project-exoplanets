@@ -9,7 +9,8 @@
 
     <link rel="stylesheet" href="https://bootswatch.com/4/lux/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="static/css/dc.min.css" type="text/css" />
-    <link rel="stylesheet" href="static/css/style.css" type="text/css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css" />
+    <link rel="stylesheet" href="static/css/main.css" type="text/css" />
 
     <script type="text/javascript" src="static/js/d3.min.js"></script>
     <script type="text/javascript" src="static/js/crossfilter.min.js"></script>
@@ -23,25 +24,28 @@
 
     <!---------------------------------------------------------------HEADER-->
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <a class="navbar-brand" href="#">Exoplanets Dashboard</a>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary header-position">
+        <a class="navbar-brand" href="#dashboard">Exoplanets Dashboard</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
+                <span class="navbar-toggler-icon"></span>
+             </button>
 
         <div class="collapse navbar-collapse" id="navbarColor01">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="#home">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Disovery</a>
+                    <a class="nav-link" href="#discovery">Disovery</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Features</a>
+                    <a class="nav-link" href="#features">Features</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Correlation</a>
+                    <a class="nav-link" href="#correlation">Correlation</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#recap-data">Data Table</a>
                 </li>
             </ul>
             <form class="form-inline my-2 my-lg-0">
@@ -51,108 +55,161 @@
         </div>
     </nav>
 
+    <!---------------------------------------------------------------HOME PAGE-->
+
+    <section class="container-fluid home-page" id="home">
+        <h1 class="main-header text-align">Data Exploration on Exoplanets</h1>
+    </section>
+
+    <div class="container-fluid jumbotron">
+        <h3>Let's discovery Exoplanets together!</h4>
+            <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+            <hr class="my-4">
+            <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+            <p class="lead">
+                <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+            </p>
+    </div>
+
     <!---------------------------------------------------------------DASHBOARD-->
 
-    <section class="container-fluid">
+    <div class="container-fluid" id="dashboard">
 
-        <h1>Exoplanets Dashboard</h1>
+        <section class="container-fluid" id="discovery">
 
-        <div class="row">
-            <div class="col-md-12">
-                <h2> Method of Discovery & Discovery Facility</h2>
-            </div>
-            <div class="col-md-6" id="discovery-method"></div>
-
-            <div class="col-md-6" id="discovery-facility"></div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-12">
-                <h2> Years of Discovery</h2>
+            <div class="row">
+                <div class="col-md-12">
+                    <h2 class="section-header"> Information related to the discovery of the exoplanets</h2>
+                    <hr class="my-4">
+                </div>
             </div>
 
-            <div class="col-md-12" id="year-of-discovery"></div>
-
-        </div>
-
-        <div class="row">
-
-            <div class="col-md-6">
-                <h2> Orbital Period (days)</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <h4> Method of Discovery</h4>
+                </div>
+                <div class="col-md-6">
+                    <h4> Discovery facility</h4>
+                </div>
             </div>
 
-            <div class="col-md-6">
-                <h2> Number (known) of planets in planetary system</h2>
-            </div>
-        </div>
-
-        <div class="row">
-
-            <div class="col-md-6" id="orbital-period"> </div>
-
-            <div class="col-md-6" id="planetary-system"> </div>
-
-        </div>
-
-
-        <div class="row">
-
-            <div class="col-md-12">
-                <h2> Correlation between the mass and the radius of the planet</h2>
+            <div class="row">
+                <div class="col-md-6" id="discovery-method"></div>
+                <div class="col-md-6" id="discovery-facility"></div>
             </div>
 
-            <div class="col-md-12">
-                <div id="mass-radius-correlation"></div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h4> Years of Discovery</h4>
+                </div>
+                <div class="col-md-12" id="year-of-discovery"></div>
             </div>
 
-        </div>
+        </section>
 
-        <div class="row">
+        <section class="container-fluid" id="features">
 
-            <div class="col-md-12">
-                <h2> Correlation between the mass of the planet and the mass of the stellar</h2>
+            <div class="row">
+                <div class="col-md-12">
+                    <hr class="my-4">
+                    <h2 class="section-header"> Features of the exoplanets</h2>
+                    <hr class="my-4">
+                </div>
             </div>
 
-            <div class="col-md-12">
-                <div id="mass-correlation"></div>
+            <div class="row">
+                <div class="col-md-6">
+                    <h4> Orbital Period (days)</h4>
+                </div>
+                <div class="col-md-6">
+                    <h4> Number (known) of planets in planetary system</h4>
+                </div>
             </div>
 
-        </div>
-
-        <div class="row">
-
-            <div class="col-md-12">
-                <h2> Correlation between the radius of the planet and the radius of the stellar</h2>
+            <div class="row">
+                <div class="col-md-6" id="orbital-period"> </div>
+                <div class="col-md-6" id="planetary-system"> </div>
             </div>
 
-            <div class="col-md-12">
-                <div id="radius-correlation"></div>
+        </section>
+
+        <section class="container-fluid" id="correlation">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <hr class="my-4">
+                    <h2 class="section-header"> Correlations </h2>
+                    <hr class="my-4">
+                </div>
             </div>
 
-        </div>
-
-        <div class="row">
-
-            <div class="col-md-12">
-                <h2> Information about the selected planets</h2>
+            <div class="row">
+                <div class="col-md-12">
+                    <h4> Correlation: mass vs. radius of the planet</h4>
+                </div>
+                <div class="col-md-12" id="mass-radius-correlation">
+                </div>
             </div>
 
-            <div class="col-md-12">
-                <div id="table"></div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h4> Correlation: planet mass vs. stellar mass</h4>
+                </div>
+                <div class="col-md-12" id="mass-correlation">
+                </div>
             </div>
 
-        </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h4> Correlation: planet radius vs. stellar radius</h4>
+                </div>
+                <div class="col-md-12" id="radius-correlation">
+                </div>
+            </div>
 
-    </section>
+        </section>
+
+        <section class="container-fluid" id="recap-data">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <hr class="my-4">
+                    <h2 class="section-header"> Information about the selected planets </h2>
+                    <hr class="my-4">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12" id="data-table"></div>
+            </div>
+
+        </section>
+
+    </div>
 
     <!---------------------------------------------------------------FOOTER-->
 
     <footer class="container-fluid">
-        <div class="col-md-12">
-            <p class="copyright">&copy; Alexia Delorme</p>
+
+        <div class="row">
+
+            <div class="col-md-4">
+                <p class="copyright">&copy; Alexia Delorme</p>
+            </div>
+
+            <div class="col-md-4">
+                <a class="mailto" href="mailto:alexia.delorme@gmail.com"> <i class="fa fa-envelope" aria-hidden="true"></i> alexia.delorme@gmail.com </a>
+            </div>
+
+            <div class="col-md-4">
+                <a target="_blank" href="https://github.com/AlexiaDelorme"> <i class="fa fa-github" aria-hidden="true"></i> My GIT </a>
+            </div>
+
         </div>
+
     </footer>
 
+    <!------------------------------------------------------JQUERY BOOTSTRAP-->
 
 </body>
 

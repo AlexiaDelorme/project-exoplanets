@@ -1,0 +1,25 @@
+@mixin full-bg($img-url, $color, $height) {
+   
+    background: url($img-url) no-repeat center center fixed, #999;
+    
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+
+    height: $height;
+    width: 100vw;
+    color: $color;
+
+}
+
+%VerticalCenter {
+    margin-top: 50vh;
+    transform: translateY(-50%);
+    text-align: center;
+    background-color: transparent;
+}
+
+%MarginBottom {
+    margin-bottom: 20px;
+}

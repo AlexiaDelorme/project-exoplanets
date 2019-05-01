@@ -1,0 +1,41 @@
+svg {
+  margin-bottom: 20px; }
+
+.home-page {
+  background: url("img/bg-1.jpg") no-repeat center center fixed, #999;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  height: 70vh;
+  width: 100vw;
+  color: white; }
+
+.main-header {
+  color: white;
+  padding: 35vh;
+  font-size: 3rem; }
+
+.text-align {
+  text-align: center; }
+
+.header-position {
+  position: fixed;
+  width: 100vw;
+  z-index: 1; }
+
+.section-header {
+  padding-top: 15px; }
+
+footer {
+  text-align: center;
+  background-color: black;
+  color: white;
+  padding-top: 15px; }
+  footer a {
+    color: white; }
+  footer a:hover {
+    color: orange;
+    text-decoration: none; }
+
+/*# sourceMappingURL=main.css.map */
