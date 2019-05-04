@@ -6,6 +6,7 @@ function makeGraphs(error, Data) {
 
     var ndx = crossfilter(Data);
 
+    show_kepler_selector(ndx);
     show_discovery_method(ndx);
     show_discovery_facility(ndx);
     show_year_of_discovery(ndx);
@@ -18,9 +19,19 @@ function makeGraphs(error, Data) {
     dc.renderAll();
 }
 
+function show_kepler_selector(ndx) {
+    var dim = ndx.dimension(dc.pluck('pl_kepflag'));
+    var group = dim.group();
+
+    dc.selectMenu("#kepler-selector")
+        .dimension(dim)
+        .group(group);
+}
+
 function show_discovery_method(ndx) {
 
     var dim = ndx.dimension(dc.pluck('pl_discmethod'));
+
     var group = dim.group();
 
     dc.pieChart('#discovery-method')
@@ -30,12 +41,47 @@ function show_discovery_method(ndx) {
         .dimension(dim)
         .group(group)
         .legend(dc.legend());
-
 }
 
 function show_discovery_facility(ndx) {
-    var dim = ndx.dimension(dc.pluck('pl_facility'));
+
+    //var dim = ndx.dimension(dc.pluck('pl_facility'));
+
+    var dim = ndx.dimension(function(d) {
+
+        var facility = d.pl_facility;
+
+        if (facility == "Kepler")
+            return "Kepler";
+        else if (facility == "K2")
+            return "K2";
+        else if (facility == "La Silla Observatory")
+            return "La Silla Observatory";
+        else if (facility == "W. M. Keck Observatory")
+            return "W. M. Keck Observatory";
+        else if (facility == "Multiple Observatories")
+            return "Multiple Observatories";
+        else if (facility == "SuperWASP")
+            return "SuperWASP";
+        else if (facility == "HATNet")
+            return "HATNet";
+        else if (facility == "HATSouth")
+            return "HATSouth";
+        else if (facility == "OGLE")
+            return "OGLE";
+        else if (facility == "Haute-Provence Observatory")
+            return "Haute-Provence Observatory";
+        else if (facility == "Anglo-Australian Telescope")
+            return "Anglo-Australian Telescope";
+        else if (facility == "Lick Observatory")
+            return "Lick Observatory";
+        else
+            return "Others*";
+    });
+
     var group = dim.group();
+
+    console.log(group.all());
 
     dc.pieChart('#discovery-facility')
         .height(330)
@@ -69,25 +115,45 @@ function show_orbital_period(ndx) {
 
     var orbitalPeriod = ndx.dimension(function(d) {
         var days = d.pl_orbper;
-        if (days <= 1) {
-            return '< 1 day';
+
+        if (days > 0 && days <= 1) {
+            return '<= 1 day';
         }
         else if (days > 1 && days <= 5) {
             return ']1;5] days';
         }
+        else if (days > 5 && days <= 15) {
+            return ']5;15] days';
+        }
+        else if (days > 15 && days <= 30) {
+            return ']15;30] days';
+        }
+        else if (days > 30 && days <= 365) {
+            return ']30;365] days';
+        }
+        else if (days > 365) {
+            return '> 1 year';
+        }
         else {
-            return '> 5 days';
+            return 'N/A';
         }
     });
 
     var orbitalPeriodGroup = orbitalPeriod.group();
+
+    //Code taken from Stackoverflow but does not enable me to fix the problem of empty values
+    var filteredGroup = {
+        all: function() {
+            return orbitalPeriodGroup.top(Infinity).filter(function(d) { return d.pl_orbper !== null; });
+        }
+    };
 
     dc.barChart("#orbital-period")
         .width(700)
         .height(300)
         .margins({ top: 10, right: 50, bottom: 30, left: 50 })
         .dimension(orbitalPeriod)
-        .group(orbitalPeriodGroup)
+        .group(filteredGroup)
         .transitionDuration(500)
         .x(d3.scale.ordinal())
         .xUnits(dc.units.ordinal)
@@ -114,7 +180,7 @@ function show_mass_radius_correlation(ndx) {
 
     var planetMassDim = ndx.dimension(dc.pluck("pl_masse"));
     var planetMassRadDim = ndx.dimension(function(d) {
-        return [d.pl_masse, d.pl_rade]; 
+        return [d.pl_masse, d.pl_rade];
     });
     var planetMassRadDimGroup = planetMassRadDim.group();
 
