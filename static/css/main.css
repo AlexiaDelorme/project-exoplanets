@@ -7,7 +7,9 @@ svg {
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-  height: 70vh;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  height: 75vh;
   width: 100vw;
   color: white; }
 
@@ -37,5 +39,13 @@ footer {
   footer a:hover {
     color: orange;
     text-decoration: none; }
+
+#year-of-discovery .x.axis text {
+  text-anchor: end !important;
+  transform: rotate(-45deg); }
+
+.jumbotron {
+  margin-bottom: 0px;
+  padding-bottom: 40px; }
 
 /*# sourceMappingURL=main.css.map */

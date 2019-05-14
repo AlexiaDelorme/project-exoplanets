@@ -1,5 +1,5 @@
 .home-page {
-    @include full-bg("img/bg-1.jpg", white, 70vh)
+    @include full-bg("img/bg-1.jpg", white, 75vh)
 }
 
 .main-header {
@@ -39,4 +39,14 @@ footer {
         color: orange;
         text-decoration: none;
     }
+}
+
+#year-of-discovery .x.axis text {
+    text-anchor: end !important;
+    transform: rotate(-45deg);
+}
+
+.jumbotron {
+    margin-bottom: 0px;
+    padding-bottom: 40px;
 }
