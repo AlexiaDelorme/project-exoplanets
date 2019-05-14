@@ -15,6 +15,7 @@ function makeGraphs(error, Data) {
     show_mass_radius_correlation(ndx);
     show_mass_correlation(ndx);
     show_radius_correlation(ndx);
+    showTable(ndx);
 
     dc.renderAll();
 }
@@ -100,15 +101,14 @@ function show_year_of_discovery(ndx) {
     var maxYear = dim.top(1)[0].pl_disc;
 
     dc.barChart("#year-of-discovery")
-        .width(700)
+        .width(800)
         .height(300)
         .margins({ top: 10, right: 50, bottom: 30, left: 50 })
         .dimension(dim)
         .group(group)
         .transitionDuration(500)
         .x(d3.scale.ordinal())
-        .xUnits(dc.units.ordinal)
-        .xAxisLabel("Year of discovery");
+        .xUnits(dc.units.ordinal);
 }
 
 function show_orbital_period(ndx) {
@@ -148,6 +148,10 @@ function show_orbital_period(ndx) {
         }
     };
 
+    var scale = d3.scale.ordinal()
+        .domain(['<= 1 day', ']1;5] days', ']5;15] days', ']15;30] days', ']30;365] days', '> 1 year'])
+        .range([0, 1, 2, 3, 4, 5]);
+
     dc.barChart("#orbital-period")
         .width(700)
         .height(300)
@@ -155,7 +159,7 @@ function show_orbital_period(ndx) {
         .dimension(orbitalPeriod)
         .group(filteredGroup)
         .transitionDuration(500)
-        .x(d3.scale.ordinal())
+        .x(scale)
         .xUnits(dc.units.ordinal)
         .xAxisLabel("Orbital Period in days");
 }
@@ -176,11 +180,15 @@ function show_planetary_system(ndx) {
         .xAxisLabel("Number of planets in system");
 }
 
+var keplerFlagColors = d3.scale.ordinal()
+    .domain(["0", "1"])
+    .range(["black", "orange"]);
+
 function show_mass_radius_correlation(ndx) {
 
     var planetMassDim = ndx.dimension(dc.pluck("pl_masse"));
     var planetMassRadDim = ndx.dimension(function(d) {
-        return [d.pl_masse, d.pl_rade];
+        return [d.pl_masse, d.pl_rade, d.pl_kepflag];
     });
     var planetMassRadDimGroup = planetMassRadDim.group();
 
@@ -193,13 +201,17 @@ function show_mass_radius_correlation(ndx) {
         .x(d3.scale.linear().domain([minPlanetMass, maxPlanetMass]))
         .y(d3.scale.linear().domain([0, 6]))
         .brushOn(false)
-        .symbolSize(2)
+        .symbolSize(3)
         .clipPadding(1)
         .xAxisLabel("Planet Mass (Earth Masses)")
         .yAxisLabel("Planet Radius (Earth Radii)")
         .title(function(d) {
             return " Planet Mass = " + d.key[0] + " - Planet Radius = " + d.key[1];
         })
+        .colorAccessor(function(d) {
+            return d.key[2];
+        })
+        .colors(keplerFlagColors)
         .dimension(planetMassRadDim)
         .group(planetMassRadDimGroup)
         .margins({ top: 10, right: 50, bottom: 75, left: 75 });
@@ -209,7 +221,7 @@ function show_mass_correlation(ndx) {
 
     var planetMassDim = ndx.dimension(dc.pluck("pl_massj"));
     var planetStellarMassDim = ndx.dimension(function(d) {
-        return [d.pl_massj, d.st_mass];
+        return [d.pl_massj, d.st_mass, d.pl_kepflag];
     });
     var planetStellarMassDimGroup = planetStellarMassDim.group();
 
@@ -229,6 +241,10 @@ function show_mass_correlation(ndx) {
         .title(function(d) {
             return " Planet Mass = " + d.key[0] + " - Stellar Mass = " + d.key[1];
         })
+        .colorAccessor(function(d) {
+            return d.key[2];
+        })
+        .colors(keplerFlagColors)
         .dimension(planetStellarMassDim)
         .group(planetStellarMassDimGroup)
         .margins({ top: 10, right: 50, bottom: 75, left: 75 });
@@ -238,7 +254,7 @@ function show_radius_correlation(ndx) {
 
     var planetMassDim = ndx.dimension(dc.pluck("pl_rade"));
     var planetStellarMassDim = ndx.dimension(function(d) {
-        return [d.pl_rade, d.st_rad];
+        return [d.pl_rade, d.st_rad, d.pl_kepflag];
     });
     var planetStellarMassDimGroup = planetStellarMassDim.group();
 
@@ -258,7 +274,51 @@ function show_radius_correlation(ndx) {
         .title(function(d) {
             return " Planet Radius = " + d.key[0] + " - Stellar Radius = " + d.key[1];
         })
+        .colorAccessor(function(d) {
+            return d.key[2];
+        })
+        .colors(keplerFlagColors)
         .dimension(planetStellarMassDim)
         .group(planetStellarMassDimGroup)
         .margins({ top: 10, right: 50, bottom: 75, left: 75 });
+}
+
+function showTable(ndx) {
+    var dim = ndx.dimension(dc.pluck("pl_name"));
+    dc.dataTable("#data-table")
+        .dimension(dim)
+        .group(function(d) {
+            return "";
+        })
+        .columns([{
+                label: "Planet Name",
+                format: function(d) { return d.pl_name; }
+            },
+            {
+                label: "Hosting Stellar Name",
+                format: function(d) { return d.pl_hostname; }
+            },
+            {
+                label: "Year of discovery",
+                format: function(d) { return d.pl_disc; }
+            },
+            {
+                label: "Discovery method",
+                format: function(d) { return d.pl_discmethod; }
+            },
+            {
+                label: "Orbital Period",
+                format: function(d) { return d.pl_orbper; }
+            },
+            {
+                label: "Stellar age",
+                format: function(d) { return d.st_age; }
+            }
+        ])
+        .size(Infinity)
+        .sortBy(function(d) {
+            return d.pl_name;
+        })
+        .order(d3.ascending)
+        .transitionDuration(500);
 }
