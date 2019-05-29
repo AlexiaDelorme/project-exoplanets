@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>The Exoplanets Dashboard</title>
 
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://bootswatch.com/4/lux/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="static/css/dc.min.css" type="text/css" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css" />
@@ -24,7 +25,7 @@
 
     <!---------------------------------------------------------------HEADER-->
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary header-position">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary header-position fixed-top">
         <a class="navbar-brand" href="#dashboard">Exoplanets Dashboard</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -41,10 +42,10 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#features">Features</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" id="nav-item-correlation">
                     <a class="nav-link" href="#correlation">Correlation</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" id="nav-item-table">
                     <a class="nav-link" href="#recap-data">Data Table</a>
                 </li>
             </ul>
@@ -58,7 +59,13 @@
     <!---------------------------------------------------------------HOME PAGE-->
 
     <section class="container-fluid home-page" id="home">
-        <h1 class="main-header text-align">Data Exploration on Exoplanets</h1>
+        <div class="row">
+            <div class="col-12 text-align">
+                <h1 class="main-header">Data Exploration on Exoplanets</h1>
+                <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#myModal">Start here</button>
+            </div>
+        </div>
+
     </section>
 
     <div class="container-fluid jumbotron">
@@ -209,15 +216,15 @@
 
         <div class="row">
 
-            <div class="col-md-4">
+            <div class="col-12 col-md-4">
                 <p class="copyright">&copy; Alexia Delorme</p>
             </div>
 
-            <div class="col-md-4">
+            <div class="col-12 col-md-4">
                 <a class="mailto" href="mailto:alexia.delorme@gmail.com"> <i class="fa fa-envelope" aria-hidden="true"></i> alexia.delorme@gmail.com </a>
             </div>
 
-            <div class="col-md-4">
+            <div class="col-12 col-md-4">
                 <a target="_blank" href="https://github.com/AlexiaDelorme"> <i class="fa fa-github" aria-hidden="true"></i> My GIT </a>
             </div>
 
@@ -225,7 +232,83 @@
 
     </footer>
 
-    <!------------------------------------------------------JQUERY BOOTSWATCH-->
+    <!-----------------------------------------------------------MODAL FORM-->
+
+    <div class="modal" id="myModal">
+        <div class="modal-dialog" role="document">
+
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h3 class="modal-title">Add filters to the sample</h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                        </button>
+                </div>
+
+                <div class="modal-body">
+
+                    <form>
+
+                        <fieldset class="form-group">
+                            <legend>Kepler selector</legend>
+                            <p>Planets discovered during the Kelpler mission</p>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                             <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" value="option1" checked=""> Select all </label>
+                            </div>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                             <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios2" value="option2"> Only Kepler scope </label>
+                            </div>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                            <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios3" value="option3"> Exlude Kepler scope </label>
+                            </div>
+                        </fieldset>
+
+                        <fieldset>
+                            <legend>Data table</legend>
+                            <div class="form-group">
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" class="custom-control-input" id="switchTable" checked="">
+                                    <label class="custom-control-label" for="switchTable" id="checkboxLabel">Enable</label>
+                                </div>
+                            </div>
+                        </fieldset>
+
+                    </form>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Save & Close</button>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!------------------------------------------------------BOOTSTRAP SCRIPTS-->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <script>
+        $("#switchTable").change(function() {
+            if (this.checked != true) {
+                $("#recap-data").hide();
+                $("#nav-item-table").hide();
+                $("#checkboxLabel").text("Disable");
+            }
+            else {
+                $("#recap-data").show();
+                $("#nav-item-table").show();
+                $("#checkboxLabel").text("Enable");
+            }
+        });
+    </script>
 
 </body>
 
