@@ -1,21 +1,15 @@
 .home-page {
-    @include full-bg("img/bg-1.jpg", white, 75vh)
+    @include full-bg("img/bg-1.jpg", white, 100vh)
 }
 
 .main-header {
     color: white;
-    padding: 35vh;
     font-size: 3rem;
 }
 
 .text-align {
     text-align: center;
-}
-
-.header-position {
-    position: fixed;
-    width: 100vw;
-    z-index: 1;
+    padding: 45vh;
 }
 
 .section-header {
