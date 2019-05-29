@@ -94,16 +94,9 @@
         <section class="container-fluid" id="discovery">
 
             <div class="row">
-                <div class="col-md-10">
+                <div class="col-md-12">
                     <h2 class="section-header"> Information related to the discovery of the exoplanets</h2>
                     <hr class="my-4">
-                </div>
-                <div class="col-md-2">
-                    <div class="row">
-                        <p>Kepler Selector</p>
-                    </div>
-                    <div class="row" id="kepler-selector">
-                    </div>
                 </div>
             </div>
 
@@ -118,6 +111,7 @@
 
             <div class="row">
                 <div class="col-md-6" id="discovery-method"></div>
+
                 <div class="col-md-6" id="discovery-facility"></div>
             </div>
 
@@ -253,18 +247,7 @@
                         <fieldset class="form-group">
                             <legend>Kepler selector</legend>
                             <p>Planets discovered during the Kelpler mission</p>
-                            <div class="form-check">
-                                <label class="form-check-label">
-                             <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" value="option1" checked=""> Select all </label>
-                            </div>
-                            <div class="form-check">
-                                <label class="form-check-label">
-                             <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios2" value="option2"> Only Kepler scope </label>
-                            </div>
-                            <div class="form-check">
-                                <label class="form-check-label">
-                            <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios3" value="option3"> Exlude Kepler scope </label>
-                            </div>
+                            <div id="kepler-selector"> </div>
                         </fieldset>
 
                         <fieldset>

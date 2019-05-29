@@ -26,24 +26,27 @@ function show_kepler_selector(ndx) {
 
     dc.selectMenu("#kepler-selector")
         .dimension(dim)
-        .group(group);
+        .group(group)
+        .title(function(d) {
+            if (d.key == "0") {
+                return 'Exclude Kepler scope';
+            }
+            else if (d.key == "1") {
+                return 'Only Kepler scope';
+            }
+        });
+
 }
 
 function show_discovery_method(ndx) {
 
+    //For testing purposes we set var keplerFlag to empty
+    var keplerFlag = "";
+
     var dim = ndx.dimension(dc.pluck('pl_discmethod'));
 
-    var group = dim.group();
-
-    dc.pieChart('#discovery-method')
-        .height(330)
-        .radius(90)
-        .transitionDuration(1500)
-        .dimension(dim)
-        .group(group)
-        .legend(dc.legend());
-
     function keplerFlagByDim(dimension, flag) {
+
         return dimension.group().reduce(
             function(p, v) {
                 p.total++;
@@ -65,11 +68,64 @@ function show_discovery_method(ndx) {
         );
     }
 
-    var keplerYesByDim = keplerFlagByDim(dim, "1");
-    var keplerNoByDim = keplerFlagByDim(dim, "0");
+    //Determine what graph to be plotted according to the Kepler Flag 
 
-    console.log(keplerYesByDim.all());
-    console.log(keplerNoByDim.all());
+    if (keplerFlag == "") {
+
+        //If the Kepler Flag is empty, user keeps all planets, we group dimension regardless of the Kepler Flag
+
+        var group = dim.group();
+
+        dc.pieChart('#discovery-method')
+            .height(330)
+            .radius(90)
+            .transitionDuration(1500)
+            .dimension(dim)
+            .group(group)
+            .legend(dc.legend());
+
+    }
+    else if (keplerFlag == "0") {
+
+        var keplerNoByDim = keplerFlagByDim(dim, "0");
+
+        dc.pieChart('#discovery-method')
+            .height(330)
+            .radius(90)
+            .transitionDuration(1500)
+            .dimension(dim)
+            .group(keplerNoByDim)
+            .valueAccessor(function(d) {
+                if (d.value.total > 0) {
+                    return (d.value.match)
+                }
+                else {
+                    return 0;
+                }
+            })
+            .legend(dc.legend());
+
+    }
+    else if (keplerFlag == "1") {
+
+        var keplerYesByDim = keplerFlagByDim(dim, "1");
+
+        dc.pieChart('#discovery-method')
+            .height(330)
+            .radius(90)
+            .transitionDuration(1500)
+            .dimension(dim)
+            .group(keplerYesByDim)
+            .valueAccessor(function(d) {
+                if (d.value.total > 0) {
+                    return (d.value.match)
+                }
+                else {
+                    return 0;
+                }
+            })
+            .legend(dc.legend());
+    }
 
 }
 
