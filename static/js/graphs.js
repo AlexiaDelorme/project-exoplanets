@@ -42,6 +42,35 @@ function show_discovery_method(ndx) {
         .dimension(dim)
         .group(group)
         .legend(dc.legend());
+
+    function keplerFlagByDim(dimension, flag) {
+        return dimension.group().reduce(
+            function(p, v) {
+                p.total++;
+                if (v.pl_kepflag == flag) {
+                    p.match++;
+                }
+                return p;
+            },
+            function(p, v) {
+                p.total--;
+                if (v.pl_kepflag == flag) {
+                    p.match--;
+                }
+                return p;
+            },
+            function() {
+                return { total: 0, match: 0 };
+            }
+        );
+    }
+
+    var keplerYesByDim = keplerFlagByDim(dim, "1");
+    var keplerNoByDim = keplerFlagByDim(dim, "0");
+
+    console.log(keplerYesByDim.all());
+    console.log(keplerNoByDim.all());
+
 }
 
 function show_discovery_facility(ndx) {
@@ -81,8 +110,6 @@ function show_discovery_facility(ndx) {
     });
 
     var group = dim.group();
-
-    console.log(group.all());
 
     dc.pieChart('#discovery-facility')
         .height(330)
