@@ -6,10 +6,16 @@ function makeGraphs(error, Data) {
 
     var ndx = crossfilter(Data);
 
+
+    Data.forEach(function(d) {
+        d.pl_disc = parseInt(d.pl_disc);
+    })
+
     show_kepler_selector(ndx);
     show_discovery_method(ndx);
     show_discovery_facility(ndx);
     show_year_of_discovery(ndx);
+    //show_cumulative_year(ndx);
     show_orbital_period(ndx);
     show_planetary_system(ndx);
     show_mass_radius_correlation(ndx);
@@ -19,6 +25,7 @@ function makeGraphs(error, Data) {
 
     dc.renderAll();
 }
+
 
 function show_kepler_selector(ndx) {
     var dim = ndx.dimension(dc.pluck('pl_kepflag'));
@@ -37,6 +44,7 @@ function show_kepler_selector(ndx) {
         });
 
 }
+
 
 function show_discovery_method(ndx) {
 
@@ -79,10 +87,16 @@ function show_discovery_method(ndx) {
         dc.pieChart('#discovery-method')
             .height(330)
             .radius(90)
-            .transitionDuration(1500)
+            .innerRadius(40)
+            .transitionDuration(500)
+            .slicesCap(10)
+            .legend(dc.legend())
+            .title(function(d) {
+                return d.key + ": " + d.value + " planets discovered";
+            })
+            .useViewBoxResizing(true)
             .dimension(dim)
-            .group(group)
-            .legend(dc.legend());
+            .group(group);
 
     }
     else if (keplerFlag == "0") {
@@ -92,7 +106,7 @@ function show_discovery_method(ndx) {
         dc.pieChart('#discovery-method')
             .height(330)
             .radius(90)
-            .transitionDuration(1500)
+            .transitionDuration(500)
             .dimension(dim)
             .group(keplerNoByDim)
             .valueAccessor(function(d) {
@@ -113,7 +127,7 @@ function show_discovery_method(ndx) {
         dc.pieChart('#discovery-method')
             .height(330)
             .radius(90)
-            .transitionDuration(1500)
+            .transitionDuration(500)
             .dimension(dim)
             .group(keplerYesByDim)
             .valueAccessor(function(d) {
@@ -126,12 +140,10 @@ function show_discovery_method(ndx) {
             })
             .legend(dc.legend());
     }
-
 }
 
-function show_discovery_facility(ndx) {
 
-    //var dim = ndx.dimension(dc.pluck('pl_facility'));
+function show_discovery_facility(ndx) {
 
     var dim = ndx.dimension(function(d) {
 
@@ -170,33 +182,87 @@ function show_discovery_facility(ndx) {
     dc.pieChart('#discovery-facility')
         .height(330)
         .radius(90)
-        .transitionDuration(1500)
+        .innerRadius(40)
+        .transitionDuration(500)
+        .legend(dc.legend())
+        .useViewBoxResizing(true)
         .dimension(dim)
-        .group(group)
-        .legend(dc.legend());
+        .group(group);
 }
+
 
 function show_year_of_discovery(ndx) {
     var dim = ndx.dimension(dc.pluck('pl_disc'));
     var group = dim.group();
 
-    var minYear = dim.bottom(1)[0].pl_disc;
-    var maxYear = dim.top(1)[0].pl_disc;
-
     dc.barChart("#year-of-discovery")
         .width(800)
         .height(300)
         .margins({ top: 10, right: 50, bottom: 30, left: 50 })
-        .dimension(dim)
-        .group(group)
-        .transitionDuration(500)
         .x(d3.scale.ordinal())
-        .xUnits(dc.units.ordinal);
+        .xUnits(dc.units.ordinal)
+        .transitionDuration(500)
+        .useViewBoxResizing(true)
+        .dimension(dim)
+        .group(group);
+
 }
+
+/*
+function show_cumulative_year(ndx) {
+
+    var dim = ndx.dimension(dc.pluck('pl_disc'));
+
+    var minYear = dim.bottom(1)[0].pl_disc;
+    var maxYear = dim.top(1)[0].pl_disc;
+
+    var cumulativeGroup = dim.group().reduce(
+        function(p, v) {
+            p.total++;
+            if (v.pl_disc <= 2016) {
+                p.match++;
+            }
+            return p;
+        },
+        function(p, v) {
+            p.total--;
+            if (v.pl_disc <= 2016) {
+                p.match--;
+            }
+            return p;
+        },
+        function() {
+            return { total: 0, match: 0 };
+        }
+    );
+
+    dc.barChart("#cumulative-year")
+        .width(800)
+        .height(300)
+        .margins({ top: 10, right: 50, bottom: 30, left: 50 })
+        .x(d3.scale.ordinal())
+        .xUnits(dc.units.ordinal)
+        .transitionDuration(500)
+        .useViewBoxResizing(true)
+        .valueAccessor(function(d) {
+            if (d.value.total > 0) {
+                return (d.value.match)
+            }
+            else {
+                return 0;
+            }
+        })
+        .dimension(dim)
+        .group(cumulativeGroup);
+
+}
+
+*/
 
 function show_orbital_period(ndx) {
 
     var orbitalPeriod = ndx.dimension(function(d) {
+
         var days = d.pl_orbper;
 
         if (days > 0 && days <= 1) {
@@ -224,13 +290,6 @@ function show_orbital_period(ndx) {
 
     var orbitalPeriodGroup = orbitalPeriod.group();
 
-    //Code taken from Stackoverflow but does not enable me to fix the problem of empty values
-    var filteredGroup = {
-        all: function() {
-            return orbitalPeriodGroup.top(Infinity).filter(function(d) { return d.pl_orbper !== null; });
-        }
-    };
-
     var scale = d3.scale.ordinal()
         .domain(['<= 1 day', ']1;5] days', ']5;15] days', ']15;30] days', ']30;365] days', '> 1 year'])
         .range([0, 1, 2, 3, 4, 5]);
@@ -239,12 +298,13 @@ function show_orbital_period(ndx) {
         .width(700)
         .height(300)
         .margins({ top: 10, right: 50, bottom: 30, left: 50 })
-        .dimension(orbitalPeriod)
-        .group(filteredGroup)
-        .transitionDuration(500)
         .x(scale)
         .xUnits(dc.units.ordinal)
-        .xAxisLabel("Orbital Period in days");
+        .xAxisLabel("Orbital Period in days")
+        .transitionDuration(500)
+        .useViewBoxResizing(true)
+        .dimension(orbitalPeriod)
+        .group(orbitalPeriodGroup);
 }
 
 function show_planetary_system(ndx) {
@@ -255,12 +315,13 @@ function show_planetary_system(ndx) {
         .width(700)
         .height(300)
         .margins({ top: 10, right: 50, bottom: 30, left: 50 })
-        .dimension(dim)
-        .group(group)
-        .transitionDuration(500)
         .x(d3.scale.ordinal())
         .xUnits(dc.units.ordinal)
-        .xAxisLabel("Number of planets in system");
+        .xAxisLabel("Number of planets in system")
+        .transitionDuration(500)
+        .useViewBoxResizing(true)
+        .dimension(dim)
+        .group(group);
 }
 
 var keplerFlagColors = d3.scale.ordinal()
@@ -279,8 +340,8 @@ function show_mass_radius_correlation(ndx) {
     var maxPlanetMass = planetMassDim.top(1)[0].pl_masse;
 
     dc.scatterPlot("#mass-radius-correlation")
-        .width(800)
-        .height(400)
+        .width(700)
+        .height(300)
         .x(d3.scale.linear().domain([minPlanetMass, maxPlanetMass]))
         .y(d3.scale.linear().domain([0, 6]))
         .brushOn(false)
@@ -295,6 +356,7 @@ function show_mass_radius_correlation(ndx) {
             return d.key[2];
         })
         .colors(keplerFlagColors)
+        .useViewBoxResizing(true)
         .dimension(planetMassRadDim)
         .group(planetMassRadDimGroup)
         .margins({ top: 10, right: 50, bottom: 75, left: 75 });
@@ -312,8 +374,8 @@ function show_mass_correlation(ndx) {
     var maxPlanetMass = planetMassDim.top(1)[0].pl_massj;
 
     dc.scatterPlot("#mass-correlation")
-        .width(800)
-        .height(400)
+        .width(700)
+        .height(300)
         .x(d3.scale.linear().domain([minPlanetMass, maxPlanetMass]))
         .y(d3.scale.linear().domain([0, 4]))
         .brushOn(false)
@@ -328,6 +390,7 @@ function show_mass_correlation(ndx) {
             return d.key[2];
         })
         .colors(keplerFlagColors)
+        .useViewBoxResizing(true)
         .dimension(planetStellarMassDim)
         .group(planetStellarMassDimGroup)
         .margins({ top: 10, right: 50, bottom: 75, left: 75 });
@@ -345,8 +408,8 @@ function show_radius_correlation(ndx) {
     var maxPlanetMass = planetMassDim.top(1)[0].pl_rade;
 
     dc.scatterPlot("#radius-correlation")
-        .width(800)
-        .height(400)
+        .width(700)
+        .height(300)
         .x(d3.scale.linear().domain([minPlanetMass, maxPlanetMass]))
         .y(d3.scale.linear().domain([0, 6]))
         .brushOn(false)
@@ -361,6 +424,7 @@ function show_radius_correlation(ndx) {
             return d.key[2];
         })
         .colors(keplerFlagColors)
+        .useViewBoxResizing(true)
         .dimension(planetStellarMassDim)
         .group(planetStellarMassDimGroup)
         .margins({ top: 10, right: 50, bottom: 75, left: 75 });
@@ -403,5 +467,6 @@ function showTable(ndx) {
             return d.pl_name;
         })
         .order(d3.ascending)
-        .transitionDuration(500);
+        .transitionDuration(500)
+        .useViewBoxResizing(true);
 }
