@@ -38,7 +38,7 @@ function makeGraphs(error, Data) {
 }
 
 
-//--------------------- Create selector fonctions to filter chart on user input
+/*-------------- Create selector fonctions to filter chart on user input -----*/
 
 
 function show_kepler_selector(ndx) {
@@ -108,8 +108,7 @@ function show_discovery_year_selector(ndx) {
 }
 
 
-//--------------------- Charts related to the discovery of the exoplanets
-
+/*--------------------- Charts related to the discovery of the exoplanets-----*/
 
 /*
 function show_discovery_method(ndx) {
@@ -221,7 +220,6 @@ function show_discovery_method(ndx) {
         .radius(90)
         .innerRadius(40)
         .transitionDuration(500)
-        .slicesCap(15)
         .legend(dc.legend())
         .title(function(d) {
             return d.key + ": " + d.value + " planets discovered";
@@ -263,7 +261,7 @@ function show_discovery_facility(ndx) {
         else if (facility == "Lick Observatory")
             return "Lick Observatory";
         else
-            return "Others*";
+            return "others*";
     });
 
     var group = dim.group();
@@ -283,17 +281,6 @@ function show_discovery_facility(ndx) {
         .dimension(dim)
         .group(group);
 
-    /*
-    dc.pieChart('#discovery-facility')
-        .height(330)
-        .radius(90)
-        .innerRadius(40)
-        .transitionDuration(500)
-        .legend(dc.legend())
-        .useViewBoxResizing(true)
-        .dimension(dim)
-        .group(group);
-    */
 }
 
 
@@ -305,8 +292,12 @@ function show_year_of_discovery(ndx) {
         .width(800)
         .height(300)
         .margins({ top: 10, right: 50, bottom: 30, left: 50 })
+        .title(function(d) {
+            return d.value + " planets discovered in " + d.key ;
+        })
         .x(d3.scale.ordinal())
         .xUnits(dc.units.ordinal)
+        .elasticY(true)
         .transitionDuration(500)
         .useViewBoxResizing(true)
         .dimension(dim)
@@ -373,6 +364,9 @@ function show_range_year(ndx) {
 }
 
 
+/*---------------------- Charts related to the features of the exoplanets-----*/
+
+
 function show_orbital_period(ndx) {
 
     var orbitalPeriod = ndx.dimension(function(d) {
@@ -412,14 +406,20 @@ function show_orbital_period(ndx) {
         .width(700)
         .height(300)
         .margins({ top: 10, right: 50, bottom: 30, left: 50 })
+        .title(function(d) {
+            return d.value + " planets with orbital period " + d.key;
+        })
         .x(scale)
         .xUnits(dc.units.ordinal)
         .xAxisLabel("Orbital Period in days")
+        .elasticY(true)
+        .renderLabel(true)
         .transitionDuration(500)
         .useViewBoxResizing(true)
         .dimension(orbitalPeriod)
         .group(orbitalPeriodGroup);
 }
+
 
 function show_planetary_system(ndx) {
     var dim = ndx.dimension(dc.pluck('pl_pnum'));
@@ -429,18 +429,26 @@ function show_planetary_system(ndx) {
         .width(700)
         .height(300)
         .margins({ top: 10, right: 50, bottom: 30, left: 50 })
+        .title(function(d) {
+            return d.value + " planets with " + d.key + " known planet(s) in system";
+        })
         .x(d3.scale.ordinal())
         .xUnits(dc.units.ordinal)
         .xAxisLabel("Number of planets in system")
+        .elasticY(true)
+        .renderLabel(true)
         .transitionDuration(500)
         .useViewBoxResizing(true)
         .dimension(dim)
         .group(group);
 }
 
+/*--------------------------------------------------------- Correlations -----*/
+
 var keplerFlagColors = d3.scale.ordinal()
     .domain(["0", "1"])
     .range(["black", "orange"]);
+
 
 function show_mass_radius_correlation(ndx) {
 
@@ -476,6 +484,7 @@ function show_mass_radius_correlation(ndx) {
         .margins({ top: 10, right: 50, bottom: 75, left: 75 });
 }
 
+
 function show_mass_correlation(ndx) {
 
     var planetMassDim = ndx.dimension(dc.pluck("pl_massj"));
@@ -510,6 +519,7 @@ function show_mass_correlation(ndx) {
         .margins({ top: 10, right: 50, bottom: 75, left: 75 });
 }
 
+
 function show_radius_correlation(ndx) {
 
     var planetMassDim = ndx.dimension(dc.pluck("pl_rade"));
@@ -543,6 +553,10 @@ function show_radius_correlation(ndx) {
         .group(planetStellarMassDimGroup)
         .margins({ top: 10, right: 50, bottom: 75, left: 75 });
 }
+
+
+/*------------------------------------------------------------ Data Table-----*/
+
 
 function showTable(ndx) {
     var dim = ndx.dimension(dc.pluck("pl_name"));

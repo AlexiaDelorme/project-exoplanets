@@ -7,18 +7,38 @@
     font-size: 3rem;
 }
 
+.section-header {
+    padding-top: 15px;
+}
+
 .text-align {
     text-align: center;
     padding: 45vh;
 }
 
-.section-header {
-    padding-top: 15px;
+.jumbotron {
+    margin-bottom: 0px;
+    padding-bottom: 40px;
+}
+
+/*---------------------------------------- Charts ---*/
+
+#year-of-discovery .x.axis text {
+    text-anchor: end !important;
+    transform: rotate(-45deg);
+}
+
+.dc-chart g.row text {
+    fill: #343a40;
+    font-size: 12px;
+    cursor: pointer;
 }
 
 svg {
     @extend %MarginBottom;
 }
+
+/*---------------------------------------- Footer ---*/
 
 footer {
     text-align: center;
@@ -33,14 +53,4 @@ footer {
         color: orange;
         text-decoration: none;
     }
-}
-
-#year-of-discovery .x.axis text {
-    text-anchor: end !important;
-    transform: rotate(-45deg);
-}
-
-.jumbotron {
-    margin-bottom: 0px;
-    padding-bottom: 40px;
 }
