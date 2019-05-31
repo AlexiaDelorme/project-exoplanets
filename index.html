@@ -94,59 +94,62 @@
         <section class="container-fluid" id="discovery">
 
             <div class="row">
-                <div class="col-md-12">
-                    <h2 class="section-header"> Information related to the discovery of the exoplanets</h2>
-                    <hr class="my-4">
-                </div>
+                <h2 class="section-header"> Information related to the discovery of the exoplanets</h2>
+                <hr class="my-4">
             </div>
 
             <div class="row">
-                <div class="col-md-6">
-                    <h4> Method of Discovery</h4>
+
+                <div class="col-12 col-md-6">
+                    <div class="row">
+                        <h4 class="col-12"> Method of Discovery</h4>
+                        <div class="col-12" id="discovery-method"></div>
+                    </div>
                 </div>
-                <div class="col-md-6">
-                    <h4> Discovery facility</h4>
+
+                <div class="col-12 col-md-6">
+                    <div class="row">
+                        <h4 class="col-12"> Discovery facilityy</h4>
+                        <div class="col-12" id="discovery-facility"></div>
+                    </div>
                 </div>
+
             </div>
 
             <div class="row">
-                <div class="col-md-6" id="discovery-method"></div>
-
-                <div class="col-md-6" id="discovery-facility"></div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-12">
+                <div class="col-12">
                     <h4> Years of Discovery</h4>
                 </div>
-                <div class="col-md-12" id="year-of-discovery"></div>
-                <div class="col-md-12" id="range-year"></div>
+                <div class="col-12" id="year-of-discovery"></div>
+                <div class="col-12" id="range-year"></div>
             </div>
-            
+
         </section>
 
         <section class="container-fluid" id="features">
 
             <div class="row">
-                <div class="col-md-12">
+
+                <div class="col-12">
                     <hr class="my-4">
                     <h2 class="section-header"> Features of the exoplanets</h2>
                     <hr class="my-4">
                 </div>
-            </div>
 
-            <div class="row">
-                <div class="col-md-6">
-                    <h4> Orbital Period (days)</h4>
+                <div class="col-12 col-md-6">
+                    <div class="row">
+                        <h4> Orbital Period (days)</h4>
+                        <div class="col-12" id="orbital-period"> </div>
+                    </div>
                 </div>
-                <div class="col-md-6">
-                    <h4> Number (known) of planets in planetary system</h4>
-                </div>
-            </div>
 
-            <div class="row">
-                <div class="col-md-6" id="orbital-period"> </div>
-                <div class="col-md-6" id="planetary-system"> </div>
+                <div class="col-12 col-md-6">
+                    <div class="row">
+                        <h4> Number (known) of planets in planetary system</h4>
+                        <div class="col-12" id="planetary-system"> </div>
+                    </div>
+                </div>
+
             </div>
 
         </section>
@@ -165,24 +168,21 @@
                 <div class="col-md-12">
                     <h4> Correlation: mass vs. radius of the planet</h4>
                 </div>
-                <div class="col-md-12" id="mass-radius-correlation">
-                </div>
+                <div class="col-md-12" id="mass-radius-correlation"> </div>
             </div>
 
             <div class="row">
                 <div class="col-md-12">
                     <h4> Correlation: planet mass vs. stellar mass</h4>
                 </div>
-                <div class="col-md-12" id="mass-correlation">
-                </div>
+                <div class="col-md-12" id="mass-correlation"> </div>
             </div>
 
             <div class="row">
                 <div class="col-md-12">
                     <h4> Correlation: planet radius vs. stellar radius</h4>
                 </div>
-                <div class="col-md-12" id="radius-correlation">
-                </div>
+                <div class="col-md-12" id="radius-correlation"> </div>
             </div>
 
         </section>
@@ -190,15 +190,17 @@
         <section class="container-fluid" id="recap-data">
 
             <div class="row">
-                <div class="col-md-12">
+                
+                <div class="col-12">
                     <hr class="my-4">
                     <h2 class="section-header"> Information about the selected planets </h2>
                     <hr class="my-4">
                 </div>
-            </div>
 
-            <div class="row">
-                <table class="table table-hover" id="data-table"></table>
+                <div class="col-12">
+                    <table class="table table-hover" id="data-table"></table>
+                </div>
+                
             </div>
 
         </section>
@@ -250,19 +252,19 @@
                             <p>Planets discovered during the Kelpler mission</p>
                             <div id="kepler-selector"> </div>
                         </fieldset>
-                        
+
                         <fieldset class="form-group">
                             <legend>Discovering facility</legend>
                             <p>Select exoplanets discovered on a specific discovery facility</p>
                             <div id="facility-selector"> </div>
                         </fieldset>
-                        
+
                         <fieldset class="form-group">
                             <legend>Discovery method</legend>
                             <p>Select exoplanets discovered according to a specific discovery method</p>
                             <div id="discovery-selector"> </div>
                         </fieldset>
-                        
+
                         <fieldset class="form-group">
                             <legend>Years of discovery</legend>
                             <div id="discovery-year-selector"> </div>
