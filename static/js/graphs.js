@@ -6,25 +6,39 @@ function makeGraphs(error, Data) {
 
     var ndx = crossfilter(Data);
 
-
     Data.forEach(function(d) {
         d.pl_disc = parseInt(d.pl_disc);
     })
 
+    // Selectors
     show_kepler_selector(ndx);
+    show_facility_selector(ndx);
+    show_discovery_selector(ndx);
+    show_discovery_year_selector(ndx);
+
+    //Discovery charts
     show_discovery_method(ndx);
     show_discovery_facility(ndx);
     show_year_of_discovery(ndx);
-    //show_cumulative_year(ndx);
+    show_range_year(ndx);
+
+    //Exoplanets features charts
     show_orbital_period(ndx);
     show_planetary_system(ndx);
+
+    //Correlation charts
     show_mass_radius_correlation(ndx);
     show_mass_correlation(ndx);
     show_radius_correlation(ndx);
+
+    //Data table
     showTable(ndx);
 
     dc.renderAll();
 }
+
+
+//--------------------- Create selector fonctions to filter chart on user input
 
 
 function show_kepler_selector(ndx) {
@@ -32,8 +46,6 @@ function show_kepler_selector(ndx) {
     var group = dim.group();
 
     dc.selectMenu("#kepler-selector")
-        .dimension(dim)
-        .group(group)
         .title(function(d) {
             if (d.key == "0") {
                 return 'Exclude Kepler scope';
@@ -41,11 +53,65 @@ function show_kepler_selector(ndx) {
             else if (d.key == "1") {
                 return 'Only Kepler scope';
             }
-        });
+        })
+        .dimension(dim)
+        .group(group);
 
 }
 
 
+function show_facility_selector(ndx) {
+    var dim = ndx.dimension(dc.pluck('pl_facility'));
+    var group = dim.group();
+
+    dc.selectMenu("#facility-selector")
+        .multiple(true)
+        .title(function(d) {
+            return d.key;
+        })
+        .promptText('Select all')
+        .dimension(dim)
+        .group(group);
+
+}
+
+
+function show_discovery_selector(ndx) {
+    var dim = ndx.dimension(dc.pluck('pl_discmethod'));
+    var group = dim.group();
+
+    dc.selectMenu("#discovery-selector")
+        .multiple(true)
+        .title(function(d) {
+            return d.key;
+        })
+        .promptText('Select all')
+        .dimension(dim)
+        .group(group);
+
+}
+
+
+function show_discovery_year_selector(ndx) {
+    var dim = ndx.dimension(dc.pluck('pl_disc'));
+    var group = dim.group();
+
+    dc.selectMenu("#discovery-year-selector")
+        .multiple(true)
+        .title(function(d) {
+            return d.key;
+        })
+        .promptText('Select all')
+        .dimension(dim)
+        .group(group);
+
+}
+
+
+//--------------------- Charts related to the discovery of the exoplanets
+
+
+/*
 function show_discovery_method(ndx) {
 
     //For testing purposes we set var keplerFlag to empty
@@ -142,6 +208,29 @@ function show_discovery_method(ndx) {
     }
 }
 
+*/
+
+
+function show_discovery_method(ndx) {
+
+    var dim = ndx.dimension(dc.pluck('pl_discmethod'));
+    var group = dim.group();
+
+    dc.pieChart('#discovery-method')
+        .height(330)
+        .radius(90)
+        .innerRadius(40)
+        .transitionDuration(500)
+        .slicesCap(15)
+        .legend(dc.legend())
+        .title(function(d) {
+            return d.key + ": " + d.value + " planets discovered";
+        })
+        .useViewBoxResizing(true)
+        .dimension(dim)
+        .group(group);
+}
+
 
 function show_discovery_facility(ndx) {
 
@@ -179,6 +268,22 @@ function show_discovery_facility(ndx) {
 
     var group = dim.group();
 
+    dc.rowChart('#discovery-facility')
+        .width(600)
+        .height(300)
+        .margins({ top: 10, right: 20, bottom: 40, left: 20 })
+        .useViewBoxResizing(true)
+        .title(function(d) {
+            return d.value + " planets discovered by " + d.key;
+        })
+        .label(function(d) {
+            return d.key + " | " + d.value;
+        })
+        .transitionDuration(500)
+        .dimension(dim)
+        .group(group);
+
+    /*
     dc.pieChart('#discovery-facility')
         .height(330)
         .radius(90)
@@ -188,6 +293,7 @@ function show_discovery_facility(ndx) {
         .useViewBoxResizing(true)
         .dimension(dim)
         .group(group);
+    */
 }
 
 
@@ -208,25 +314,33 @@ function show_year_of_discovery(ndx) {
 
 }
 
-/*
-function show_cumulative_year(ndx) {
+
+function show_range_year(ndx) {
 
     var dim = ndx.dimension(dc.pluck('pl_disc'));
 
     var minYear = dim.bottom(1)[0].pl_disc;
     var maxYear = dim.top(1)[0].pl_disc;
 
-    var cumulativeGroup = dim.group().reduce(
+    var infYear = 2011;
+    var supYear = 2017;
+
+    var domainArray = [infYear, supYear];
+
+    //.x(d3.scale.ordinal().domain(domainArray))
+    //.xUnits(dc.units.ordinal)
+
+    var group = dim.group().reduce(
         function(p, v) {
             p.total++;
-            if (v.pl_disc <= 2016) {
+            if (v.pl_disc >= infYear && v.pl_disc <= supYear) {
                 p.match++;
             }
             return p;
         },
         function(p, v) {
             p.total--;
-            if (v.pl_disc <= 2016) {
+            if (v.pl_disc >= infYear && v.pl_disc <= supYear) {
                 p.match--;
             }
             return p;
@@ -236,12 +350,13 @@ function show_cumulative_year(ndx) {
         }
     );
 
-    dc.barChart("#cumulative-year")
+    dc.barChart("#range-year")
         .width(800)
         .height(300)
         .margins({ top: 10, right: 50, bottom: 30, left: 50 })
         .x(d3.scale.ordinal())
         .xUnits(dc.units.ordinal)
+        .elasticX(true)
         .transitionDuration(500)
         .useViewBoxResizing(true)
         .valueAccessor(function(d) {
@@ -253,11 +368,10 @@ function show_cumulative_year(ndx) {
             }
         })
         .dimension(dim)
-        .group(cumulativeGroup);
+        .group(group);
 
 }
 
-*/
 
 function show_orbital_period(ndx) {
 
