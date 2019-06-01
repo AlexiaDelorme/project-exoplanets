@@ -17,8 +17,11 @@
 }
 
 .jumbotron {
-    margin-bottom: 0px;
-    padding-bottom: 40px;
+    padding-bottom: 20px;
+}
+
+div#dashboard {
+    margin-top: 20px;
 }
 
 /*---------------------------------------- Charts ---*/
@@ -36,6 +39,10 @@
 
 svg {
     @extend %MarginBottom;
+}
+
+text.barLabel {
+    font-size: 10px;
 }
 
 /*---------------------------------------- Footer ---*/

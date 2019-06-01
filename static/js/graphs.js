@@ -293,11 +293,12 @@ function show_year_of_discovery(ndx) {
         .height(300)
         .margins({ top: 10, right: 50, bottom: 30, left: 50 })
         .title(function(d) {
-            return d.value + " planets discovered in " + d.key ;
+            return d.value + " planets discovered in " + d.key;
         })
         .x(d3.scale.ordinal())
         .xUnits(dc.units.ordinal)
         .elasticY(true)
+        .barPadding(0.2)
         .transitionDuration(500)
         .useViewBoxResizing(true)
         .dimension(dim)
@@ -347,7 +348,8 @@ function show_range_year(ndx) {
         .margins({ top: 10, right: 50, bottom: 30, left: 50 })
         .x(d3.scale.ordinal())
         .xUnits(dc.units.ordinal)
-        .elasticX(true)
+        .elasticY(true)
+        .barPadding(0.2)
         .transitionDuration(500)
         .useViewBoxResizing(true)
         .valueAccessor(function(d) {
@@ -413,11 +415,13 @@ function show_orbital_period(ndx) {
         .xUnits(dc.units.ordinal)
         .xAxisLabel("Orbital Period in days")
         .elasticY(true)
+        .barPadding(0.2)
         .renderLabel(true)
         .transitionDuration(500)
         .useViewBoxResizing(true)
         .dimension(orbitalPeriod)
-        .group(orbitalPeriodGroup);
+        .group(orbitalPeriodGroup)
+        .yAxis().ticks(4);
 }
 
 
@@ -436,11 +440,13 @@ function show_planetary_system(ndx) {
         .xUnits(dc.units.ordinal)
         .xAxisLabel("Number of planets in system")
         .elasticY(true)
+        .barPadding(0.2)
         .renderLabel(true)
         .transitionDuration(500)
         .useViewBoxResizing(true)
         .dimension(dim)
-        .group(group);
+        .group(group)
+        .yAxis().ticks(4);
 }
 
 /*--------------------------------------------------------- Correlations -----*/
