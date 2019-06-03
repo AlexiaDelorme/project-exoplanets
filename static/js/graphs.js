@@ -125,169 +125,30 @@ function show_discovery_year_selector(ndx) {
 
 /*--------------------- Charts related to the discovery of the exoplanets-----*/
 
-/*
-function show_discovery_method(ndx) {
-
-    //For testing purposes we set var keplerFlag to empty
-    var keplerFlag = "";
-
-    var dim = ndx.dimension(dc.pluck('pl_discmethod'));
-
-    function keplerFlagByDim(dimension, flag) {
-
-        return dimension.group().reduce(
-            function(p, v) {
-                p.total++;
-                if (v.pl_kepflag == flag) {
-                    p.match++;
-                }
-                return p;
-            },
-            function(p, v) {
-                p.total--;
-                if (v.pl_kepflag == flag) {
-                    p.match--;
-                }
-                return p;
-            },
-            function() {
-                return { total: 0, match: 0 };
-            }
-        );
-    }
-
-    //Determine what graph to be plotted according to the Kepler Flag 
-
-    if (keplerFlag == "") {
-
-        //If the Kepler Flag is empty, user keeps all planets, we group dimension regardless of the Kepler Flag
-
-        var group = dim.group();
-
-        dc.pieChart('#discovery-method')
-            .height(330)
-            .radius(90)
-            .innerRadius(40)
-            .transitionDuration(500)
-            .slicesCap(10)
-            .legend(dc.legend())
-            .title(function(d) {
-                return d.key + ": " + d.value + " planets discovered";
-            })
-            .useViewBoxResizing(true)
-            .dimension(dim)
-            .group(group);
-
-    }
-    else if (keplerFlag == "0") {
-
-        var keplerNoByDim = keplerFlagByDim(dim, "0");
-
-        dc.pieChart('#discovery-method')
-            .height(330)
-            .radius(90)
-            .transitionDuration(500)
-            .dimension(dim)
-            .group(keplerNoByDim)
-            .valueAccessor(function(d) {
-                if (d.value.total > 0) {
-                    return (d.value.match)
-                }
-                else {
-                    return 0;
-                }
-            })
-            .legend(dc.legend());
-
-    }
-    else if (keplerFlag == "1") {
-
-        var keplerYesByDim = keplerFlagByDim(dim, "1");
-
-        dc.pieChart('#discovery-method')
-            .height(330)
-            .radius(90)
-            .transitionDuration(500)
-            .dimension(dim)
-            .group(keplerYesByDim)
-            .valueAccessor(function(d) {
-                if (d.value.total > 0) {
-                    return (d.value.match)
-                }
-                else {
-                    return 0;
-                }
-            })
-            .legend(dc.legend());
-    }
-}
-
-*/
-
 
 function show_discovery_method(ndx) {
 
-    var dim = ndx.dimension(dc.pluck('pl_discmethod'));
-    var group = dim.group();
-
-    dc.pieChart('#discovery-method')
-        .height(330)
-        .radius(90)
-        .innerRadius(40)
-        .transitionDuration(500)
-        .legend(dc.legend())
-        .title(function(d) {
-            return d.key + ": " + d.value + " planets discovered";
-        })
-        .useViewBoxResizing(true)
-        .dimension(dim)
-        .group(group);
-}
-
-
-function show_discovery_facility(ndx) {
-
+    //var dim = ndx.dimension(dc.pluck('pl_discmethod'));
+    
     var dim = ndx.dimension(function(d) {
 
-        var facility = d.pl_facility;
-
-        if (facility == "Kepler")
-            return "Kepler";
-        else if (facility == "K2")
-            return "K2";
-        else if (facility == "La Silla Observatory")
-            return "La Silla Observatory";
-        else if (facility == "W. M. Keck Observatory")
-            return "W. M. Keck Observatory";
-        else if (facility == "Multiple Observatories")
-            return "Multiple Observatories";
-        else if (facility == "SuperWASP")
-            return "SuperWASP";
-        else if (facility == "HATNet")
-            return "HATNet";
-        else if (facility == "HATSouth")
-            return "HATSouth";
-        else if (facility == "OGLE")
-            return "OGLE";
-        else if (facility == "Haute-Provence Observatory")
-            return "Haute-Provence Observatory";
-        else if (facility == "Anglo-Australian Telescope")
-            return "Anglo-Australian Telescope";
-        else if (facility == "Lick Observatory")
-            return "Lick Observatory";
-        else
-            return "others*";
+        if (d.pl_discmethod == "Eclipse Timing Variations" || d.pl_discmethod == "Transit Timing Variations" || d.pl_discmethod == "Pulsar Timing" || d.pl_discmethod == "Pulsation Timing Variations")  {
+            return 'Timing Varations';
+        }
+        else {
+            return d.pl_discmethod;
+        }
     });
-
+    
     var group = dim.group();
-
-    dc.rowChart('#discovery-facility')
+    
+    dc.rowChart('#discovery-method')
         .width(600)
         .height(300)
         .margins({ top: 10, right: 20, bottom: 40, left: 20 })
         .useViewBoxResizing(true)
         .title(function(d) {
-            return d.value + " planets discovered by " + d.key;
+            return d.value + " planets detected by " + d.key + " method";
         })
         .label(function(d) {
             return d.key + " | " + d.value;
@@ -299,25 +160,111 @@ function show_discovery_facility(ndx) {
 }
 
 
-function show_year_of_discovery(ndx) {
-    var dim = ndx.dimension(dc.pluck('pl_disc'));
-    var group = dim.group();
+function show_discovery_facility(ndx) {
 
+    var dim = ndx.dimension(dc.pluck('pl_facility'));
+    var group = remove_blanks(dim.group(), "");
+
+    dc.pieChart('#discovery-facility')
+        .height(330)
+        .radius(90)
+        .innerRadius(40)
+        .transitionDuration(500)
+        .legend(dc.legend())
+        .slicesCap(8)
+        .title(function(d) {
+            return d.value + " planets discovered by " + d.key ;
+        })
+        .useViewBoxResizing(true)
+        .dimension(dim)
+        .group(group);    
+
+}
+
+
+function show_year_of_discovery(ndx) {
+
+    function detectionByYear(dimension, detection_method) {
+
+        return dimension.group().reduce(
+            function(p, v) {
+                p.total++;
+                if (v.pl_discmethod == detection_method) {
+                    p.match++;
+                }
+                return p;
+            },
+            function(p, v) {
+                p.total--;
+                if (v.pl_discmethod == detection_method) {
+                    p.match--;
+                }
+                return p;
+            },
+            function() {
+                return { total: 0, match: 0 };
+            }
+        );
+    }
+
+    var dim = ndx.dimension(dc.pluck('pl_disc'));
+
+    //Creating grouping for each detection type
+    var radialVelocityByYear = detectionByYear(dim, "Radial Velocity");
+    var transitByYear = detectionByYear(dim, "Transit");
+    var microlensingByYear = detectionByYear(dim, "Microlensing");
+    var imagingByYear = detectionByYear(dim, "Imaging");
+    var orbitalBrightnessByYear = detectionByYear(dim, "Orbital Brightness Modulation");
+    var astronomyByYear = detectionByYear(dim, "Astrometry");
+    
+    //Grouping timing detection types under the generic "Timing Variations" method
+    var timingVariationsByYear = dim.group().reduce(
+        function(p, v) {
+            p.total++;
+            if (v.pl_discmethod == "Eclipse Timing Variations" || v.pl_discmethod == "Transit Timing Variations" || v.pl_discmethod == "Pulsar Timing" || v.pl_discmethod == "Pulsation Timing Variations") {
+                p.match++;
+            }
+            return p;
+        },
+        function(p, v) {
+            p.total--;
+            if (v.pl_discmethod == "Eclipse Timing Variations" || v.pl_discmethod == "Transit Timing Variations" || v.pl_discmethod == "Pulsar Timing" || v.pl_discmethod == "Pulsation Timing Variations") {
+                p.match--;
+            }
+            return p;
+        },
+        function() {
+            return { total: 0, match: 0 };
+        }
+    );
+    
     dc.barChart("#year-of-discovery")
         .width(800)
         .height(300)
         .margins({ top: 10, right: 50, bottom: 30, left: 50 })
-        .title(function(d) {
-            return d.value + " planets discovered in " + d.key;
-        })
         .x(d3.scale.ordinal())
         .xUnits(dc.units.ordinal)
         .elasticY(true)
         .barPadding(0.2)
         .transitionDuration(500)
         .useViewBoxResizing(true)
+        .legend(dc.legend().x(80).y(20).itemHeight(8).gap(5))
         .dimension(dim)
-        .group(group);
+        .group(radialVelocityByYear)
+        .stack(transitByYear)
+        .stack(microlensingByYear)
+        .stack(imagingByYear)
+        .stack(timingVariationsByYear)
+        .stack(orbitalBrightnessByYear)
+        .stack(astronomyByYear)
+        .valueAccessor(function(d) {
+            if (d.value.total > 0) {
+                return d.value.match;
+            }
+            else {
+                return 0;
+            }
+        });
 
 }
 
