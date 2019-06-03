@@ -6,12 +6,6 @@ function makeGraphs(error, Data) {
 
     var ndx = crossfilter(Data);
 
-    // Converting Data
-
-    Data.forEach(function(d) {
-        d.pl_disc = parseInt(d.pl_disc);
-    })
-
     // Selectors
     show_kepler_selector(ndx);
     show_facility_selector(ndx);
@@ -22,7 +16,7 @@ function makeGraphs(error, Data) {
     show_discovery_method(ndx);
     show_discovery_facility(ndx);
     show_year_of_discovery(ndx);
-    show_range_year(ndx);
+    show_composite_chart_discovery_year(ndx);
 
     //Exoplanets features charts
     show_orbital_period(ndx);
@@ -129,19 +123,19 @@ function show_discovery_year_selector(ndx) {
 function show_discovery_method(ndx) {
 
     //var dim = ndx.dimension(dc.pluck('pl_discmethod'));
-    
+
     var dim = ndx.dimension(function(d) {
 
-        if (d.pl_discmethod == "Eclipse Timing Variations" || d.pl_discmethod == "Transit Timing Variations" || d.pl_discmethod == "Pulsar Timing" || d.pl_discmethod == "Pulsation Timing Variations")  {
+        if (d.pl_discmethod == "Eclipse Timing Variations" || d.pl_discmethod == "Transit Timing Variations" || d.pl_discmethod == "Pulsar Timing" || d.pl_discmethod == "Pulsation Timing Variations") {
             return 'Timing Varations';
         }
         else {
             return d.pl_discmethod;
         }
     });
-    
+
     var group = dim.group();
-    
+
     dc.rowChart('#discovery-method')
         .width(600)
         .height(300)
@@ -173,11 +167,11 @@ function show_discovery_facility(ndx) {
         .legend(dc.legend())
         .slicesCap(8)
         .title(function(d) {
-            return d.value + " planets discovered by " + d.key ;
+            return d.value + " planets discovered by " + d.key;
         })
         .useViewBoxResizing(true)
         .dimension(dim)
-        .group(group);    
+        .group(group);
 
 }
 
@@ -216,7 +210,7 @@ function show_year_of_discovery(ndx) {
     var imagingByYear = detectionByYear(dim, "Imaging");
     var orbitalBrightnessByYear = detectionByYear(dim, "Orbital Brightness Modulation");
     var astronomyByYear = detectionByYear(dim, "Astrometry");
-    
+
     //Grouping timing detection types under the generic "Timing Variations" method
     var timingVariationsByYear = dim.group().reduce(
         function(p, v) {
@@ -237,7 +231,7 @@ function show_year_of_discovery(ndx) {
             return { total: 0, match: 0 };
         }
     );
-    
+
     dc.barChart("#year-of-discovery")
         .width(800)
         .height(300)
@@ -268,7 +262,7 @@ function show_year_of_discovery(ndx) {
 
 }
 
-
+/*
 function show_range_year(ndx) {
 
     var dim = ndx.dimension(dc.pluck('pl_disc'));
@@ -326,7 +320,77 @@ function show_range_year(ndx) {
         .group(group);
 
 }
+*/
 
+function show_composite_chart_discovery_year(ndx) {
+
+    var dim = ndx.dimension(dc.pluck('pl_disc'));
+
+    function detectionByYear(dimension, detection_method) {
+
+        return dimension.group().reduce(function(d) {
+            if (d.pl_discmethod == detection_method) {
+                return +1;
+            }
+            else {
+                return 0;
+            }
+        })
+    }
+
+    //Creating grouping for each detection type
+    var radialVelocityByYear = detectionByYear(dim, "Radial Velocity");
+    var transitByYear = detectionByYear(dim, "Transit");
+    var microlensingByYear = detectionByYear(dim, "Microlensing");
+    var imagingByYear = detectionByYear(dim, "Imaging");
+    var orbitalBrightnessByYear = detectionByYear(dim, "Orbital Brightness Modulation");
+    var astronomyByYear = detectionByYear(dim, "Astrometry");
+
+    //Grouping timing detection types under the generic "Timing Variations" method
+    var timingVariationsByYear = dim.group().reduce();
+
+    var compositeChart = dc.compositeChart('#range-year');
+
+    compositeChart
+        .width(1000)
+        .height(300)
+        .margins({ top: 10, right: 30, bottom: 40, left: 40 })
+        .x(d3.scale.ordinal())
+        .xUnits(dc.units.ordinal)
+        .xAxisLabel("Year of discovery")
+        .yAxisLabel("Planets by detection method")
+        .legend(dc.legend().x(80).y(20).itemHeight(13).gap(5))
+        .useViewBoxResizing(true)
+        .brushOn(false)
+        .dimension(dim)
+        .compose([
+            dc.lineChart(compositeChart)
+            .colors('green')
+            .group(radialVelocityByYear, 'Radial Velocity'),
+            dc.lineChart(compositeChart)
+            .colors('red')
+            .group(transitByYear, 'Transit'),
+            dc.lineChart(compositeChart)
+            .colors('blue')
+            .group(microlensingByYear, 'Microlensing')
+        ]);
+
+}
+
+/*
+var group = dim.group();
+
+    dc.lineChart("#range-year")
+        .width(800)
+        .height(300)
+        .margins({ top: 10, right: 50, bottom: 30, left: 50 })
+        .dimension(dim)
+        .group(group)
+        .transitionDuration(500)
+        .useViewBoxResizing(true)
+        .x(d3.scale.ordinal())
+        .xUnits(dc.units.ordinal);
+*/
 
 /*---------------------- Charts related to the features of the exoplanets-----*/
 
