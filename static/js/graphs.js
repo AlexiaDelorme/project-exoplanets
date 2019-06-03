@@ -6,6 +6,8 @@ function makeGraphs(error, Data) {
 
     var ndx = crossfilter(Data);
 
+    // Converting Data
+
     Data.forEach(function(d) {
         d.pl_disc = parseInt(d.pl_disc);
     })
@@ -37,6 +39,19 @@ function makeGraphs(error, Data) {
     dc.renderAll();
 }
 
+/*----------------------------------------------------- Helper functions -----*/
+
+//This function was taken in the code from another Code Institute student (Git: steview-d / Project: superhero-dashboard)
+function remove_blanks(group, value_to_remove) {
+    // Filter out specified values from passed group
+    return {
+        all: function() {
+            return group.all().filter(function(d) {
+                return d.key !== value_to_remove;
+            });
+        }
+    };
+}
 
 /*-------------- Create selector fonctions to filter chart on user input -----*/
 
@@ -62,7 +77,7 @@ function show_kepler_selector(ndx) {
 
 function show_facility_selector(ndx) {
     var dim = ndx.dimension(dc.pluck('pl_facility'));
-    var group = dim.group();
+    var group = remove_blanks(dim.group(), "");
 
     dc.selectMenu("#facility-selector")
         .multiple(true)
@@ -398,7 +413,7 @@ function show_orbital_period(ndx) {
         }
     });
 
-    var orbitalPeriodGroup = orbitalPeriod.group();
+    var orbitalPeriodGroup = remove_blanks(orbitalPeriod.group(), "N/A");
 
     var scale = d3.scale.ordinal()
         .domain(['<= 1 day', ']1;5] days', ']5;15] days', ']15;30] days', ']30;365] days', '> 1 year'])
@@ -460,9 +475,15 @@ function show_mass_radius_correlation(ndx) {
 
     var planetMassDim = ndx.dimension(dc.pluck("pl_masse"));
     var planetMassRadDim = ndx.dimension(function(d) {
-        return [d.pl_masse, d.pl_rade, d.pl_kepflag];
+        //prevents drawing correlations when we are missing at least on of the two data
+        if (d.pl_masse == "" || d.pl_rade == "") {
+            return "";
+        }
+        else {
+            return [d.pl_masse, d.pl_rade, d.pl_kepflag];
+        }
     });
-    var planetMassRadDimGroup = planetMassRadDim.group();
+    var planetMassRadDimGroup = remove_blanks(planetMassRadDim.group(), "");
 
     var minPlanetMass = planetMassDim.bottom(1)[0].pl_masse;
     var maxPlanetMass = planetMassDim.top(1)[0].pl_masse;
@@ -493,14 +514,20 @@ function show_mass_radius_correlation(ndx) {
 
 function show_mass_correlation(ndx) {
 
-    var planetMassDim = ndx.dimension(dc.pluck("pl_massj"));
+    var planetMassDim = ndx.dimension(dc.pluck("pl_masse"));
     var planetStellarMassDim = ndx.dimension(function(d) {
-        return [d.pl_massj, d.st_mass, d.pl_kepflag];
+        //prevents drawing correlations when we are missing at least on of the two data
+        if (d.pl_masse == "" || d.st_mass == "") {
+            return "";
+        }
+        else {
+            return [d.pl_masse, d.st_mass, d.pl_kepflag];
+        }
     });
-    var planetStellarMassDimGroup = planetStellarMassDim.group();
+    var planetStellarMassDimGroup = remove_blanks(planetStellarMassDim.group(), "");
 
-    var minPlanetMass = planetMassDim.bottom(1)[0].pl_massj;
-    var maxPlanetMass = planetMassDim.top(1)[0].pl_massj;
+    var minPlanetMass = planetMassDim.bottom(1)[0].pl_masse;
+    var maxPlanetMass = planetMassDim.top(1)[0].pl_masse;
 
     dc.scatterPlot("#mass-correlation")
         .width(700)
@@ -510,7 +537,7 @@ function show_mass_correlation(ndx) {
         .brushOn(false)
         .symbolSize(2)
         .clipPadding(1)
-        .xAxisLabel("Planet Mass (Jupiter Masses)")
+        .xAxisLabel("Planet Mass (Earth Masses)")
         .yAxisLabel("Stellar Mass (Solar Masses)")
         .title(function(d) {
             return " Planet Mass = " + d.key[0] + " - Stellar Mass = " + d.key[1];
@@ -530,9 +557,15 @@ function show_radius_correlation(ndx) {
 
     var planetMassDim = ndx.dimension(dc.pluck("pl_rade"));
     var planetStellarMassDim = ndx.dimension(function(d) {
-        return [d.pl_rade, d.st_rad, d.pl_kepflag];
+        //prevents drawing correlations when we are missing at least on of the two data
+        if (d.pl_rade == "" || d.st_rad == "") {
+            return "";
+        }
+        else {
+            return [d.pl_rade, d.st_rad, d.pl_kepflag];
+        }
     });
-    var planetStellarMassDimGroup = planetStellarMassDim.group();
+    var planetStellarMassDimGroup = remove_blanks(planetStellarMassDim.group(), "");
 
     var minPlanetMass = planetMassDim.bottom(1)[0].pl_rade;
     var maxPlanetMass = planetMassDim.top(1)[0].pl_rade;
