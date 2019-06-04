@@ -5,6 +5,10 @@ queue()
 function makeGraphs(error, Data) {
 
     var ndx = crossfilter(Data);
+    
+    //Stats
+    display_kepler_percent(ndx, "1", "#kepler-flagged");
+    display_kepler_percent(ndx, "0", "#not-kepler-flagged");
 
     // Selectors
     show_kepler_selector(ndx);
@@ -110,6 +114,44 @@ function show_discovery_year_selector(ndx) {
         .dimension(dim)
         .group(group);
 
+}
+
+/*------------------------------------------- Display stats on the sample ----*/
+
+function display_kepler_percent(ndx, flag, element) {
+    
+    var keplerPercent = ndx.groupAll().reduce(
+        
+        function(p, v) {
+            p.total++;
+            if (v.pl_kepflag === flag) {
+                p.count++;
+            }
+            return p;
+        },
+        function(p, v) {
+            p.total--;
+            if (v.pl_kepflag === flag) {
+                p.count--;
+            }
+            return p;
+        },
+        function() {
+            return { total: 0, count: 0 };
+        }
+    );
+
+    dc.numberDisplay(element)
+        .formatNumber(d3.format('.2%'))
+        .valueAccessor(function(d) {
+            if (d.count == 0) {
+                return 0;
+            }
+            else {
+                return (d.count / d.total);
+            }
+        })
+        .group(keplerPercent);
 }
 
 /*--------------------- Charts related to the discovery of the exoplanets-----*/
@@ -253,6 +295,8 @@ function show_year_of_discovery(ndx) {
         });
 
 }
+
+// Helper function to create custom reducer for grouping on kepler flag
 
 function keplerFlagByYear(dimension, flag) {
 
