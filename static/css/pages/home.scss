@@ -31,7 +31,12 @@ div#dashboard {
     transform: rotate(-45deg);
 }
 
-.dc-chart g.row text {
+#linear-char-year .x.axis text {
+    text-anchor: end !important;
+    transform: rotate(-45deg);
+}
+
+.dc-chart g.row {
     fill: #343a40;
     font-size: 12px;
     cursor: pointer;
