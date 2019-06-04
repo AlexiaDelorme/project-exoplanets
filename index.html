@@ -6,24 +6,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>The Exoplanets Dashboard</title>
-
+    
+    <!-- Bootstrap and Bootswatch libraries -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://bootswatch.com/4/lux/bootstrap.min.css" type="text/css" />
-    <link rel="stylesheet" href="static/css/dc.min.css" type="text/css" />
+    
+    <!-- Font Awesome CDN -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css" />
+    
+    <!-- CSS files -->
     <link rel="stylesheet" href="static/css/main.css" type="text/css" />
-
-    <script type="text/javascript" src="static/js/d3.min.js"></script>
-    <script type="text/javascript" src="static/js/crossfilter.min.js"></script>
-    <script type="text/javascript" src="static/js/dc.min.js"></script>
-    <script type="text/javascript" src="static/js/queue.min.js"></script>
+    <link rel="stylesheet" href="static/css/dc.min.css" type="text/css" />
+    
+    <!-- JS libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crossfilter/1.3.12/crossfilter.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dc/2.1.8/dc.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/queue-async/1.0.7/queue.min.js"></script>
+    
+    <!-- My JS file -->
     <script type="text/javascript" src="static/js/graphs.js"></script>
+    
 
 </head>
 
 <body>
 
-    <!---------------------------------------------------------------HEADER-->
+    <!--------------------------------------------------------------- HEADER -->
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary header-position fixed-top">
         <a class="navbar-brand" href="#dashboard">Exoplanets Dashboard</a>
@@ -55,7 +64,7 @@
         </div>
     </nav>
 
-    <!---------------------------------------------------------------HOME PAGE-->
+    <!------------------------------------------------------------ HOME PAGE -->
 
     <section class="container-fluid home-page" id="home">
 
@@ -87,7 +96,7 @@
         </p>
     </div>
 
-    <!---------------------------------------------------------------DASHBOARD-->
+    <!------------------------------------------------------------ DASHBOARD -->
 
     <div class="container-fluid" id="dashboard">
 
@@ -207,7 +216,7 @@
 
     </div>
 
-    <!---------------------------------------------------------------FOOTER-->
+    <!--------------------------------------------------------------- FOOTER -->
 
     <footer class="container-fluid">
 
@@ -229,7 +238,7 @@
 
     </footer>
 
-    <!-----------------------------------------------------------MODAL FORM-->
+    <!----------------------------------------------------------- MODAL FORM -->
 
     <div class="modal" id="myModal">
         <div class="modal-dialog" role="document">
@@ -314,7 +323,7 @@
         </div>
     </div>
 
-    <!------------------------------------------------------BOOTSTRAP SCRIPTS-->
+    <!--------------------------------------------------------------- jQuery -->
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
