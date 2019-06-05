@@ -5,7 +5,7 @@ queue()
 function makeGraphs(error, Data) {
 
     var ndx = crossfilter(Data);
-    
+
     //Stats
     display_kepler_percent(ndx, "1", "#kepler-flagged");
     display_kepler_percent(ndx, "0", "#not-kepler-flagged");
@@ -20,6 +20,7 @@ function makeGraphs(error, Data) {
     show_discovery_method(ndx);
     show_discovery_facility(ndx);
     show_year_of_discovery(ndx);
+    show_cumulative_year_of_discovery(ndx);
     show_composite_chart_discovery_year_test1(ndx);
 
     //Exoplanets features charts
@@ -46,6 +47,19 @@ function remove_blanks(group, value_to_remove) {
         all: function() {
             return group.all().filter(function(d) {
                 return d.key !== value_to_remove;
+            });
+        }
+    };
+}
+
+//Accumalate data when grouping to plot cumulative charts
+function accumulate_group(group) {
+    return {
+        all: function() {
+            var cumulate = 0;
+            return group.all().map(function(d) {
+                cumulate += d.value;
+                return { key: d.key, value: cumulate };
             });
         }
     };
@@ -119,9 +133,9 @@ function show_discovery_year_selector(ndx) {
 /*------------------------------------------- Display stats on the sample ----*/
 
 function display_kepler_percent(ndx, flag, element) {
-    
+
     var keplerPercent = ndx.groupAll().reduce(
-        
+
         function(p, v) {
             p.total++;
             if (v.pl_kepflag === flag) {
@@ -210,7 +224,7 @@ function show_discovery_facility(ndx) {
 
 // Helper function to create custom reducer for grouping on detection method
 
-function detectionByYear(dimension, detection_method) {
+function detection_by_year(dimension, detection_method) {
 
     return dimension.group().reduce(
         function(p, v) {
@@ -238,12 +252,12 @@ function show_year_of_discovery(ndx) {
     var dim = ndx.dimension(dc.pluck('pl_disc'));
 
     //Creating grouping for each detection type
-    var radialVelocityByYear = detectionByYear(dim, "Radial Velocity");
-    var transitByYear = detectionByYear(dim, "Transit");
-    var microlensingByYear = detectionByYear(dim, "Microlensing");
-    var imagingByYear = detectionByYear(dim, "Imaging");
-    var orbitalBrightnessByYear = detectionByYear(dim, "Orbital Brightness Modulation");
-    var astronomyByYear = detectionByYear(dim, "Astrometry");
+    var radialVelocityByYear = detection_by_year(dim, "Radial Velocity");
+    var transitByYear = detection_by_year(dim, "Transit");
+    var microlensingByYear = detection_by_year(dim, "Microlensing");
+    var imagingByYear = detection_by_year(dim, "Imaging");
+    var orbitalBrightnessByYear = detection_by_year(dim, "Orbital Brightness Modulation");
+    var astronomyByYear = detection_by_year(dim, "Astrometry");
 
     //Grouping timing detection types under the generic "Timing Variations" method
     var timingVariationsByYear = dim.group().reduce(
@@ -272,10 +286,14 @@ function show_year_of_discovery(ndx) {
         .margins({ top: 10, right: 50, bottom: 30, left: 50 })
         .x(d3.scale.ordinal())
         .xUnits(dc.units.ordinal)
+        .renderLabel(true)
         .elasticY(true)
         .barPadding(0.2)
         .transitionDuration(500)
         .useViewBoxResizing(true)
+        .title(function(d) {
+            return d.value.match + " planets discovered in " + d.key;
+        })
         .legend(dc.legend().x(80).y(20).itemHeight(8).gap(5))
         .dimension(dim)
         .group(radialVelocityByYear)
@@ -293,6 +311,61 @@ function show_year_of_discovery(ndx) {
                 return 0;
             }
         });
+
+}
+
+function accumulate_detection_by_year(dimension, detection_method) {
+
+    return {
+        all: function() {
+            var cumulate = 0;
+            return dimension.group().reduce(
+                function(p, v) {
+                    p.total++;
+                    if (v.pl_discmethod == detection_method) {
+                        p.match++;
+                    }
+                    return p;
+                },
+                function(p, v) {
+                    p.total--;
+                    if (v.pl_discmethod == detection_method) {
+                        p.match--;
+                    }
+                    return p;
+                },
+                function() {
+                    return { total: 0, match: 0 };
+                }
+            ).all().map(function(d) {
+                cumulate += d.value;
+                return { key: d.key, value: cumulate };
+            });
+        }
+    };
+}
+
+function show_cumulative_year_of_discovery(ndx) {
+
+    var dim = ndx.dimension(dc.pluck('pl_disc'));
+    var group = accumulate_group(dim.group());
+    
+    //var radialVelocityCumulativeYear = accumulate_detection_by_year(dim, "Radial Velocity");
+    //var transitByCumulativeYear = accumulate_detection_by_year(dim, "Transit");
+
+    dc.barChart("#cumulative-year-of-discovery")
+        .width(800)
+        .height(300)
+        .margins({ top: 10, right: 50, bottom: 30, left: 50 })
+        .x(d3.scale.ordinal())
+        .xUnits(dc.units.ordinal)
+        .elasticY(true)
+        .barPadding(0.2)
+        .transitionDuration(500)
+        .useViewBoxResizing(true)
+        .legend(dc.legend().x(80).y(20).itemHeight(8).gap(5))
+        .dimension(dim)
+        .group(group);
 
 }
 
@@ -442,8 +515,10 @@ var keplerFlagColors = d3.scale.ordinal()
 function show_mass_radius_correlation(ndx) {
 
     var planetMassDim = ndx.dimension(dc.pluck("pl_masse"));
+    var planetRadDim = ndx.dimension(dc.pluck("pl_rade"));
+    
     var planetMassRadDim = ndx.dimension(function(d) {
-        //prevents drawing correlations when we are missing at least on of the two data
+        //prevents from drawing correlations when we are missing at least one of the two data set
         if (d.pl_masse == "" || d.pl_rade == "") {
             return "";
         }
@@ -453,14 +528,16 @@ function show_mass_radius_correlation(ndx) {
     });
     var planetMassRadDimGroup = remove_blanks(planetMassRadDim.group(), "");
 
+    //To set domain we need to determine Max/Min for Planet Mass
     var minPlanetMass = planetMassDim.bottom(1)[0].pl_masse;
     var maxPlanetMass = planetMassDim.top(1)[0].pl_masse;
-
+    
     dc.scatterPlot("#mass-radius-correlation")
         .width(700)
         .height(300)
         .x(d3.scale.linear().domain([minPlanetMass, maxPlanetMass]))
-        .y(d3.scale.linear().domain([0, 6]))
+        //I intentionally decided to exclude data for Radius > 25.EarthRadius (it only removes 3 planets in the sample) so that the scale is smoother
+        .y(d3.scale.linear().domain([0,25]))
         .brushOn(false)
         .symbolSize(3)
         .clipPadding(1)
@@ -476,14 +553,14 @@ function show_mass_radius_correlation(ndx) {
         .useViewBoxResizing(true)
         .dimension(planetMassRadDim)
         .group(planetMassRadDimGroup)
-        .margins({ top: 10, right: 50, bottom: 75, left: 75 });
+        .margins({ top: 50, right: 50, bottom: 75, left: 75 });
 }
 
 function show_mass_correlation(ndx) {
 
     var planetMassDim = ndx.dimension(dc.pluck("pl_masse"));
     var planetStellarMassDim = ndx.dimension(function(d) {
-        //prevents drawing correlations when we are missing at least on of the two data
+        //prevents from drawing correlations when we are missing at least one of the two data set
         if (d.pl_masse == "" || d.st_mass == "") {
             return "";
         }
@@ -500,6 +577,7 @@ function show_mass_correlation(ndx) {
         .width(700)
         .height(300)
         .x(d3.scale.linear().domain([minPlanetMass, maxPlanetMass]))
+        //I intentionally decided to exclude data for Stellar Mass > 4.SolarMass (only removes 3 planets in the sample) so that the scale is smoother
         .y(d3.scale.linear().domain([0, 4]))
         .brushOn(false)
         .symbolSize(2)
@@ -523,7 +601,7 @@ function show_radius_correlation(ndx) {
 
     var planetMassDim = ndx.dimension(dc.pluck("pl_rade"));
     var planetStellarMassDim = ndx.dimension(function(d) {
-        //prevents drawing correlations when we are missing at least on of the two data
+        //prevents from drawing correlations when we are missing at least one of the two data set
         if (d.pl_rade == "" || d.st_rad == "") {
             return "";
         }
@@ -540,6 +618,7 @@ function show_radius_correlation(ndx) {
         .width(700)
         .height(300)
         .x(d3.scale.linear().domain([minPlanetMass, maxPlanetMass]))
+        //I intentionally decided to exclude data for Stellar Radius > 4.SolarrRadius (only removes 4 planets in the sample) so that the scale is smoother
         .y(d3.scale.linear().domain([0, 6]))
         .brushOn(false)
         .symbolSize(2)
@@ -601,63 +680,3 @@ function showTable(ndx) {
         .transitionDuration(500)
         .useViewBoxResizing(true);
 }
-
-/*
-function show_range_year(ndx) {
-
-    var dim = ndx.dimension(dc.pluck('pl_disc'));
-
-    var minYear = dim.bottom(1)[0].pl_disc;
-    var maxYear = dim.top(1)[0].pl_disc;
-
-    var infYear = 2011;
-    var supYear = 2017;
-
-    var domainArray = [infYear, supYear];
-
-    //.x(d3.scale.ordinal().domain(domainArray))
-    //.xUnits(dc.units.ordinal)
-
-    var group = dim.group().reduce(
-        function(p, v) {
-            p.total++;
-            if (v.pl_disc >= infYear && v.pl_disc <= supYear) {
-                p.match++;
-            }
-            return p;
-        },
-        function(p, v) {
-            p.total--;
-            if (v.pl_disc >= infYear && v.pl_disc <= supYear) {
-                p.match--;
-            }
-            return p;
-        },
-        function() {
-            return { total: 0, match: 0 };
-        }
-    );
-
-    dc.barChart("#range-year")
-        .width(800)
-        .height(300)
-        .margins({ top: 10, right: 50, bottom: 30, left: 50 })
-        .x(d3.scale.ordinal())
-        .xUnits(dc.units.ordinal)
-        .elasticY(true)
-        .barPadding(0.2)
-        .transitionDuration(500)
-        .useViewBoxResizing(true)
-        .valueAccessor(function(d) {
-            if (d.value.total > 0) {
-                return (d.value.match)
-            }
-            else {
-                return 0;
-            }
-        })
-        .dimension(dim)
-        .group(group);
-
-}
-*/
