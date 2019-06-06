@@ -9,6 +9,7 @@ function makeGraphs(error, Data) {
     //Stats
     display_kepler_percent(ndx, "1", "#kepler-flagged");
     display_kepler_percent(ndx, "0", "#not-kepler-flagged");
+    display_total_planets_sample(ndx);
 
     // Selectors
     show_kepler_selector(ndx);
@@ -52,7 +53,7 @@ function remove_blanks(group, value_to_remove) {
     };
 }
 
-//Accumalate data when grouping to plot cumulative charts
+//Accumalate data to plot cumulative charts
 function accumulate_group(group) {
     return {
         all: function() {
@@ -132,6 +133,39 @@ function show_discovery_year_selector(ndx) {
 
 /*------------------------------------------- Display stats on the sample ----*/
 
+//Display total number of planets in the sample
+function display_total_planets_sample(ndx) {
+
+    var totalPlanets = ndx.groupAll().reduce(
+
+        function(p) {
+            p.total++;
+            return p;
+        },
+        function(p) {
+            p.total--;
+            return p;
+        },
+        function() {
+            return { total: 0 };
+        }
+    );
+
+    dc.numberDisplay('#total-planets')
+        .formatNumber(d3.format('.2'))
+        .valueAccessor(function(d) {
+            if (d.total == 0) {
+                return 0;
+            }
+            else {
+                return d.total;
+            }
+        })
+        .group(totalPlanets);
+
+}
+
+//Display % of planets discovered during the Kepler mission
 function display_kepler_percent(ndx, flag, element) {
 
     var keplerPercent = ndx.groupAll().reduce(
@@ -223,7 +257,6 @@ function show_discovery_facility(ndx) {
 }
 
 // Helper function to create custom reducer for grouping on detection method
-
 function detection_by_year(dimension, detection_method) {
 
     return dimension.group().reduce(
@@ -296,13 +329,13 @@ function show_year_of_discovery(ndx) {
         })
         .legend(dc.legend().x(80).y(20).itemHeight(8).gap(5))
         .dimension(dim)
-        .group(radialVelocityByYear)
-        .stack(transitByYear)
-        .stack(microlensingByYear)
-        .stack(imagingByYear)
-        .stack(timingVariationsByYear)
-        .stack(orbitalBrightnessByYear)
-        .stack(astronomyByYear)
+        .group(transitByYear, "Transit")
+        .stack(radialVelocityByYear, "Radial Velocity")
+        .stack(microlensingByYear, "Microlensing")
+        .stack(imagingByYear, "Imaging")
+        .stack(timingVariationsByYear, "Timing Variations")
+        .stack(orbitalBrightnessByYear, "Orbital Brightness")
+        .stack(astronomyByYear, "Astrometry")
         .valueAccessor(function(d) {
             if (d.value.total > 0) {
                 return d.value.match;
@@ -349,7 +382,7 @@ function show_cumulative_year_of_discovery(ndx) {
 
     var dim = ndx.dimension(dc.pluck('pl_disc'));
     var group = accumulate_group(dim.group());
-    
+
     //var radialVelocityCumulativeYear = accumulate_detection_by_year(dim, "Radial Velocity");
     //var transitByCumulativeYear = accumulate_detection_by_year(dim, "Transit");
 
@@ -365,12 +398,11 @@ function show_cumulative_year_of_discovery(ndx) {
         .useViewBoxResizing(true)
         .legend(dc.legend().x(80).y(20).itemHeight(8).gap(5))
         .dimension(dim)
-        .group(group);
+        .group(group, "Total");
 
 }
 
 // Helper function to create custom reducer for grouping on kepler flag
-
 function keplerFlagByYear(dimension, flag) {
 
     return dimension.group().reduce(
@@ -402,7 +434,7 @@ function show_composite_chart_discovery_year_test1(ndx) {
     var keplerFlaggedByYear = keplerFlagByYear(dim, "1");
     var notKeplerFlaggedByYear = keplerFlagByYear(dim, "0");
 
-    dc.lineChart("#linear-char-year")
+    dc.lineChart("#linear-chart-year")
         .width(800)
         .height(300)
         .margins({ top: 10, right: 50, bottom: 30, left: 50 })
@@ -412,8 +444,8 @@ function show_composite_chart_discovery_year_test1(ndx) {
         .useViewBoxResizing(true)
         .legend(dc.legend().x(80).y(20).itemHeight(8).gap(5))
         .dimension(dim)
-        .group(keplerFlaggedByYear)
-        .stack(notKeplerFlaggedByYear)
+        .group(keplerFlaggedByYear, "Planets in Kepler Scope")
+        .stack(notKeplerFlaggedByYear, "Planets outside Kepler Scope ")
         .valueAccessor(function(d) {
             if (d.value.total > 0) {
                 return d.value.match;
@@ -516,7 +548,7 @@ function show_mass_radius_correlation(ndx) {
 
     var planetMassDim = ndx.dimension(dc.pluck("pl_masse"));
     var planetRadDim = ndx.dimension(dc.pluck("pl_rade"));
-    
+
     var planetMassRadDim = ndx.dimension(function(d) {
         //prevents from drawing correlations when we are missing at least one of the two data set
         if (d.pl_masse == "" || d.pl_rade == "") {
@@ -531,13 +563,13 @@ function show_mass_radius_correlation(ndx) {
     //To set domain we need to determine Max/Min for Planet Mass
     var minPlanetMass = planetMassDim.bottom(1)[0].pl_masse;
     var maxPlanetMass = planetMassDim.top(1)[0].pl_masse;
-    
+
     dc.scatterPlot("#mass-radius-correlation")
         .width(700)
         .height(300)
         .x(d3.scale.linear().domain([minPlanetMass, maxPlanetMass]))
         //I intentionally decided to exclude data for Radius > 25.EarthRadius (it only removes 3 planets in the sample) so that the scale is smoother
-        .y(d3.scale.linear().domain([0,25]))
+        .y(d3.scale.linear().domain([0, 25]))
         .brushOn(false)
         .symbolSize(3)
         .clipPadding(1)

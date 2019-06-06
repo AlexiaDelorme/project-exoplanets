@@ -118,6 +118,13 @@
 
                     <div class="row">
                         <div class="col-12">
+                            <h6>Total number of exoplanets in the sample</h6>
+
+                        </div>
+                        <div class="col-12">
+                            <div id="total-planets"></div>
+                        </div>
+                        <div class="col-12">
                             <h6>Attribution of exoplanets detections</h6>
                         </div>
                         <div class="col-6">
@@ -184,7 +191,7 @@
                 <div class="col-12">
                     <h4> Kepler Scope Discovery Per Year</h4>
                 </div>
-                <div class="col-12" id="linear-char-year"></div>
+                <div class="col-12" id="linear-chart-year"></div>
             </div>
 
         </section>
@@ -199,21 +206,30 @@
                     <hr class="my-4">
                 </div>
 
+            </div>
+
+            <div class="row">
+
                 <div class="col-12 col-md-6">
                     <div class="row">
-                        <h4> Orbital Period (days)</h4>
+                        <div class="col-12">
+                            <h4> Orbital Period (days)</h4>
+                        </div>
                         <div class="col-12" id="orbital-period"> </div>
                     </div>
                 </div>
 
                 <div class="col-12 col-md-6">
                     <div class="row">
-                        <h4> Number (known) of planets in planetary system</h4>
+                        <div class="col-12">
+                            <h4> Number (known) of planets in planetary system</h4>
+                        </div>
                         <div class="col-12" id="planetary-system"> </div>
                     </div>
                 </div>
 
             </div>
+
 
         </section>
 
@@ -410,7 +426,7 @@
             dc.filterAll();
             dc.renderAll();
         });
-        
+
         $("#switchTable").change(function() {
             if (this.checked != true) {
                 $("#recap-data").hide();
@@ -423,7 +439,7 @@
                 $("#checkboxLabel").text("Enable");
             }
         });
-        
+
         $("#switchCorr1").change(function() {
             if (this.checked != true) {
                 $("#planet-corr-section").hide();
@@ -432,7 +448,7 @@
                 $("#planet-corr-section").show();
             }
         });
-        
+
         $("#switchCorr2").change(function() {
             if (this.checked != true) {
                 $("#mass-corr-section").hide();
@@ -441,7 +457,7 @@
                 $("#mass-corr-section").show();
             }
         });
-        
+
         $("#switchCorr3").change(function() {
             if (this.checked != true) {
                 $("#radius-corr-section").hide();
@@ -450,7 +466,6 @@
                 $("#radius-corr-section").show();
             }
         });
-        
     </script>
 
 </body>
