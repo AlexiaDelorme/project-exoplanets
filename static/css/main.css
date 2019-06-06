@@ -30,16 +30,21 @@ svg {
 div#dashboard {
   margin-top: 20px; }
 
-/*---------------------------------------- Charts ---*/
-#year-of-discovery .x.axis text {
-  text-anchor: end !important;
-  transform: rotate(-45deg); }
+h4 {
+  margin: 15px 0; }
 
+h6 {
+  margin: 15px 0; }
+
+/*---------------------------------------- Charts ---*/
+#year-of-discovery .x.axis text,
+#cumulative-year-of-discovery .x.axis text,
 #linear-char-year .x.axis text {
   text-anchor: end !important;
   transform: rotate(-45deg); }
 
-.dc-chart g.row {
+.dc-chart g.row text,
+.dc-chart .pie-slice {
   fill: #343a40;
   font-size: 12px;
   cursor: pointer; }
