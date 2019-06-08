@@ -312,7 +312,7 @@ function show_year_of_discovery(ndx) {
             return { total: 0, match: 0 };
         }
     );
-
+    
     dc.barChart("#year-of-discovery")
         .width(800)
         .height(300)
@@ -322,6 +322,7 @@ function show_year_of_discovery(ndx) {
         .renderLabel(true)
         .elasticY(true)
         .barPadding(0.2)
+        .clipPadding(15)
         .transitionDuration(500)
         .useViewBoxResizing(true)
         .title(function(d) {
@@ -392,8 +393,10 @@ function show_cumulative_year_of_discovery(ndx) {
         .margins({ top: 10, right: 50, bottom: 30, left: 50 })
         .x(d3.scale.ordinal())
         .xUnits(dc.units.ordinal)
+        .renderLabel(true)
         .elasticY(true)
         .barPadding(0.2)
+        .clipPadding(15)
         .transitionDuration(500)
         .useViewBoxResizing(true)
         .legend(dc.legend().x(80).y(20).itemHeight(8).gap(5))
@@ -505,6 +508,7 @@ function show_orbital_period(ndx) {
         .xAxisLabel("Orbital Period in days")
         .elasticY(true)
         .barPadding(0.2)
+        .clipPadding(15)
         .renderLabel(true)
         .transitionDuration(500)
         .useViewBoxResizing(true)
@@ -529,6 +533,7 @@ function show_planetary_system(ndx) {
         .xAxisLabel("Number of planets in system")
         .elasticY(true)
         .barPadding(0.2)
+        .clipPadding(15)
         .renderLabel(true)
         .transitionDuration(500)
         .useViewBoxResizing(true)
@@ -712,3 +717,4 @@ function showTable(ndx) {
         .transitionDuration(500)
         .useViewBoxResizing(true);
 }
+
