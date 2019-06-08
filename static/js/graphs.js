@@ -53,6 +53,19 @@ function remove_blanks(group, value_to_remove) {
     };
 }
 
+//This function was taken in the code from another Code Institute student (Git: steview-d / Project: superhero-dashboard)
+//I adapted it to my pie Chart to exclude the display of percent below 5%
+function show_slice_percent(key, endAngle, startAngle) {
+    // Return the % of each pie slice as a string to be displayed on the slice itself
+    var percent = dc.utils.printSingleValue((endAngle - startAngle) / (2 * Math.PI) * 100);
+    if (percent >= 5) {
+        return key + ': ' + Math.round(percent) + '%';
+    }
+    else if (percent > 0) {
+        return "";
+    }
+}
+
 //Accumalate data to plot cumulative charts
 function accumulate_group(group) {
     return {
@@ -234,7 +247,7 @@ function show_discovery_method(ndx) {
         .label(function(d) {
             return d.key + " | " + d.value;
         })
-        .transitionDuration(500)
+        .transitionDuration(1500)
         .colors(detectionColors)
         .dimension(dim)
         .group(group);
@@ -250,13 +263,18 @@ function show_discovery_facility(ndx) {
         .height(330)
         .radius(90)
         .innerRadius(40)
-        .transitionDuration(500)
+        .transitionDuration(1500)
         .legend(dc.legend().x(80).y(20).itemHeight(8).gap(5))
         .slicesCap(8)
         .title(function(d) {
             return d.value + " planets discovered by " + d.key;
         })
         .useViewBoxResizing(true)
+        .on('pretransition', function(chart) {
+            chart.selectAll('text.pie-slice').text(function(d) {
+                return show_slice_percent(d.data.key, d.endAngle, d.startAngle);
+            });
+        })
         .dimension(dim)
         .group(group);
 
@@ -558,7 +576,7 @@ function show_mass_radius_correlation(ndx) {
         .xAxisLabel("Planet Mass (Earth Masses)")
         .yAxisLabel("Planet Radius (Earth Radii)")
         .title(function(d) {
-            return " Planet Mass = " + d.key[0] + " - Planet Radius = " + d.key[1];
+            return " Planet Mass = " + d.key[0] + " - Planet Radius = " + d.key[1] ;
         })
         .colorAccessor(function(d) {
             return d.key[2];
