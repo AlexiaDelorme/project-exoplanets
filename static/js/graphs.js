@@ -22,7 +22,7 @@ function makeGraphs(error, Data) {
     show_discovery_facility(ndx);
     show_year_of_discovery(ndx);
     show_cumulative_year_of_discovery(ndx);
-    show_composite_chart_discovery_year_test1(ndx);
+    //show_composite_chart_test1(ndx);
 
     //Exoplanets features charts
     show_orbital_period(ndx);
@@ -204,12 +204,17 @@ function display_kepler_percent(ndx, flag, element) {
 
 /*--------------------- Charts related to the discovery of the exoplanets-----*/
 
+//Create a variable to set detection method colors
+var detectionColors = d3.scale.ordinal()
+    .domain(["Transit", "Radial Velocity", "Microlensing", "Imaging", "Timing Variations", "Orbital Brightness Modulation", "Astrometry"])
+    .range(["cornflowerBlue", "grey", "lightblue", "orange", "seaGreen", "paleVioletRed", "navy"]);
+
 function show_discovery_method(ndx) {
 
     var dim = ndx.dimension(function(d) {
 
         if (d.pl_discmethod == "Eclipse Timing Variations" || d.pl_discmethod == "Transit Timing Variations" || d.pl_discmethod == "Pulsar Timing" || d.pl_discmethod == "Pulsation Timing Variations") {
-            return 'Timing Varations';
+            return "Timing Variations";
         }
         else {
             return d.pl_discmethod;
@@ -230,6 +235,7 @@ function show_discovery_method(ndx) {
             return d.key + " | " + d.value;
         })
         .transitionDuration(500)
+        .colors(detectionColors)
         .dimension(dim)
         .group(group);
 
@@ -245,7 +251,7 @@ function show_discovery_facility(ndx) {
         .radius(90)
         .innerRadius(40)
         .transitionDuration(500)
-        .legend(dc.legend())
+        .legend(dc.legend().x(80).y(20).itemHeight(8).gap(5))
         .slicesCap(8)
         .title(function(d) {
             return d.value + " planets discovered by " + d.key;
@@ -285,8 +291,8 @@ function show_year_of_discovery(ndx) {
     var dim = ndx.dimension(dc.pluck('pl_disc'));
 
     //Creating grouping for each detection type
-    var radialVelocityByYear = detection_by_year(dim, "Radial Velocity");
     var transitByYear = detection_by_year(dim, "Transit");
+    var radialVelocityByYear = detection_by_year(dim, "Radial Velocity");
     var microlensingByYear = detection_by_year(dim, "Microlensing");
     var imagingByYear = detection_by_year(dim, "Imaging");
     var orbitalBrightnessByYear = detection_by_year(dim, "Orbital Brightness Modulation");
@@ -312,7 +318,7 @@ function show_year_of_discovery(ndx) {
             return { total: 0, match: 0 };
         }
     );
-    
+
     dc.barChart("#year-of-discovery")
         .width(800)
         .height(300)
@@ -335,8 +341,9 @@ function show_year_of_discovery(ndx) {
         .stack(microlensingByYear, "Microlensing")
         .stack(imagingByYear, "Imaging")
         .stack(timingVariationsByYear, "Timing Variations")
-        .stack(orbitalBrightnessByYear, "Orbital Brightness")
+        .stack(orbitalBrightnessByYear, "Orbital Brightness Modulation")
         .stack(astronomyByYear, "Astrometry")
+        .colors(detectionColors)
         .valueAccessor(function(d) {
             if (d.value.total > 0) {
                 return d.value.match;
@@ -379,6 +386,10 @@ function accumulate_detection_by_year(dimension, detection_method) {
     };
 }
 
+//Create a variable colors to change default colors for bar charts
+var barChartColors = d3.scale.ordinal()
+    .range(["grey", "black"]);
+
 function show_cumulative_year_of_discovery(ndx) {
 
     var dim = ndx.dimension(dc.pluck('pl_disc'));
@@ -400,63 +411,17 @@ function show_cumulative_year_of_discovery(ndx) {
         .transitionDuration(500)
         .useViewBoxResizing(true)
         .legend(dc.legend().x(80).y(20).itemHeight(8).gap(5))
+        .colorAccessor(function(d) {
+            return d.key;
+        })
+        .colors(barChartColors)
         .dimension(dim)
         .group(group, "Total");
 
 }
 
-// Helper function to create custom reducer for grouping on kepler flag
-function keplerFlagByYear(dimension, flag) {
+function show_composite_chart_test1(ndx) {
 
-    return dimension.group().reduce(
-        function(p, v) {
-            p.total++;
-            if (v.pl_kepflag == flag) {
-                p.match++;
-            }
-            return p;
-        },
-        function(p, v) {
-            p.total--;
-            if (v.pl_kepflag == flag) {
-                p.match--;
-            }
-            return p;
-        },
-        function() {
-            return { total: 0, match: 0 };
-        }
-    );
-}
-
-function show_composite_chart_discovery_year_test1(ndx) {
-
-    var dim = ndx.dimension(dc.pluck('pl_disc'));
-
-    //Creating grouping according to the Kepler Flag
-    var keplerFlaggedByYear = keplerFlagByYear(dim, "1");
-    var notKeplerFlaggedByYear = keplerFlagByYear(dim, "0");
-
-    dc.lineChart("#linear-chart-year")
-        .width(800)
-        .height(300)
-        .margins({ top: 10, right: 50, bottom: 30, left: 50 })
-        .x(d3.scale.ordinal())
-        .xUnits(dc.units.ordinal)
-        .transitionDuration(500)
-        .useViewBoxResizing(true)
-        .legend(dc.legend().x(80).y(20).itemHeight(8).gap(5))
-        .dimension(dim)
-        .group(keplerFlaggedByYear, "Planets in Kepler Scope")
-        .stack(notKeplerFlaggedByYear, "Planets outside Kepler Scope ")
-        .valueAccessor(function(d) {
-            if (d.value.total > 0) {
-                return d.value.match;
-            }
-            else {
-                return 0;
-            }
-        });
 }
 
 /*---------------------- Charts related to the features of the exoplanets-----*/
@@ -495,6 +460,11 @@ function show_orbital_period(ndx) {
     var scale = d3.scale.ordinal()
         .domain(['<= 1 day', ']1;5] days', ']5;15] days', ']15;30] days', ']30;365] days', '> 1 year'])
         .range([0, 1, 2, 3, 4, 5]);
+    
+    //We need to create a different color variable as we rearraged the order dimension for orbital period
+    var orbitalChartColors = d3.scale.ordinal()
+        .domain(['<= 1 day', ']1;5] days', ']5;15] days', ']15;30] days', ']30;365] days', '> 1 year'])
+        .range(["grey", "black"]);
 
     dc.barChart("#orbital-period")
         .width(700)
@@ -512,6 +482,10 @@ function show_orbital_period(ndx) {
         .renderLabel(true)
         .transitionDuration(500)
         .useViewBoxResizing(true)
+        .colorAccessor(function(d) {
+            return d.key;
+        })
+        .colors(orbitalChartColors)
         .dimension(orbitalPeriod)
         .group(orbitalPeriodGroup)
         .yAxis().ticks(4);
@@ -537,6 +511,10 @@ function show_planetary_system(ndx) {
         .renderLabel(true)
         .transitionDuration(500)
         .useViewBoxResizing(true)
+        .colorAccessor(function(d) {
+            return d.key;
+        })
+        .colors(barChartColors)
         .dimension(dim)
         .group(group)
         .yAxis().ticks(4);
@@ -547,7 +525,6 @@ function show_planetary_system(ndx) {
 var keplerFlagColors = d3.scale.ordinal()
     .domain(["0", "1"])
     .range(["black", "orange"]);
-
 
 function show_mass_radius_correlation(ndx) {
 
@@ -717,4 +694,3 @@ function showTable(ndx) {
         .transitionDuration(500)
         .useViewBoxResizing(true);
 }
-
