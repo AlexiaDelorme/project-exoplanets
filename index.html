@@ -176,22 +176,22 @@
 
             </div>
 
-            <div class="row">
+            <div class="row" id="non-cumulative-chart">
 
                 <div class="col-12">
                     <h4> Detections Per Year</h4>
                 </div>
                 <div class="col-12 chart" id="year-of-discovery"></div>
 
+            </div>
+
+            <div class="row" id="cumulative-chart">
+
                 <div class="col-12">
                     <h4> Cumulative Detections Per Year</h4>
                 </div>
                 <div class="col-12" id="cumulative-year-of-discovery"></div>
 
-                <div class="col-12">
-                    <h4> Kepler Scope Discovery Per Year</h4>
-                </div>
-                <div class="col-12" id="linear-chart-year"></div>
             </div>
 
         </section>
@@ -329,7 +329,7 @@
 
                             <div class="row">
 
-                                <div class="col-6">
+                                <div class="col-12 col-md-6">
                                     <fieldset class="form-group">
                                         <legend>Kepler selector</legend>
                                         <p>Planets discovered during the Kelpler mission</p>
@@ -337,22 +337,38 @@
                                     </fieldset>
                                 </div>
 
-                                <div class="col-6">
+                                <div class="col-12 col-md-6">
                                     <fieldset>
                                         <legend>Data table</legend>
                                         <div class="form-group">
                                             <div class="custom-control custom-switch">
                                                 <input type="checkbox" class="custom-control-input" id="switchTable" checked="">
-                                                <label class="custom-control-label" for="switchTable" id="checkboxLabel">Enable</label>
+                                                <label class="custom-control-label" for="switchTable" id="checkboxLabelTable">Enable</label>
                                             </div>
                                         </div>
                                     </fieldset>
                                 </div>
 
-                                <div class="col-12">
+                            </div>
+
+                            <div class="row">
+
+                                <div class="col-12 col-md-6">
                                     <fieldset class="form-group">
                                         <legend>Years of discovery</legend>
                                         <div id="discovery-year-selector"> </div>
+                                    </fieldset>
+                                </div>
+
+                                <div class="col-12 col-md-6">
+                                    <fieldset>
+                                        <legend>Type of data</legend>
+                                        <div class="form-group">
+                                            <div class="custom-control custom-switch">
+                                                <input type="checkbox" class="custom-control-input" id="switchDataType" checked="">
+                                                <label class="custom-control-label" for="switchDataType" id="checkboxLabelData">Non-Cumulative</label>
+                                            </div>
+                                        </div>
                                     </fieldset>
                                 </div>
 
@@ -431,15 +447,28 @@
             if (this.checked != true) {
                 $("#recap-data").hide();
                 $("#nav-item-table").hide();
-                $("#checkboxLabel").text("Disable");
+                $("#checkboxLabelTable").text("Disable");
             }
             else {
                 $("#recap-data").show();
                 $("#nav-item-table").show();
-                $("#checkboxLabel").text("Enable");
+                $("#checkboxLabelTable").text("Enable");
             }
         });
-
+        
+        $("#switchDataType").change(function() {
+            if (this.checked != true) {
+                $("#non-cumulative-chart").hide();
+                $("#cumulative-chart").show();
+                $("#checkboxLabelData").text("Cumulative");
+            }
+            else {
+                $("#non-cumulative-chart").show();
+                $("#cumulative-chart").hide();
+                $("#checkboxLabelData").text("Non Cumulative");
+            }
+        });
+        
         $("#switchCorr1").change(function() {
             if (this.checked != true) {
                 $("#planet-corr-section").hide();
