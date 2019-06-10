@@ -18,11 +18,11 @@ function makeGraphs(error, Data) {
     show_discovery_year_selector(ndx);
 
     //Discovery charts
-    show_discovery_method(ndx);
+    show_discovery_location(ndx);
     show_discovery_facility(ndx);
+    show_discovery_method(ndx);
     show_year_of_discovery(ndx);
     show_cumulative_year_of_discovery(ndx);
-    //show_composite_chart_test1(ndx);
 
     //Exoplanets features charts
     show_orbital_period(ndx);
@@ -217,6 +217,57 @@ function display_kepler_percent(ndx, flag, element) {
 
 /*--------------------- Charts related to the discovery of the exoplanets-----*/
 
+function show_discovery_location(ndx) {
+
+    var dim = ndx.dimension(dc.pluck('pl_locale'));
+    var group = remove_blanks(dim.group(), "");
+
+    dc.pieChart('#discovery-location')
+        .height(330)
+        .radius(90)
+        .innerRadius(40)
+        .transitionDuration(1500)
+        .legend(dc.legend().x(5).y(10).itemHeight(8).gap(5))
+        .title(function(d) {
+            return d.value + " planets discovered by " + d.key;
+        })
+        .useViewBoxResizing(true)
+        .on('pretransition', function(chart) {
+            chart.selectAll('text.pie-slice').text(function(d) {
+                return show_slice_percent(d.data.key, d.endAngle, d.startAngle);
+            });
+        })
+        .dimension(dim)
+        .group(group);
+
+}
+
+function show_discovery_facility(ndx) {
+
+    var dim = ndx.dimension(dc.pluck('pl_facility'));
+    var group = remove_blanks(dim.group(), "");
+
+    dc.pieChart('#discovery-facility')
+        .height(330)
+        .radius(90)
+        .innerRadius(40)
+        .transitionDuration(1500)
+        .legend(dc.legend().x(5).y(10).itemHeight(8).gap(5))
+        .slicesCap(8)
+        .title(function(d) {
+            return d.value + " planets discovered by " + d.key;
+        })
+        .useViewBoxResizing(true)
+        .on('pretransition', function(chart) {
+            chart.selectAll('text.pie-slice').text(function(d) {
+                return show_slice_percent(d.data.key, d.endAngle, d.startAngle);
+            });
+        })
+        .dimension(dim)
+        .group(group);
+
+}
+
 //Create a variable to set detection method colors
 var detectionColors = d3.scale.ordinal()
     .domain(["Transit", "Radial Velocity", "Microlensing", "Imaging", "Timing Variations", "Orbital Brightness Modulation", "Astrometry"])
@@ -249,32 +300,6 @@ function show_discovery_method(ndx) {
         })
         .transitionDuration(1500)
         .colors(detectionColors)
-        .dimension(dim)
-        .group(group);
-
-}
-
-function show_discovery_facility(ndx) {
-
-    var dim = ndx.dimension(dc.pluck('pl_facility'));
-    var group = remove_blanks(dim.group(), "");
-
-    dc.pieChart('#discovery-facility')
-        .height(330)
-        .radius(90)
-        .innerRadius(40)
-        .transitionDuration(1500)
-        .legend(dc.legend().x(80).y(20).itemHeight(8).gap(5))
-        .slicesCap(8)
-        .title(function(d) {
-            return d.value + " planets discovered by " + d.key;
-        })
-        .useViewBoxResizing(true)
-        .on('pretransition', function(chart) {
-            chart.selectAll('text.pie-slice').text(function(d) {
-                return show_slice_percent(d.data.key, d.endAngle, d.startAngle);
-            });
-        })
         .dimension(dim)
         .group(group);
 
@@ -671,7 +696,7 @@ function show_radius_correlation(ndx) {
 }
 
 //Helper function to round data numbers for table
-function convert_string_to_float (d) {
+function convert_string_to_float(d) {
     var number = parseFloat(d);
     return number.toFixed(1);
 }
@@ -722,7 +747,7 @@ function showTable(ndx) {
                     }
                 }
             },
-             {
+            {
                 label: "Stellar distance [parsecs]",
                 format: function(d) {
                     if (d.st_dist == "") {
@@ -753,5 +778,3 @@ function showTable(ndx) {
         .transitionDuration(500)
         .useViewBoxResizing(true);
 }
-
-
