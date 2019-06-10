@@ -217,6 +217,10 @@ function display_kepler_percent(ndx, flag, element) {
 
 /*--------------------- Charts related to the discovery of the exoplanets-----*/
 
+//Create a variable colors to change default colors for bar charts
+var pieChartColors = d3.scale.ordinal()
+    .range(["lightgrey", "lightSteelBlue", "black"]);
+
 function show_discovery_location(ndx) {
 
     var dim = ndx.dimension(dc.pluck('pl_locale'));
@@ -232,6 +236,7 @@ function show_discovery_location(ndx) {
             return d.value + " planets discovered by " + d.key;
         })
         .useViewBoxResizing(true)
+        .colors(pieChartColors)
         .on('pretransition', function(chart) {
             chart.selectAll('text.pie-slice').text(function(d) {
                 return show_slice_percent(d.data.key, d.endAngle, d.startAngle);
@@ -271,7 +276,7 @@ function show_discovery_facility(ndx) {
 //Create a variable to set detection method colors
 var detectionColors = d3.scale.ordinal()
     .domain(["Transit", "Radial Velocity", "Microlensing", "Imaging", "Timing Variations", "Orbital Brightness Modulation", "Astrometry"])
-    .range(["cornflowerBlue", "grey", "lightblue", "orange", "seaGreen", "paleVioletRed", "navy"]);
+    .range(["steelBlue", "grey", "lightblue", "orange", "seaGreen", "paleVioletRed", "navy"]);
 
 function show_discovery_method(ndx) {
 
@@ -431,8 +436,8 @@ function accumulate_detection_by_year(dimension, detection_method) {
 
 //Create a variable colors to change default colors for bar charts
 var barChartColors = d3.scale.ordinal()
-    .range(["grey", "black"]);
-
+    .range(["lightgrey", "lightSteelBlue"]);
+    
 function show_cumulative_year_of_discovery(ndx) {
 
     var dim = ndx.dimension(dc.pluck('pl_disc'));
@@ -507,7 +512,7 @@ function show_orbital_period(ndx) {
     //We need to create a different color variable as we rearraged the order dimension for orbital period
     var orbitalChartColors = d3.scale.ordinal()
         .domain(['<= 1 day', ']1;5] days', ']5;15] days', ']15;30] days', ']30;365] days', '> 1 year'])
-        .range(["grey", "black"]);
+        .range(["lightgrey", "lightsteelBlue"]);
 
     dc.barChart("#orbital-period")
         .width(700)
@@ -567,7 +572,7 @@ function show_planetary_system(ndx) {
 
 var keplerFlagColors = d3.scale.ordinal()
     .domain(["0", "1"])
-    .range(["black", "orange"]);
+    .range(["black", "steelBlue"]);
 
 function show_mass_radius_correlation(ndx) {
 
