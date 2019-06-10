@@ -13,7 +13,7 @@
 
 .text-align {
     text-align: center;
-    padding: 45vh;
+    padding-top: 45vh;
 }
 
 .jumbotron {
@@ -54,6 +54,11 @@ text.barLabel {
     font-size: 0.5em;
 }
 
+#orbital-period text.barLabel,
+#planetary-system text.barLabel {
+    font-size: 0.7em;
+}
+
 .dc-legend {
     font-size: 0.5em;
 }
@@ -84,7 +89,6 @@ td {
 tr:nth-child(even) {
     background-color: #f2f2f2;
 }
-
 
 /*---------------------------------------- Footer ---*/
 
