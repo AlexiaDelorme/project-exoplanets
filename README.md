@@ -1,10 +1,10 @@
 # Exoplanets Dashboard
 
-This is a single page dashboard presenting data on the most recent (confirmed) exoplanets published by the [NASA Exoplanet Science Institue](https://exoplanetarchive.ipac.caltech.edu/index.html).The data were selected and displayed to allow users without background in Astrophysics to easily understand and analyse it.
+This is a single page dashboard presenting data on the most recent (and confirmed) exoplanets published by the [NASA Exoplanet Science Institue](https://exoplanetarchive.ipac.caltech.edu/index.html).The data were thouroughly selected and displayed to allow users without background in Astrophysics to easily understand and analyse it.
 
 The dashboard was built using DC.js, D3.js and crossfilter.js libraries to present the data through different chart types : pie charts, bar/row charts, scatter plot and finally a recap table. 
 
-The interface enables the user to collect information related to the detection of the exoplanets, the years they were discovered, and get some simple features as well as correlations regarding the planets and their hosting stellar. The user has the option to filter the exoplanets thanks to a modal form so that he/she can isolate specific planets based on chosen criteria. A recap data table is presented at the bottom of the page to provide the user with additional relevant information on individual planets in the sample (such as the hosting stellar name, distance...). 
+The interface enables the user to collect diverse information related to the detection of the exoplanets, the years they were discovered, and get some simple features as well as correlations regarding the planets and their hosting stellar. The user has the option to filter exoplanets thanks to a modal form so that he/she can isolate specific planets based on chosen criteria. A recap data table is presented at the bottom of the page to provide the user with additional relevant information on individual planets in the sample (such as the hosting stellar name, distance...). 
 
 The current deployed version can be found at [here](https://alexiadelorme.github.io/project-exoplanets/).
 
@@ -12,11 +12,14 @@ The current deployed version can be found at [here](https://alexiadelorme.github
 
 This dashboard is built for users who have an interest in Astrophysics and specifically exoplanets and would like to quickly analyze and collect information on the most recent and confirmed exoplanets published by the NASA Exoplanet Science Institute. 
 
-It allows users to refine a large sample of more than 3900 via a simple modal form. They can decide what type of charts they want to display and/or filter on specific criteria to analyse data in a simple and flexible manner. After filtering on desired criteria, users can collect a set of exoplanets and extract individual features related to their exoplanets "selection".
+It allows users to refine a large sample of more than 3900 exoplanets thanks to a simple modal form. They can decide what type of charts they want to display and/or filter on specific criteria to analyse data in a simple and flexible manner. Based on their selection, users can visualize aggregated charts and can also have access - through a data table - to specific features for each individual planets in the sample .
  
 ### User Stories
  
- * A user should be able 
+ * As a user, I want to have access to a clear and simple dashboard for a large sample of exoplanets without having to go through a spreadsheet with equivocal column fields and without any hierarchy in the data. So that I can have a glimpse of the general information in an aggregated format. 
+ * As a user, I want to easily identify information related to the exoplanet discovery: when was it discovered, how (method of detection), where (from space or from earth), from what entity it was discovered - and also to acess some of their features such as their orbital period and other information related to their planetary system.
+ * As a user, I want to be able to access scatter plots on some features of the exoplanets so that I can identify correlations and be able to confirm/infirm some hypothesis on planetary systems.
+ * As a user, I want to be able to filter according to some features related to either the discovery of the exoplanets (years of discovery, detection method or facility), or analyse data for exoplanets inside/outside the Kepler scope (ie. exoplanets detected during the Kepler mission), chose the type of data, and be able to keep only correlations that are relevant to my analysis. This will enable me to refine my sample and extract individual information for the exoplanets in my selection. 
  * xxxx
  * xxxx
 
