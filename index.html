@@ -160,17 +160,24 @@
                     <hr class="my-4">
                 </div>
 
-                <div class="col-12 col-md-6">
+                <div class="col-12 col-md-5 col-lg-3">
                     <div class="row">
-                        <h4 class="col-12"> Detection Method</h4>
-                        <div class="col-12" id="discovery-method"></div>
+                        <h4 class="col-12"> Discovery location</h4>
+                        <div class="col-12" id="discovery-location"></div>
                     </div>
                 </div>
 
-                <div class="col-12 col-md-6">
+                <div class="col-12 col-md-7 col-lg-4">
                     <div class="row">
-                        <h4 class="col-12"> Discovery facilityy</h4>
+                        <h4 class="col-12"> Discovery facility</h4>
                         <div class="col-12" id="discovery-facility"></div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-5">
+                    <div class="row">
+                        <h4 class="col-12"> Detection Method</h4>
+                        <div class="col-12" id="discovery-method"></div>
                     </div>
                 </div>
 
@@ -210,7 +217,7 @@
 
             <div class="row">
 
-                <div class="col-12 col-md-6">
+                <div class="col-12 col-lg-6">
                     <div class="row">
                         <div class="col-12">
                             <h4> Orbital Period (days)</h4>
@@ -219,7 +226,7 @@
                     </div>
                 </div>
 
-                <div class="col-12 col-md-6">
+                <div class="col-12 col-lg-6">
                     <div class="row">
                         <div class="col-12">
                             <h4> Number (known) of planets in planetary system</h4>
@@ -438,12 +445,11 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
     <script>
-    
         $('#reset-filters').click(function() {
             dc.filterAll();
             dc.renderAll();
         });
-        
+
         // Automatically redirect user to "discovery" section when clicking modal button
         $('#button-modal').click(function() {
             $('#myModal').modal('hide');
