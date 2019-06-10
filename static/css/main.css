@@ -69,7 +69,8 @@ text.barLabel {
 .dc-legend {
   font-size: 0.5em; }
 
-#discovery-facility .dc-legend {
+#discovery-facility .dc-legend,
+#discovery-location .dc-legend {
   font-size: 0.8em; }
 
 /* Format Table */
