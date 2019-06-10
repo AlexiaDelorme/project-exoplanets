@@ -423,7 +423,7 @@
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Save & Close</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" id="button-modal">Save & Close</button>
                 </div>
 
             </div>
@@ -438,9 +438,16 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
     <script>
+    
         $('#reset-filters').click(function() {
             dc.filterAll();
             dc.renderAll();
+        });
+        
+        // Automatically redirect user to "discovery" section when clicking modal button
+        $('#button-modal').click(function() {
+            $('#myModal').modal('hide');
+            $(document).scrollTop($('#discovery').offset().top);
         });
 
         $("#switchTable").change(function() {
@@ -455,7 +462,7 @@
                 $("#checkboxLabelTable").text("Enable");
             }
         });
-        
+
         $("#switchDataType").change(function() {
             if (this.checked != true) {
                 $("#non-cumulative-chart").hide();
@@ -468,7 +475,7 @@
                 $("#checkboxLabelData").text("Non Cumulative");
             }
         });
-        
+
         $("#switchCorr1").change(function() {
             if (this.checked != true) {
                 $("#planet-corr-section").hide();
