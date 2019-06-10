@@ -1,6 +1,18 @@
 svg {
   margin-bottom: 20px; }
 
+/*----------------------------------------------------------------- Navbar ---*/
+.section {
+  /* Prevents fixed navbar from hiding top of the content */
+  margin-top: -84.75px;
+  padding-top: 84.75px; }
+
+#discovery {
+  /*Adjusted dimesnion for discovery section */
+  margin-top: -125px;
+  padding-top: 125px; }
+
+/*-------------------------------------------------------------- Home Page ---*/
 .home-page {
   background: url("img/bg-1.jpg") no-repeat center center fixed, #999;
   -webkit-background-size: cover;
@@ -22,7 +34,7 @@ svg {
 
 .text-align {
   text-align: center;
-  padding-top: 45vh; }
+  padding-top: 50vh; }
 
 .jumbotron {
   padding-bottom: 20px; }
@@ -36,7 +48,7 @@ h4 {
 h6 {
   margin: 15px 0; }
 
-/*---------------------------------------- Charts ---*/
+/*----------------------------------------------------------------- Charts ---*/
 #year-of-discovery .x.axis text,
 #cumulative-year-of-discovery .x.axis text,
 #linear-chart-year .x.axis text {
@@ -60,7 +72,7 @@ text.barLabel {
 #discovery-facility .dc-legend {
   font-size: 0.8em; }
 
-/*----------------------------------------- Table ---*/
+/* Format Table */
 table#data-table {
   font-size: 0.7rem;
   border-collapse: collapse;
@@ -78,7 +90,7 @@ td {
 tr:nth-child(even) {
   background-color: #f2f2f2; }
 
-/*---------------------------------------- Footer ---*/
+/*----------------------------------------------------------------- Footer ---*/
 footer {
   text-align: center;
   background-color: black;
