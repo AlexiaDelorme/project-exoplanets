@@ -670,6 +670,12 @@ function show_radius_correlation(ndx) {
         .margins({ top: 10, right: 50, bottom: 75, left: 75 });
 }
 
+//Helper function to round data numbers for table
+function convert_string_to_float (d) {
+    var number = parseFloat(d);
+    return number.toFixed(1);
+}
+
 /*------------------------------------------------------------ Data Table-----*/
 
 function showTable(ndx) {
@@ -712,7 +718,7 @@ function showTable(ndx) {
                         return "N/A";
                     }
                     else {
-                        return d.pl_orbper;
+                        return convert_string_to_float(d.pl_orbper);
                     }
                 }
             },
@@ -723,7 +729,7 @@ function showTable(ndx) {
                         return "N/A";
                     }
                     else {
-                        return d.st_age;
+                        return convert_string_to_float(d.st_age);
                     }
                 }
             }
@@ -736,3 +742,5 @@ function showTable(ndx) {
         .transitionDuration(500)
         .useViewBoxResizing(true);
 }
+
+
