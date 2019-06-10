@@ -712,7 +712,7 @@ function showTable(ndx) {
                 }
             },
             {
-                label: "Orbital Period",
+                label: "Orbital Period [days]",
                 format: function(d) {
                     if (d.pl_orbper == "") {
                         return "N/A";
@@ -722,8 +722,19 @@ function showTable(ndx) {
                     }
                 }
             },
+             {
+                label: "Stellar distance [parsecs]",
+                format: function(d) {
+                    if (d.st_dist == "") {
+                        return "N/A";
+                    }
+                    else {
+                        return convert_string_to_float(d.st_dist);
+                    }
+                }
+            },
             {
-                label: "Stellar age",
+                label: "Stellar age [Gyr]",
                 format: function(d) {
                     if (d.st_age == "") {
                         return "N/A";
