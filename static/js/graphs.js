@@ -478,7 +478,7 @@ function show_orbital_period(ndx) {
     var scale = d3.scale.ordinal()
         .domain(['<= 1 day', ']1;5] days', ']5;15] days', ']15;30] days', ']30;365] days', '> 1 year'])
         .range([0, 1, 2, 3, 4, 5]);
-    
+
     //We need to create a different color variable as we rearraged the order dimension for orbital period
     var orbitalChartColors = d3.scale.ordinal()
         .domain(['<= 1 day', ']1;5] days', ']5;15] days', ']15;30] days', ']30;365] days', '> 1 year'])
@@ -576,7 +576,7 @@ function show_mass_radius_correlation(ndx) {
         .xAxisLabel("Planet Mass (Earth Masses)")
         .yAxisLabel("Planet Radius (Earth Radii)")
         .title(function(d) {
-            return " Planet Mass = " + d.key[0] + " - Planet Radius = " + d.key[1] ;
+            return " Planet Mass = " + d.key[0] + " - Planet Radius = " + d.key[1];
         })
         .colorAccessor(function(d) {
             return d.key[2];
@@ -673,40 +673,64 @@ function show_radius_correlation(ndx) {
 /*------------------------------------------------------------ Data Table-----*/
 
 function showTable(ndx) {
-    var dim = ndx.dimension(dc.pluck("pl_name"));
+    var dim = ndx.dimension(dc.pluck("pl_hostname"));
     dc.dataTable("#data-table")
         .dimension(dim)
         .group(function(d) {
             return "";
         })
         .columns([{
-                label: "Planet Name",
-                format: function(d) { return d.pl_name; }
-            },
-            {
                 label: "Hosting Stellar Name",
                 format: function(d) { return d.pl_hostname; }
             },
             {
                 label: "Year of discovery",
-                format: function(d) { return d.pl_disc; }
+                format: function(d) {
+                    if (d.pl_disc == "") {
+                        return "N/A";
+                    }
+                    else {
+                        return d.pl_disc;
+                    }
+                }
             },
             {
                 label: "Discovery method",
-                format: function(d) { return d.pl_discmethod; }
+                format: function(d) {
+                    if (d.pl_discmethod == "") {
+                        return "N/A";
+                    }
+                    else {
+                        return d.pl_discmethod;
+                    }
+                }
             },
             {
                 label: "Orbital Period",
-                format: function(d) { return d.pl_orbper; }
+                format: function(d) {
+                    if (d.pl_orbper == "") {
+                        return "N/A";
+                    }
+                    else {
+                        return d.pl_orbper;
+                    }
+                }
             },
             {
                 label: "Stellar age",
-                format: function(d) { return d.st_age; }
+                format: function(d) {
+                    if (d.st_age == "") {
+                        return "N/A";
+                    }
+                    else {
+                        return d.st_age;
+                    }
+                }
             }
         ])
         .size(Infinity)
         .sortBy(function(d) {
-            return d.pl_name;
+            return d.pl_hostname;
         })
         .order(d3.ascending)
         .transitionDuration(500)
