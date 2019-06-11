@@ -26,13 +26,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/queue-async/1.0.7/queue.min.js"></script>
 
     <!-- My JS file -->
-    <script type="text/javascript" src="static/js/graphs.js"></script>
+    <script src="static/js/graphs.js"></script>
 
 </head>
 
 <body>
 
-    <!--------------------------------------------------------------- HEADER -->
+    <!-- HEADER -->
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary header-position fixed-top">
         <a class="navbar-brand" href="#dashboard">Exoplanets Dashboard</a>
@@ -64,7 +64,7 @@
         </div>
     </nav>
 
-    <!------------------------------------------------------------ HOME PAGE -->
+    <!-- HOME PAGE -->
 
     <section class="container-fluid home-page" id="home">
 
@@ -97,15 +97,14 @@
 
                 <div class="col-12 col-md-7">
                     <h4>What is considered a planet by the way?</h4>
-                    <p>This is a very controversial question but according to the International Astronomical Union, a planet is a celestial body that complies with the 3 following conditions:
+                    This is a very controversial question but according to the International Astronomical Union, a planet is a celestial body that complies with the 3 following conditions: 
                         <ul>
                             <li>it must orbit a star</li>
                             <li>that has enough gravity to force this celestial body into a spherical shape</li>
                             <li>it must have enough mass that its gravity cleared away any other objects of a similar size near its orbit</li>
                         </ul>
                         Researchers have found hundreds of extrasolar planet, or "exoplanets", that reside outside of the solar system. There may be billions of exoplanets in the Milky Way galaxy alone, and some may have conditions favorable to life...
-                        <br>
-                    </p>
+                    <br><br>
                     <p class="lead">
                         <a class="btn btn-primary btn-lg" href="https://solarsystem.nasa.gov/planets/in-depth/" role="button" target="_blank">Learn more</a>
                     </p>
@@ -143,11 +142,9 @@
 
         </div>
 
-        </div>
-
     </section>
 
-    <!------------------------------------------------------------ DASHBOARD -->
+    <!-- DASHBOARD -->
 
     <div class="container-fluid" id="dashboard">
 
@@ -314,7 +311,7 @@
 
     </div>
 
-    <!--------------------------------------------------------------- FOOTER -->
+    <!-- FOOTER -->
 
     <footer class="container-fluid">
 
@@ -336,7 +333,7 @@
 
     </footer>
 
-    <!----------------------------------------------------------- MODAL FORM -->
+    <!-- MODAL FORM -->
 
     <div class="modal" id="myModal">
         <div class="modal-dialog" role="document">
@@ -459,11 +456,13 @@
         </div>
     </div>
 
-    <!--------------------------------------------------------------- jQuery -->
+    <!-- jQuery -->
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <!-- SCRIPT -->
 
     <script>
         $('#reset-filters').click(function() {
