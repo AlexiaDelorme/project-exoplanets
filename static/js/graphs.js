@@ -28,6 +28,7 @@ function makeGraphs(error, Data) {
     show_orbital_period(ndx);
     show_planetary_system(ndx);
     show_stellar_distance(ndx);
+    show_stellar_age(ndx);
 
     //Correlation charts
     show_mass_radius_correlation(ndx);
@@ -469,10 +470,6 @@ function show_cumulative_year_of_discovery(ndx) {
 
 }
 
-function show_composite_chart_test1(ndx) {
-
-}
-
 /*---------------------- Charts related to the features of the exoplanets-----*/
 
 function show_orbital_period(ndx) {
@@ -629,6 +626,65 @@ function show_stellar_distance(ndx) {
         .dimension(stellarDistDim)
         .group(stellarDistGroup)
         .yAxis().ticks(5);
+}
+
+function show_stellar_age(ndx) {
+
+    var stellarAgeDim = ndx.dimension(function(d) {
+
+        var stellarAge = d.st_age;
+
+        if (stellarAge > 0 && stellarAge <= 2.5) {
+            return '<= 2,5';
+        }
+        else if (stellarAge > 2.5 && stellarAge <= 5) {
+            return ']2,5;5]';
+        }
+        else if (stellarAge > 5 && stellarAge <= 10) {
+            return ']5;10]';
+        }
+        else if (stellarAge > 10 && stellarAge <= 15) {
+            return ']10;15]';
+        }
+        else {
+            return 'N/A';
+        }
+    });
+
+    var stellarAgeGroup = remove_blanks(stellarAgeDim.group(), "N/A");
+
+    var scale = d3.scale.ordinal()
+        .domain(['<= 2,5', ']2,5;5]', ']5;10]', ']10;15]'])
+        .range([0, 1, 2, 3]);
+
+    //We need to create a different color variable as we rearraged the order dimension for stellar age
+    var stellarAgeChartColors = d3.scale.ordinal()
+        .domain(['<= 2,5', ']2,5;5]', ']5;10]', ']10;15]'])
+        .range(["lightgrey", "lightsteelBlue"]);
+
+    dc.barChart("#stellar-age")
+        .width(700)
+        .height(300)
+        .margins({ top: 10, right: 50, bottom: 30, left: 50 })
+        .title(function(d) {
+            return d.value + " planets with age " + d.key;
+        })
+        .x(scale)
+        .xUnits(dc.units.ordinal)
+        .elasticY(true)
+        .barPadding(0.5)
+        .clipPadding(15)
+        .renderLabel(true)
+        .transitionDuration(500)
+        .useViewBoxResizing(true)
+        .colorAccessor(function(d) {
+            return d.key;
+        })
+        .colors(stellarAgeChartColors)
+        .dimension(stellarAgeDim)
+        .group(stellarAgeGroup)
+        .yAxis().ticks(5);
+
 }
 
 /*--------------------------------------------------------- Correlations -----*/
