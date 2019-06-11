@@ -16,12 +16,13 @@ It allows users to refine a large sample of more than 3900 exoplanets thanks to 
  
 ### User Stories
  
- * As a user, I want to have access to a clear and simple dashboard for a large sample of exoplanets without having to go through a spreadsheet with equivocal column fields and without any hierarchy in the data. So that I can have a glimpse of the general information in an aggregated format. 
+ * As a user, I want to have access to a clear and simple dashboard for a large sample of exoplanets without having to go through a spreadsheet with equivocal column fields and without any hierarchy in the data. This way I have a glimpse of the general information and trends on exoplanets in an aggregated format. 
  * As a user, I want to easily identify information related to the exoplanet discovery: when was it discovered, how (method of detection), where (from space or from earth), from what entity it was discovered - and also to acess some of their features such as their orbital period and other information related to their planetary system.
- * As a user, I want to be able to access scatter plots on some features of the exoplanets so that I can identify correlations and be able to confirm/infirm some hypothesis on planetary systems.
- * As a user, I want to be able to filter according to some features related to either the discovery of the exoplanets (years of discovery, detection method or facility), or analyse data for exoplanets inside/outside the Kepler scope (ie. exoplanets detected during the Kepler mission), chose the type of data, and be able to keep only correlations that are relevant to my analysis. This will enable me to refine my sample and extract individual information for the exoplanets in my selection. 
- * xxxx
- * xxxx
+ * As a user, I want to be able to access scatter plots on some features of the exoplanets so that I can identify correlations and be able to confirm/infirm some hypothesis on planets.
+ * As a user, I want to be able to filter according to some features related to either the discovery of the exoplanets (years of discovery, detection method or facility), or analyse data for exoplanets inside/outside the Kepler scope (ie. exoplanets detected during the Kepler mission), choose the type of data, and be able to keep only correlations that are relevant to my analysis. This will enable me to refine my analysis according to some chosen criteria.
+ * As a user, I want to have access to information for individual planets either for the whole sample or for a sample based on some specific criteria.
+ * As a user, I want to be able to reset the entire dashboard without having to manually reload the page, reclick on any chart, or re-enter the modal form. 
+
 
 ### Wireframes
 
@@ -58,45 +59,46 @@ It allows users to refine a large sample of more than 3900 exoplanets thanks to 
 ## Technologies Used
 
 #### [Balsamiq](https://balsamiq.com/) 
-- Balsamiq was used in the designing phase of this project to create wireframes (link here).
+- I used Balsamiq to design my wireframes after drawing them manually.
 
-#### [AWS Cloud9](https://aws.amazon.com/cloud9/)
-- Cloud9 IDE editor used to write the HTML, CSS and JavaScript.
+#### [Cloud9](https://c9.io)
+- I used Cloud9 as my code editor for HTML, JS and CSS.
 
-#### [HTML5](https://www.w3.org/TR/html/) & [CSS3](https://www.w3.org/Style/CSS/)
-- HTML5 was used to create content of the website.
-- CSS3 was used to style the website.
-- Code validators were used for testing: [HTML](https://validator.w3.org/) and [CSS](https://jigsaw.w3.org/css-validator/)
+#### [HTML5](https://www.w3.org/TR/html/)
+- I used HTML for creating the static content of my webpage.
+- The following code validator was used to test my HTML code: [HTML](https://validator.w3.org/)
 
-#### [Bootstrap 4](link)
-- xxx
+### [CSS3](https://www.w3.org/Style/CSS/) & [SASS](https://sass-lang.com/)
+- I used SASS/SCSS to structure the styling of my webpage and personalize it. My SCSS stylesheets where then mapped to a CSS file using the CLI. 
+- The following code validator was used to test my CSS code:  [CSS](https://jigsaw.w3.org/css-validator/)
 
-#### [Bootswatch](link)
-- xxx
+#### [Bootswatch](https://bootswatch.com/lux/)
+- I used Bootswatch Theme Lux to have an elegant template for my website. 
+
+#### [Bootstrap 4](https://getbootstrap.com/)
+- I used Boostrap version 4 mostly for the grid system to easily create a responsive website.
 
 #### [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
-* JavaScript and selected external libraries have been used throughout this site, in the following ways:
-* For the creation and manipulation of the data-visualization elements, JavaScript and the following libraries were used
+- I used the following JS libraries combined with some core JS to create data-visualization elements:
     * [D3.js](https://d3js.org/)
     * [DC.js](https://dc-js.github.io/dc.js/)
     * [Crossfilter.js](http://square.github.io/crossfilter/)
-* [D3-queue.js](https://github.com/d3/d3-queue) was used to load the dataset fully before running any other files.
-* [jQuery](https://jquery.com/) was used to assist with DOM manipulation when resetting filters and showing / hiding selected sections.
-* [JSHint](https://jshint.com/) was used to check for errors and code quality.
+* [D3-queue.js](https://github.com/d3/d3-queue) to load the data field in CSV format.
+* [jQuery](https://jquery.com/) to simplify the DOM manipulation based on the user input via the modal form or when the reset button is clicked.
+* [JSHint](https://jshint.com/) ??????? IS FOR CHECKING ERROS AND CODE QUALITY ??????? TBD
 
 #### Picasa
-- Picasa was used to resize and changes orientation of the background image.
+- I used Picasa to resize and change the orientation of my background image.
 
 #### [ImageOptim](https://imageoptim.com/mac)
-- ImageOptim was used to optimize the size of the background image. 
+- I used ImageOptim to optimize the size my background image. 
 
 #### [Font Awesome](https://origin.fontawesome.com/)
-- Font Awesome was used to display icons on the footer at the bottom of the page.
+- I used Font Awesome to display icons for the footer of my page.
 
 #### [Git & GitHub](https://github.com/)
-- Git was used for version control. 
-- GitHub used as a remote repository and hosting the website.
-
+- I used Git for version control. 
+- I used GitHub to store my code in a remote repository, deploy and host my website.
 
 ## Testing ####
 
