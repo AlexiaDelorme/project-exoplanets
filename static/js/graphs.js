@@ -27,6 +27,7 @@ function makeGraphs(error, Data) {
     //Exoplanets features charts
     show_orbital_period(ndx);
     show_planetary_system(ndx);
+    show_stellar_distance(ndx);
 
     //Correlation charts
     show_mass_radius_correlation(ndx);
@@ -538,36 +539,6 @@ function show_orbital_period(ndx) {
         .group(orbitalPeriodGroup)
         .yAxis().ticks(4);
 }
-/*
-function show_planetary_system(ndx) {
-    var dim = ndx.dimension(dc.pluck('pl_pnum'));
-    var group = dim.group();
-
-    dc.barChart("#planetary-system")
-        .width(700)
-        .height(300)
-        .margins({ top: 10, right: 50, bottom: 30, left: 50 })
-        .title(function(d) {
-            return d.value + " planets with " + d.key + " known planet(s) in system";
-        })
-        .x(d3.scale.ordinal())
-        .xUnits(dc.units.ordinal)
-        .xAxisLabel("Number of planets in system")
-        .elasticY(true)
-        .barPadding(0.2)
-        .clipPadding(15)
-        .renderLabel(true)
-        .transitionDuration(500)
-        .useViewBoxResizing(true)
-        .colorAccessor(function(d) {
-            return d.key;
-        })
-        .colors(barChartColors)
-        .dimension(dim)
-        .group(group)
-        .yAxis().ticks(4);
-}
-*/
 
 function show_planetary_system(ndx) {
 
@@ -591,6 +562,73 @@ function show_planetary_system(ndx) {
         .colors(d3.scale.ordinal().range(["black"]))
         .dimension(dim)
         .group(group);
+}
+
+function show_stellar_distance(ndx) {
+
+    var stellarDistDim = ndx.dimension(function(d) {
+
+        var stellarDistance = d.st_dist;
+
+        if (stellarDistance > 0 && stellarDistance <= 250) {
+            return '<= 250';
+        }
+        else if (stellarDistance > 250 && stellarDistance <= 500) {
+            return ']250;500]';
+        }
+        else if (stellarDistance > 500 && stellarDistance <= 750) {
+            return ']500;750]';
+        }
+        else if (stellarDistance > 750 && stellarDistance <= 1000) {
+            return ']750;1000]';
+        }
+        else if (stellarDistance > 1000 && stellarDistance <= 1250) {
+            return ']1000;1250]';
+        }
+        else if (stellarDistance > 1250 && stellarDistance <= 1500) {
+            return ']1250;1500]';
+        }
+        else if (stellarDistance > 1500) {
+            return '> 1500';
+        }
+        else {
+            return 'N/A';
+        }
+    });
+
+    var stellarDistGroup = remove_blanks(stellarDistDim.group(), "N/A");
+
+    var scale = d3.scale.ordinal()
+        .domain(['<= 250', ']250;500]', ']500;750]', ']750;1000]', ']1000;1250]', ']1250;1500]', '> 1500'])
+        .range([0, 1, 2, 3, 4, 5, 6]);
+
+    //We need to create a different color variable as we rearraged the order dimension for stellar distance
+    var stellarDistChartColors = d3.scale.ordinal()
+        .domain(['<= 250', ']250;500]', ']500;750]', ']750;1000]', ']1000;1250]', ']1250;1500]', '> 1500'])
+        .range(["lightgrey", "lightsteelBlue"]);
+
+    dc.barChart("#stellar-distance")
+        .width(700)
+        .height(300)
+        .margins({ top: 10, right: 50, bottom: 30, left: 50 })
+        .title(function(d) {
+            return d.value + " planets with distance " + d.key;
+        })
+        .x(scale)
+        .xUnits(dc.units.ordinal)
+        .elasticY(true)
+        .barPadding(0.2)
+        .clipPadding(15)
+        .renderLabel(true)
+        .transitionDuration(500)
+        .useViewBoxResizing(true)
+        .colorAccessor(function(d) {
+            return d.key;
+        })
+        .colors(stellarDistChartColors)
+        .dimension(stellarDistDim)
+        .group(stellarDistGroup)
+        .yAxis().ticks(5);
 }
 
 /*--------------------------------------------------------- Correlations -----*/
