@@ -437,7 +437,7 @@ function accumulate_detection_by_year(dimension, detection_method) {
 //Create a variable colors to change default colors for bar charts
 var barChartColors = d3.scale.ordinal()
     .range(["lightgrey", "lightSteelBlue"]);
-    
+
 function show_cumulative_year_of_discovery(ndx) {
 
     var dim = ndx.dimension(dc.pluck('pl_disc'));
@@ -538,7 +538,7 @@ function show_orbital_period(ndx) {
         .group(orbitalPeriodGroup)
         .yAxis().ticks(4);
 }
-
+/*
 function show_planetary_system(ndx) {
     var dim = ndx.dimension(dc.pluck('pl_pnum'));
     var group = dim.group();
@@ -566,6 +566,31 @@ function show_planetary_system(ndx) {
         .dimension(dim)
         .group(group)
         .yAxis().ticks(4);
+}
+*/
+
+function show_planetary_system(ndx) {
+
+    var dim = ndx.dimension(dc.pluck('pl_pnum'));
+    var group = dim.group();
+
+    dc.lineChart("#planetary-system")
+        .width(800)
+        .height(300)
+        .margins({ top: 10, right: 50, bottom: 30, left: 50 })
+        .transitionDuration(500)
+        .useViewBoxResizing(true)
+        .title(function(d) {
+            return d.value + " planets with " + d.key + " known planet(s) in system";
+        })
+        .x(d3.scale.ordinal())
+        .xUnits(dc.units.ordinal)
+        .xAxisLabel("Number of planets in system")
+        .elasticY(true)
+        .clipPadding(15)
+        .colors(d3.scale.ordinal().range(["black"]))
+        .dimension(dim)
+        .group(group);
 }
 
 /*--------------------------------------------------------- Correlations -----*/
