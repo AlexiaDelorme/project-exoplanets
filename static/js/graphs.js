@@ -635,16 +635,16 @@ function show_stellar_age(ndx) {
         var stellarAge = d.st_age;
 
         if (stellarAge > 0 && stellarAge <= 2.5) {
-            return '<= 2,5';
+            return '<= 2,5 Gyr';
         }
         else if (stellarAge > 2.5 && stellarAge <= 5) {
-            return ']2,5;5]';
+            return ']2,5;5] Gyr';
         }
         else if (stellarAge > 5 && stellarAge <= 10) {
-            return ']5;10]';
+            return ']5;10] Gyr';
         }
         else if (stellarAge > 10 && stellarAge <= 15) {
-            return ']10;15]';
+            return ']10;15] Gyr';
         }
         else {
             return 'N/A';
@@ -654,12 +654,12 @@ function show_stellar_age(ndx) {
     var stellarAgeGroup = remove_blanks(stellarAgeDim.group(), "N/A");
 
     var scale = d3.scale.ordinal()
-        .domain(['<= 2,5', ']2,5;5]', ']5;10]', ']10;15]'])
+        .domain(['<= 2,5 Gyr', ']2,5;5] Gyr', ']5;10] Gyr', ']10;15] Gyr'])
         .range([0, 1, 2, 3]);
 
     //We need to create a different color variable as we rearraged the order dimension for stellar age
     var stellarAgeChartColors = d3.scale.ordinal()
-        .domain(['<= 2,5', ']2,5;5]', ']5;10]', ']10;15]'])
+        .domain(['<= 2,5 Gyr', ']2,5;5] Gyr', ']5;10] Gyr', ']10;15] Gyr'])
         .range(["lightgrey", "lightsteelBlue"]);
 
     dc.barChart("#stellar-age")
