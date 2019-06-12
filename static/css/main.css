@@ -48,6 +48,9 @@ h4 {
 h6 {
   margin: 15px 0; }
 
+#myModal legend {
+  font-size: 1.2rem; }
+
 /*----------------------------------------------------------------- Charts ---*/
 #year-of-discovery .x.axis text,
 #cumulative-year-of-discovery .x.axis text,
