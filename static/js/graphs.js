@@ -13,6 +13,7 @@ function makeGraphs(error, Data) {
 
     // Selectors
     show_kepler_selector(ndx);
+    show_location_selector(ndx);
     show_facility_selector(ndx);
     show_discovery_selector(ndx);
     show_discovery_year_selector(ndx);
@@ -95,6 +96,22 @@ function show_kepler_selector(ndx) {
             else if (d.key == "1") {
                 return 'Only Kepler scope';
             }
+        })
+        .dimension(dim)
+        .group(group);
+
+}
+
+function show_location_selector(ndx) {
+    var dim = ndx.dimension(dc.pluck('pl_locale'));
+    var group = dim.group();
+
+    dc.selectMenu("#location-selector")
+        .title(function(d) {
+            return d.key;
+        })
+        .order(function(a, b) {
+            return a.value < b.value ? 1 : b.value < a.value ? -1 : 0;
         })
         .dimension(dim)
         .group(group);
