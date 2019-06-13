@@ -242,7 +242,7 @@ function display_average_stellar_age_sample(ndx) {
     dc.numberDisplay('#average-stellar-age')
         .formatNumber(d3.format('.2'))
         .valueAccessor(function(d) {
-            return d.average ;
+            return d.average;
         })
         .group(avStellarAge);
 
@@ -835,6 +835,11 @@ function show_mass_radius_correlation(ndx) {
         .colorAccessor(function(d) {
             return d.key[2];
         })
+        .legend(dc.legend(
+            /* Function to access the color key? function(d) {
+                        return d.key[2]; 
+                    }*/
+        ).x(70).y(10).itemHeight(13).gap(5))
         .colors(keplerFlagColors)
         .useViewBoxResizing(true)
         .dimension(planetMassRadDim)
