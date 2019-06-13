@@ -818,7 +818,7 @@ function show_mass_radius_correlation(ndx) {
     var minPlanetMass = planetMassDim.bottom(1)[0].pl_masse;
     var maxPlanetMass = planetMassDim.top(1)[0].pl_masse;
 
-    dc.scatterPlot("#mass-radius-correlation")
+    var myChart = dc.scatterPlot("#mass-radius-correlation")
         .width(700)
         .height(300)
         .x(d3.scale.linear().domain([minPlanetMass, maxPlanetMass]))
@@ -835,16 +835,26 @@ function show_mass_radius_correlation(ndx) {
         .colorAccessor(function(d) {
             return d.key[2];
         })
-        .legend(dc.legend(
-            /* Function to access the color key? function(d) {
-                        return d.key[2]; 
-                    }*/
-        ).x(70).y(10).itemHeight(13).gap(5))
         .colors(keplerFlagColors)
         .useViewBoxResizing(true)
         .dimension(planetMassRadDim)
         .group(planetMassRadDimGroup)
         .margins({ top: 50, right: 50, bottom: 75, left: 75 });
+
+    // Code to add legends to Scatter Plot
+    myChart.legendables = function() {
+        var byColor = {};
+        myChart.group().all().forEach(function(d) {
+            var color = myChart.colors()(myChart.colorAccessor()(d));
+            byColor[color] = {
+                chart: myChart,
+                name: 'color ' + myChart.colorAccessor()(d),
+                color: color
+            };
+        })
+        return Object.values(byColor);
+    };
+ 
 }
 
 function show_mass_correlation(ndx) {
