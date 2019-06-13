@@ -116,24 +116,47 @@
                     <h4>Stats on our sample</h4>
 
                     <div class="row">
+                        
                         <div class="col-12">
                             <h6>Total number of exoplanets in the sample</h6>
-
                         </div>
+                        
                         <div class="col-12">
-                            <div id="total-planets"></div>
+                            <div id="total-planets" class="figures"></div> 
                         </div>
+                        
+                        <div class="col-12">
+                            <h6>Average stellar age in the sample</h6>
+                        </div>
+                        
+                        <div class="col-12">
+                            <div id="average-stellar-age" class="figures"></div> 
+                        </div>
+                        
                         <div class="col-12">
                             <h6>Attribution of exoplanets detections</h6>
                         </div>
+                        
                         <div class="col-6">
-                            <p>In Kepler Scope</p>
-                            <div id="kepler-flagged"></div>
+                            <p class = "paragraph">In Kepler Scope</p>
+                            <div id="kepler-flagged" class="figures"></div>
                         </div>
+                        
                         <div class="col-6">
-                            <p>Not in Kepler Scope</p>
-                            <div id="not-kepler-flagged"></div>
+                            <p class = "paragraph">Not in Kepler Scope</p>
+                            <div id="not-kepler-flagged" class="figures"></div>
                         </div>
+                        
+                        <div class="col-6">
+                            <p class = "paragraph">Space</p>
+                            <div id="location-space" class="figures"></div>
+                        </div>
+                        
+                        <div class="col-6">
+                            <p class = "paragraph">Ground</p>
+                            <div id="location-ground" class="figures"></div>
+                        </div>
+  
                     </div>
 
                 </div>
@@ -471,9 +494,30 @@
     <!-- SCRIPT -->
 
     <script>
+        //Helper function to reset button to "checked"
+        function resetButtonChecked(element) {
+            if ($(element).checked != true) {
+                $(element).click();
+            }
+        }
+
+        //Helper function to reset entire modal form
+        function resetModalForm() {
+            resetButtonChecked("#switchTable");
+            resetButtonChecked("#switchDataType");
+            resetButtonChecked("#switchCorr1");
+            resetButtonChecked("#switchCorr2");
+            resetButtonChecked("#switchCorr3");
+        }
+
+        //Clear all filters to chart to start over
         $('#reset-filters').click(function() {
+
             dc.filterAll();
             dc.renderAll();
+
+            //reset modal form to default settings
+            resetButtonChecked("#switchTable");
         });
 
         // Automatically redirect user to "discovery" section when clicking modal button

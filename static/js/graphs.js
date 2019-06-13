@@ -2,14 +2,21 @@ queue()
     .defer(d3.csv, "data/static-exo.csv")
     .await(makeGraphs);
 
-function makeGraphs(error, Data) {
+function makeGraphs(error, data) {
 
-    var ndx = crossfilter(Data);
+    var ndx = crossfilter(data);
+
+    data.forEach(function(d) {
+        d.st_age = parseInt(d.st_age);
+    });
 
     //Stats
+    display_total_planets_sample(ndx);
+    display_average_stellar_age_sample(ndx);
     display_kepler_percent(ndx, "1", "#kepler-flagged");
     display_kepler_percent(ndx, "0", "#not-kepler-flagged");
-    display_total_planets_sample(ndx);
+    display_location_percent(ndx, "Space", "#location-space");
+    display_location_percent(ndx, "Ground", "#location-ground");
 
     // Selectors
     show_kepler_selector(ndx);
@@ -80,6 +87,12 @@ function accumulate_group(group) {
             });
         }
     };
+}
+
+//Helper function to round data numbers for table
+function convert_string_to_float(d) {
+    var number = parseFloat(d);
+    return number.toFixed(1);
 }
 
 /*-------------- Create selector fonctions to filter chart on user input -----*/
@@ -197,6 +210,44 @@ function display_total_planets_sample(ndx) {
 
 }
 
+//Display average stellar age of the sample
+function display_average_stellar_age_sample(ndx) {
+
+    var avStellarAge = ndx.groupAll().reduce(add_item, remove_item, initialise);
+
+    function add_item(p, v) {
+        p.count++;
+        p.total += v.st_age;
+        p.average = p.total / p.count;
+        return p;
+    }
+
+    function remove_item(p, v) {
+        p.count--;
+        if (p.count == 0) {
+            p.total = 0;
+            p.average = 0;
+        }
+        else {
+            p.total -= v.st_age;
+            p.average = p.total / p.count;
+        }
+        return p;
+    }
+
+    function initialise() {
+        return { count: 0, total: 0, average: 0 };
+    }
+
+    dc.numberDisplay('#average-stellar-age')
+        .formatNumber(d3.format('.2'))
+        .valueAccessor(function(d) {
+            return d.average ;
+        })
+        .group(avStellarAge);
+
+}
+
 //Display % of planets discovered during the Kepler mission
 function display_kepler_percent(ndx, flag, element) {
 
@@ -232,6 +283,43 @@ function display_kepler_percent(ndx, flag, element) {
             }
         })
         .group(keplerPercent);
+}
+
+//Display % of planets detection location
+function display_location_percent(ndx, flag, element) {
+
+    var locationPercent = ndx.groupAll().reduce(
+
+        function(p, v) {
+            p.total++;
+            if (v.pl_locale === flag) {
+                p.count++;
+            }
+            return p;
+        },
+        function(p, v) {
+            p.total--;
+            if (v.pl_locale === flag) {
+                p.count--;
+            }
+            return p;
+        },
+        function() {
+            return { total: 0, count: 0 };
+        }
+    );
+
+    dc.numberDisplay(element)
+        .formatNumber(d3.format('.2%'))
+        .valueAccessor(function(d) {
+            if (d.count == 0) {
+                return 0;
+            }
+            else {
+                return (d.count / d.total);
+            }
+        })
+        .group(locationPercent);
 }
 
 /*--------------------- Charts related to the discovery of the exoplanets-----*/
@@ -834,12 +922,6 @@ function show_radius_correlation(ndx) {
         .dimension(planetStellarMassDim)
         .group(planetStellarMassDimGroup)
         .margins({ top: 10, right: 50, bottom: 75, left: 75 });
-}
-
-//Helper function to round data numbers for table
-function convert_string_to_float(d) {
-    var number = parseFloat(d);
-    return number.toFixed(1);
 }
 
 /*------------------------------------------------------------ Data Table-----*/
