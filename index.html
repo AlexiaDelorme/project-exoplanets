@@ -116,47 +116,47 @@
                     <h4>Stats on our sample</h4>
 
                     <div class="row">
-                        
+
                         <div class="col-12">
                             <h6>Total number of exoplanets in the sample</h6>
                         </div>
-                        
+
                         <div class="col-12">
-                            <div id="total-planets" class="figures"></div> 
+                            <div id="total-planets" class="figures"></div>
                         </div>
-                        
+
                         <div class="col-12">
                             <h6>Average stellar age in the sample</h6>
                         </div>
-                        
+
                         <div class="col-12">
-                            <div id="average-stellar-age" class="figures"></div> 
+                            <div id="average-stellar-age" class="figures"></div>
                         </div>
-                        
+
                         <div class="col-12">
                             <h6>Attribution of exoplanets detections</h6>
                         </div>
-                        
+
                         <div class="col-6">
-                            <p class = "paragraph">In Kepler Scope</p>
+                            <p class="paragraph">In Kepler Scope</p>
                             <div id="kepler-flagged" class="figures"></div>
                         </div>
-                        
+
                         <div class="col-6">
-                            <p class = "paragraph">Not in Kepler Scope</p>
+                            <p class="paragraph">Not in Kepler Scope</p>
                             <div id="not-kepler-flagged" class="figures"></div>
                         </div>
-                        
+
                         <div class="col-6">
-                            <p class = "paragraph">Space</p>
+                            <p class="paragraph">Space</p>
                             <div id="location-space" class="figures"></div>
                         </div>
-                        
+
                         <div class="col-6">
-                            <p class = "paragraph">Ground</p>
+                            <p class="paragraph">Ground</p>
                             <div id="location-ground" class="figures"></div>
                         </div>
-  
+
                     </div>
 
                 </div>
@@ -492,93 +492,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
     <!-- SCRIPT -->
-
-    <script>
-        //Helper function to reset button to "checked"
-        function resetButtonChecked(element) {
-            if ($(element).checked != true) {
-                $(element).click();
-            }
-        }
-
-        //Helper function to reset entire modal form
-        function resetModalForm() {
-            resetButtonChecked("#switchTable");
-            resetButtonChecked("#switchDataType");
-            resetButtonChecked("#switchCorr1");
-            resetButtonChecked("#switchCorr2");
-            resetButtonChecked("#switchCorr3");
-        }
-
-        //Clear all filters to chart to start over
-        $('#reset-filters').click(function() {
-
-            dc.filterAll();
-            dc.renderAll();
-
-            //reset modal form to default settings
-            resetButtonChecked("#switchTable");
-        });
-
-        // Automatically redirect user to "discovery" section when clicking modal button
-        $('#button-modal').click(function() {
-            $('#myModal').modal('hide');
-            $(document).scrollTop($('#discovery').offset().top);
-        });
-
-        $("#switchTable").change(function() {
-            if (this.checked != true) {
-                $("#recap-data").hide();
-                $("#nav-item-table").hide();
-                $("#checkboxLabelTable").text("Disable");
-            }
-            else {
-                $("#recap-data").show();
-                $("#nav-item-table").show();
-                $("#checkboxLabelTable").text("Enable");
-            }
-        });
-
-        $("#switchDataType").change(function() {
-            if (this.checked != true) {
-                $("#non-cumulative-chart").hide();
-                $("#cumulative-chart").show();
-                $("#checkboxLabelData").text("Cumulative");
-            }
-            else {
-                $("#non-cumulative-chart").show();
-                $("#cumulative-chart").hide();
-                $("#checkboxLabelData").text("Non Cumulative");
-            }
-        });
-
-        $("#switchCorr1").change(function() {
-            if (this.checked != true) {
-                $("#planet-corr-section").hide();
-            }
-            else {
-                $("#planet-corr-section").show();
-            }
-        });
-
-        $("#switchCorr2").change(function() {
-            if (this.checked != true) {
-                $("#mass-corr-section").hide();
-            }
-            else {
-                $("#mass-corr-section").show();
-            }
-        });
-
-        $("#switchCorr3").change(function() {
-            if (this.checked != true) {
-                $("#radius-corr-section").hide();
-            }
-            else {
-                $("#radius-corr-section").show();
-            }
-        });
-    </script>
+    <script src="static/js/script.js"></script>
 
 </body>
 
