@@ -23,7 +23,6 @@ It allows users to refine a large sample of more than 3900 exoplanets thanks to 
  * As a user, I want to have access to information for individual planets either for the whole sample or for a sample based on some specific criteria.
  * As a user, I want to be able to reset the entire dashboard without having to manually reload the page, reclick on any chart, or re-enter the modal form. 
 
-
 ### Wireframes
 
 <img src="..." align=top width=250>
@@ -31,30 +30,49 @@ It allows users to refine a large sample of more than 3900 exoplanets thanks to 
 ## Features
 
 ### Current Features
-###### Feature 1 
-* xxx
-* xxx
+###### Feature 1 - Navigation bar with Reset Filters button 
+The navigation bar contains (from left to right):
+- The name of the website that when clicks redirect to the data dashboard.
+- Each navigation item in the nav menu returns to a specific section in the data dashboard.
+- The reset button enables the user to reset filters for entire dashboard as well as setting back to default parametre for the modal form. 
 
-###### Feature 2 
-* xxx
-* xxx
+The navigation bar is fixed to the top which enables the user to access any section of the dashboard without scrolling up or down.This is very useful as the dashboard is quite long especially if the user is checking at data on a particular planet in the table and working on a large sample. 
 
-###### Feature 3 
-* xxx
-* xxx
+###### Feature 2 - Home page and modal form
+- On the home page, when the button "Start Here" is clicked, a modal form window popped up. 
+- The modal form enables the user to refine its sample by adding filters on various criteria (regarding the detection of the planet).
+- The modal form also enables the user to select if he/she wants to display the data table (gathering individual information on the planets), the type of data to plot (cumulative or non-cumulative), what correlations graph to display. 
+- Reset button on modal form - TBC
+- Save & Close button on modal form - TBC
 
-###### Feature 4
-* xxx
-* xxx
+###### Feature 3 - Introduction Box
+- xxx
+
+###### Feature 4 - Stat on the sample
+- xxx
+
+###### Feature 5 - Discovery section
+- xxx
+
+###### Feature 6 - Features section
+- xxx
+
+###### Feature 7 - Correlations section
+- xxx
+
+###### Feature 8 - Data Table
+- xxx
+
+###### Feature 9 - Footer
+- xxx
 
 ### Future Features
 
 ###### xxxx
-* xxx
-* xxx
+- xxx
 
 ###### xxx
-* xxx 
+- xxx 
 
 ## Technologies Used
 
