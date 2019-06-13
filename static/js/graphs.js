@@ -801,7 +801,10 @@ var keplerFlagColors = d3.scale.ordinal()
 function show_mass_radius_correlation(ndx) {
 
     var planetMassDim = ndx.dimension(dc.pluck("pl_masse"));
-    var planetRadDim = ndx.dimension(dc.pluck("pl_rade"));
+    
+    //To set domain we need to determine Max/Min for Planet Mass
+    var minPlanetMass = planetMassDim.bottom(1)[0].pl_masse;
+    var maxPlanetMass = planetMassDim.top(1)[0].pl_masse;
 
     var planetMassRadDim = ndx.dimension(function(d) {
         //prevents from drawing correlations when we are missing at least one of the two data set
@@ -812,49 +815,68 @@ function show_mass_radius_correlation(ndx) {
             return [d.pl_masse, d.pl_rade, d.pl_kepflag];
         }
     });
-    var planetMassRadDimGroup = remove_blanks(planetMassRadDim.group(), "");
 
-    //To set domain we need to determine Max/Min for Planet Mass
-    var minPlanetMass = planetMassDim.bottom(1)[0].pl_masse;
-    var maxPlanetMass = planetMassDim.top(1)[0].pl_masse;
+    //Test composite chart to display legends
+    var dim0 = ndx.dimension(function(d) {
+        if (d.pl_kepflag == "0") {
+            if (d.pl_masse == "" || d.pl_rade == "") {
+                return "";
+            }
+            else {
+                return [d.pl_masse, d.pl_rade, d.pl_kepflag];
+            }
+        }
+        else {
+            return "";
+        }
+    });
 
-    var myChart = dc.scatterPlot("#mass-radius-correlation")
+    var dim1 = ndx.dimension(function(d) {
+        if (d.pl_kepflag == "1") {
+            if (d.pl_masse == "" || d.pl_rade == "") {
+                return "";
+            }
+            else {
+                return [d.pl_masse, d.pl_rade, d.pl_kepflag];
+            }
+        }
+        else {
+            return "";
+        }
+    });
+
+    var scatterGroup0 = remove_blanks(dim0.group(), "");
+    var scatterGroup1 = remove_blanks(dim1.group(), "");
+
+    var chart = dc.compositeChart("#mass-radius-correlation");
+
+    chart
         .width(700)
         .height(300)
         .x(d3.scale.linear().domain([minPlanetMass, maxPlanetMass]))
         //I intentionally decided to exclude data for Radius > 25.EarthRadius (it only removes 3 planets in the sample) so that the scale is smoother
         .y(d3.scale.linear().domain([0, 25]))
-        .brushOn(false)
-        .symbolSize(3)
-        .clipPadding(1)
         .xAxisLabel("Planet Mass (Earth Masses)")
         .yAxisLabel("Planet Radius (Earth Radii)")
         .title(function(d) {
             return " Planet Mass = " + d.key[0] + " - Planet Radius = " + d.key[1];
         })
-        .colorAccessor(function(d) {
-            return d.key[2];
-        })
-        .colors(keplerFlagColors)
-        .useViewBoxResizing(true)
+        .brushOn(false)
+        .clipPadding(1)
         .dimension(planetMassRadDim)
-        .group(planetMassRadDimGroup)
-        .margins({ top: 50, right: 50, bottom: 75, left: 75 });
+        .legend(dc.legend().x(550).y(15).itemHeight(8).gap(5))
+        .useViewBoxResizing(true)
+        .compose([
+            dc.scatterPlot(chart)
+            .symbolSize(3)
+            .group(scatterGroup1, "Kepler Scope")
+            .colors("steelblue"),
+            dc.scatterPlot(chart)
+            .symbolSize(3)
+            .group(scatterGroup0, "Outside Kepler Scope")
+            .colors("black")
+        ]);
 
-    // Code to add legends to Scatter Plot
-    myChart.legendables = function() {
-        var byColor = {};
-        myChart.group().all().forEach(function(d) {
-            var color = myChart.colors()(myChart.colorAccessor()(d));
-            byColor[color] = {
-                chart: myChart,
-                name: 'color ' + myChart.colorAccessor()(d),
-                color: color
-            };
-        })
-        return Object.values(byColor);
-    };
- 
 }
 
 function show_mass_correlation(ndx) {
