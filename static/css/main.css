@@ -51,6 +51,15 @@ h6 {
 #myModal legend {
   font-size: 1.2rem; }
 
+/* Format figures section */
+.figures {
+  margin: 0px 5px 15px 2px;
+  font-weight: 700;
+  color: #495057; }
+
+.paragraph {
+  margin-bottom: 5px; }
+
 /*----------------------------------------------------------------- Charts ---*/
 #year-of-discovery .x.axis text,
 #cumulative-year-of-discovery .x.axis text,
