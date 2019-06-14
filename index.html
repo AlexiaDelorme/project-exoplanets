@@ -59,7 +59,7 @@
                 </li>
             </ul>
 
-            <button class="btn btn-secondary my-2 my-sm-0" id="reset-filters">Reset filters</button>
+            <button class="btn btn-secondary my-2 my-sm-0 reset-filters">Reset filters</button>
 
         </div>
     </nav>
@@ -71,7 +71,7 @@
         <div class="row">
             <div class="col-12 text-align">
                 <h1 class="main-header">Data Exploration on Exoplanets</h1>
-                <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#myModal">Start here</button>
+                <button type="button" class="btn btn-secondary btn-lg" data-toggle="modal" data-target="#myModal">Start here</button>
             </div>
         </div>
 
@@ -106,7 +106,7 @@
                     Researchers have found hundreds of extrasolar planet, or "exoplanets", that reside outside of the solar system. There may be billions of exoplanets in the Milky Way galaxy alone, and some may have conditions favorable to life...
                     <br><br>
                     <p class="lead">
-                        <a class="btn btn-primary btn-lg" href="https://solarsystem.nasa.gov/planets/in-depth/" role="button" target="_blank">Learn more</a>
+                        <a class="btn btn-primary my-2 my-sm-0" href="https://solarsystem.nasa.gov/planets/in-depth/" role="button" target="_blank">Learn more</a>
                     </p>
                     <hr class="d-md-none my-4">
                 </div>
@@ -456,15 +456,15 @@
                                         <legend>Correlations Data</legend>
                                         <div class="form-group">
                                             <div class="custom-control custom-switch">
-                                                <input type="checkbox" class="custom-control-input" id="switchCorr1" checked="">
+                                                <input type="checkbox" class="custom-control-input correlation-checkbox" id="switchCorr1" checked="">
                                                 <label class="custom-control-label" for="switchCorr1" id="checkboxLabel1">Mass vs. Radius Planet</label>
                                             </div>
                                             <div class="custom-control custom-switch">
-                                                <input type="checkbox" class="custom-control-input" id="switchCorr2" checked="">
+                                                <input type="checkbox" class="custom-control-input correlation-checkbox" id="switchCorr2" checked="">
                                                 <label class="custom-control-label" for="switchCorr2" id="checkboxLabel2">Planet Mass vs. Stellar Mass</label>
                                             </div>
                                             <div class="custom-control custom-switch">
-                                                <input type="checkbox" class="custom-control-input" id="switchCorr3" checked="">
+                                                <input type="checkbox" class="custom-control-input correlation-checkbox" id="switchCorr3" checked="">
                                                 <label class="custom-control-label" for="switchCorr3" id="checkboxLabel3">Planet Radius vs. Stellar Radius</label>
                                             </div>
                                         </div>
@@ -477,6 +477,7 @@
                 </div>
 
                 <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary reset-filters">Reset filters</button>
                     <button type="button" class="btn btn-primary" data-dismiss="modal" id="button-modal">Save & Close</button>
                 </div>
 
