@@ -6,7 +6,7 @@ function makeGraphs(error, data) {
 
     var ndx = crossfilter(data);
 
-    //Stats
+    // Sample stats
     display_total_planets_sample(ndx);
     display_average_stellar_age_sample(ndx);
     display_kepler_percent(ndx, "1", "#kepler-flagged");
@@ -21,33 +21,34 @@ function makeGraphs(error, data) {
     show_discovery_selector(ndx);
     show_discovery_year_selector(ndx);
 
-    //Discovery charts
+    // Discovery charts
     show_discovery_location(ndx);
     show_discovery_facility(ndx);
     show_discovery_method(ndx);
     show_year_of_discovery(ndx);
     show_cumulative_year_of_discovery(ndx);
 
-    //Exoplanets features charts
+    // Exoplanets features charts
     show_orbital_period(ndx);
     show_planetary_system(ndx);
     show_stellar_distance(ndx);
     show_stellar_age(ndx);
 
-    //Correlation charts
+    // Correlation charts
     show_mass_radius_correlation(ndx);
     show_mass_correlation(ndx);
     show_radius_correlation(ndx);
 
-    //Data table
+    // Data table
     showTable(ndx);
 
     dc.renderAll();
+
 }
 
 /*----------------------------------------------------- Helper functions -----*/
 
-//This function was taken in the code from another Code Institute student (Git: steview-d / Project: superhero-dashboard)
+// This function was taken in the code from a Code Institute student (Git: steview-d / Project: superhero-dashboard)
 function remove_blanks(group, value_to_remove) {
     // Filter out specified values from passed group
     return {
@@ -59,8 +60,8 @@ function remove_blanks(group, value_to_remove) {
     };
 }
 
-//This function was taken in the code from another Code Institute student (Git: steview-d / Project: superhero-dashboard)
-//I adapted it to my pie Chart to exclude the display of percent below 5%
+// This function was taken in the code from another Code Institute student (Git: steview-d / Project: superhero-dashboard)
+// I adapted it to my pie Chart to exclude the display of percent below 5%
 function show_slice_percent(key, endAngle, startAngle) {
     // Return the % of each pie slice as a string to be displayed on the slice itself
     var percent = dc.utils.printSingleValue((endAngle - startAngle) / (2 * Math.PI) * 100);
@@ -72,7 +73,7 @@ function show_slice_percent(key, endAngle, startAngle) {
     }
 }
 
-//Accumalate data to plot cumulative charts
+// Accumalate data to plot cumulative charts
 function accumulate_group(group) {
     return {
         all: function() {
@@ -85,15 +86,16 @@ function accumulate_group(group) {
     };
 }
 
-//Helper function to round data numbers for table
+// Helper function to round data numbers for table
 function convert_string_to_float(d) {
     var number = parseFloat(d);
-    return number.toFixed(1);
+    return number.toFixed(2);
 }
 
 /*-------------- Create selector fonctions to filter chart on user input -----*/
 
 function show_kepler_selector(ndx) {
+
     var dim = ndx.dimension(dc.pluck('pl_kepflag'));
     var group = dim.group();
 
@@ -112,6 +114,7 @@ function show_kepler_selector(ndx) {
 }
 
 function show_location_selector(ndx) {
+
     var dim = ndx.dimension(dc.pluck('pl_locale'));
     var group = dim.group();
 
@@ -128,6 +131,7 @@ function show_location_selector(ndx) {
 }
 
 function show_facility_selector(ndx) {
+
     var dim = ndx.dimension(dc.pluck('pl_facility'));
     var group = remove_blanks(dim.group(), "");
 
@@ -143,6 +147,7 @@ function show_facility_selector(ndx) {
 }
 
 function show_discovery_selector(ndx) {
+
     var dim = ndx.dimension(dc.pluck('pl_discmethod'));
     var group = dim.group();
 
@@ -158,6 +163,7 @@ function show_discovery_selector(ndx) {
 }
 
 function show_discovery_year_selector(ndx) {
+
     var dim = ndx.dimension(dc.pluck('pl_disc'));
     var group = dim.group();
 
@@ -174,7 +180,7 @@ function show_discovery_year_selector(ndx) {
 
 /*------------------------------------------- Display stats on the sample ----*/
 
-//Display total number of planets in the sample
+// Display total number of planets in the sample
 function display_total_planets_sample(ndx) {
 
     var totalPlanets = ndx.groupAll().reduce(
@@ -193,7 +199,7 @@ function display_total_planets_sample(ndx) {
     );
 
     dc.numberDisplay('#total-planets')
-        .formatNumber(d3.format('.2'))
+        .formatNumber(d3.format('.1'))
         .valueAccessor(function(d) {
             if (d.total == 0) {
                 return 0;
@@ -206,14 +212,14 @@ function display_total_planets_sample(ndx) {
 
 }
 
-//Display average stellar age of the sample
+// Display average stellar age of the sample
 function display_average_stellar_age_sample(ndx) {
 
     var avStellarAge = ndx.groupAll().reduce(add_item, remove_item, initialise);
 
     function add_item(p, v) {
         p.count++;
-        p.total += v.st_age;
+        p.total += parseFloat(v.st_age);
         p.average = p.total / p.count;
         return p;
     }
@@ -225,7 +231,7 @@ function display_average_stellar_age_sample(ndx) {
             p.average = 0;
         }
         else {
-            p.total -= v.st_age;
+            p.total -= parseFloat(v.st_age);
             p.average = p.total / p.count;
         }
         return p;
@@ -236,7 +242,7 @@ function display_average_stellar_age_sample(ndx) {
     }
 
     dc.numberDisplay('#average-stellar-age')
-        .formatNumber(d3.format('.2'))
+        .formatNumber(d3.format('.1'))
         .valueAccessor(function(d) {
             return d.average;
         })
@@ -244,7 +250,7 @@ function display_average_stellar_age_sample(ndx) {
 
 }
 
-//Display % of planets discovered during the Kepler mission
+// Display % of planets discovered during the Kepler mission
 function display_kepler_percent(ndx, flag, element) {
 
     var keplerPercent = ndx.groupAll().reduce(
@@ -269,7 +275,7 @@ function display_kepler_percent(ndx, flag, element) {
     );
 
     dc.numberDisplay(element)
-        .formatNumber(d3.format('.2%'))
+        .formatNumber(d3.format('.1%'))
         .valueAccessor(function(d) {
             if (d.count == 0) {
                 return 0;
@@ -281,7 +287,7 @@ function display_kepler_percent(ndx, flag, element) {
         .group(keplerPercent);
 }
 
-//Display % of planets detection location
+// Display % of planets according to their detection location
 function display_location_percent(ndx, flag, element) {
 
     var locationPercent = ndx.groupAll().reduce(
@@ -306,7 +312,7 @@ function display_location_percent(ndx, flag, element) {
     );
 
     dc.numberDisplay(element)
-        .formatNumber(d3.format('.2%'))
+        .formatNumber(d3.format('.1%'))
         .valueAccessor(function(d) {
             if (d.count == 0) {
                 return 0;
@@ -320,7 +326,7 @@ function display_location_percent(ndx, flag, element) {
 
 /*--------------------- Charts related to the discovery of the exoplanets-----*/
 
-//Create a variable colors to change default colors for bar charts
+// Create a variable colors to change default colors for charts
 var pieChartColors = d3.scale.ordinal()
     .range(["lightgrey", "lightSteelBlue", "black"]);
 
@@ -336,7 +342,7 @@ function show_discovery_location(ndx) {
         .transitionDuration(1500)
         .legend(dc.legend().x(5).y(10).itemHeight(8).gap(5))
         .title(function(d) {
-            return d.value + " planets discovered by " + d.key;
+            return d.value + " planets discovered from " + d.key;
         })
         .useViewBoxResizing(true)
         .colors(pieChartColors)
@@ -376,7 +382,7 @@ function show_discovery_facility(ndx) {
 
 }
 
-//Create a variable to set detection method colors
+// Create a variable to set detection method colors
 var detectionColors = d3.scale.ordinal()
     .domain(["Transit", "Radial Velocity", "Microlensing", "Imaging", "Timing Variations", "Orbital Brightness Modulation", "Astrometry"])
     .range(["steelBlue", "grey", "lightblue", "orange", "seaGreen", "paleVioletRed", "navy"]);
@@ -404,7 +410,7 @@ function show_discovery_method(ndx) {
             return d.value + " planets detected by " + d.key + " method";
         })
         .label(function(d) {
-            return d.key + " | " + d.value;
+            return d.key + " | " + d.value + " planets";
         })
         .transitionDuration(1500)
         .colors(detectionColors)
@@ -413,7 +419,7 @@ function show_discovery_method(ndx) {
 
 }
 
-// Helper function to create custom reducer for grouping on detection method
+// Helper function to create custom reducer based on detection method
 function detection_by_year(dimension, detection_method) {
 
     return dimension.group().reduce(
@@ -441,16 +447,16 @@ function show_year_of_discovery(ndx) {
 
     var dim = ndx.dimension(dc.pluck('pl_disc'));
 
-    //Creating grouping for each detection type
-    var transitByYear = detection_by_year(dim, "Transit");
-    var radialVelocityByYear = detection_by_year(dim, "Radial Velocity");
-    var microlensingByYear = detection_by_year(dim, "Microlensing");
-    var imagingByYear = detection_by_year(dim, "Imaging");
-    var orbitalBrightnessByYear = detection_by_year(dim, "Orbital Brightness Modulation");
-    var astronomyByYear = detection_by_year(dim, "Astrometry");
+    // Create groups for each detection method
+    var transitGroup = detection_by_year(dim, "Transit");
+    var radialVelocityGroup = detection_by_year(dim, "Radial Velocity");
+    var microlensingGroup = detection_by_year(dim, "Microlensing");
+    var imagingGroup = detection_by_year(dim, "Imaging");
+    var orbitalBrightnessGroup = detection_by_year(dim, "Orbital Brightness Modulation");
+    var astronomyGroup = detection_by_year(dim, "Astrometry");
 
-    //Grouping timing detection types under the generic "Timing Variations" method
-    var timingVariationsByYear = dim.group().reduce(
+    // Create one single group for "Timing Variations" methods
+    var timingVariationsGroup = dim.group().reduce(
         function(p, v) {
             p.total++;
             if (v.pl_discmethod == "Eclipse Timing Variations" || v.pl_discmethod == "Transit Timing Variations" || v.pl_discmethod == "Pulsar Timing" || v.pl_discmethod == "Pulsation Timing Variations") {
@@ -480,20 +486,20 @@ function show_year_of_discovery(ndx) {
         .elasticY(true)
         .barPadding(0.2)
         .clipPadding(15)
-        .transitionDuration(500)
+        .transitionDuration(1500)
         .useViewBoxResizing(true)
         .title(function(d) {
             return d.value.match + " planets discovered in " + d.key;
         })
         .legend(dc.legend().x(80).y(20).itemHeight(8).gap(5))
         .dimension(dim)
-        .group(transitByYear, "Transit")
-        .stack(radialVelocityByYear, "Radial Velocity")
-        .stack(microlensingByYear, "Microlensing")
-        .stack(imagingByYear, "Imaging")
-        .stack(timingVariationsByYear, "Timing Variations")
-        .stack(orbitalBrightnessByYear, "Orbital Brightness Modulation")
-        .stack(astronomyByYear, "Astrometry")
+        .group(transitGroup, "Transit")
+        .stack(radialVelocityGroup, "Radial Velocity")
+        .stack(microlensingGroup, "Microlensing")
+        .stack(imagingGroup, "Imaging")
+        .stack(timingVariationsGroup, "Timing Variations")
+        .stack(orbitalBrightnessGroup, "Orbital Brightness Modulation")
+        .stack(astronomyGroup, "Astrometry")
         .colors(detectionColors)
         .valueAccessor(function(d) {
             if (d.value.total > 0) {
@@ -506,38 +512,28 @@ function show_year_of_discovery(ndx) {
 
 }
 
+// Testing function to group cumulative data with a custom reducer
+/*
 function accumulate_detection_by_year(dimension, detection_method) {
-
-    return {
-        all: function() {
-            var cumulate = 0;
-            return dimension.group().reduce(
-                function(p, v) {
-                    p.total++;
-                    if (v.pl_discmethod == detection_method) {
-                        p.match++;
-                    }
-                    return p;
-                },
-                function(p, v) {
-                    p.total--;
-                    if (v.pl_discmethod == detection_method) {
-                        p.match--;
-                    }
-                    return p;
-                },
-                function() {
-                    return { total: 0, match: 0 };
-                }
-            ).all().map(function(d) {
-                cumulate += d.value;
-                return { key: d.key, value: cumulate };
-            });
-        }
-    };
+    
+    if (v.pl_discmethod == detection_method) {
+        return {
+            all: function() {
+                var cumulate = 0;
+                return group.all().map(function(d) {
+                    cumulate += d.value;
+                    return { key: d.key, value: cumulate };
+                });
+            }
+        };
+    }
+    else {
+        return "";
+    }
 }
+*/
 
-//Create a variable colors to change default colors for bar charts
+// Create a variable colors to change default colors for bar charts
 var barChartColors = d3.scale.ordinal()
     .range(["lightgrey", "lightSteelBlue"]);
 
@@ -545,9 +541,6 @@ function show_cumulative_year_of_discovery(ndx) {
 
     var dim = ndx.dimension(dc.pluck('pl_disc'));
     var group = accumulate_group(dim.group());
-
-    //var radialVelocityCumulativeYear = accumulate_detection_by_year(dim, "Radial Velocity");
-    //var transitByCumulativeYear = accumulate_detection_by_year(dim, "Transit");
 
     dc.barChart("#cumulative-year-of-discovery")
         .width(800)
@@ -559,9 +552,9 @@ function show_cumulative_year_of_discovery(ndx) {
         .elasticY(true)
         .barPadding(0.2)
         .clipPadding(15)
-        .transitionDuration(500)
+        .transitionDuration(1500)
         .useViewBoxResizing(true)
-        .legend(dc.legend().x(80).y(20).itemHeight(8).gap(5))
+        //.legend(dc.legend().x(80).y(20).itemHeight(8).gap(5))
         .colorAccessor(function(d) {
             return d.key;
         })
@@ -575,7 +568,7 @@ function show_cumulative_year_of_discovery(ndx) {
 
 function show_orbital_period(ndx) {
 
-    var orbitalPeriod = ndx.dimension(function(d) {
+    var orbitalPeriodDim = ndx.dimension(function(d) {
 
         var days = d.pl_orbper;
 
@@ -602,13 +595,13 @@ function show_orbital_period(ndx) {
         }
     });
 
-    var orbitalPeriodGroup = remove_blanks(orbitalPeriod.group(), "N/A");
+    var orbitalPeriodGroup = remove_blanks(orbitalPeriodDim.group(), "N/A");
 
     var scale = d3.scale.ordinal()
         .domain(['<= 1 day', ']1;5] days', ']5;15] days', ']15;30] days', ']30;365] days', '> 1 year'])
         .range([0, 1, 2, 3, 4, 5]);
 
-    //We need to create a different color variable as we rearraged the order dimension for orbital period
+    // Need to create a different color variable as we rearraged the order dimension for orbital period
     var orbitalChartColors = d3.scale.ordinal()
         .domain(['<= 1 day', ']1;5] days', ']5;15] days', ']15;30] days', ']30;365] days', '> 1 year'])
         .range(["lightgrey", "lightsteelBlue"]);
@@ -622,18 +615,17 @@ function show_orbital_period(ndx) {
         })
         .x(scale)
         .xUnits(dc.units.ordinal)
-        .xAxisLabel("Orbital Period in days")
         .elasticY(true)
         .barPadding(0.2)
         .clipPadding(15)
         .renderLabel(true)
-        .transitionDuration(500)
+        .transitionDuration(1500)
         .useViewBoxResizing(true)
         .colorAccessor(function(d) {
             return d.key;
         })
         .colors(orbitalChartColors)
-        .dimension(orbitalPeriod)
+        .dimension(orbitalPeriodDim)
         .group(orbitalPeriodGroup)
         .yAxis().ticks(4);
 }
@@ -647,7 +639,7 @@ function show_planetary_system(ndx) {
         .width(800)
         .height(300)
         .margins({ top: 10, right: 50, bottom: 30, left: 50 })
-        .transitionDuration(500)
+        .transitionDuration(1500)
         .useViewBoxResizing(true)
         .title(function(d) {
             return d.value + " planets with " + d.key + " known planet(s) in system";
@@ -700,7 +692,7 @@ function show_stellar_distance(ndx) {
         .domain(['<= 250', ']250;500]', ']500;750]', ']750;1000]', ']1000;1250]', ']1250;1500]', '> 1500'])
         .range([0, 1, 2, 3, 4, 5, 6]);
 
-    //We need to create a different color variable as we rearraged the order dimension for stellar distance
+    // Need to create a different color variable as we rearraged the order dimension for stellar distance
     var stellarDistChartColors = d3.scale.ordinal()
         .domain(['<= 250', ']250;500]', ']500;750]', ']750;1000]', ']1000;1250]', ']1250;1500]', '> 1500'])
         .range(["lightgrey", "lightsteelBlue"]);
@@ -718,7 +710,7 @@ function show_stellar_distance(ndx) {
         .barPadding(0.2)
         .clipPadding(15)
         .renderLabel(true)
-        .transitionDuration(500)
+        .transitionDuration(1500)
         .useViewBoxResizing(true)
         .colorAccessor(function(d) {
             return d.key;
@@ -758,7 +750,7 @@ function show_stellar_age(ndx) {
         .domain(['<= 2,5 Gyr', ']2,5;5] Gyr', ']5;10] Gyr', ']10;15] Gyr'])
         .range([0, 1, 2, 3]);
 
-    //We need to create a different color variable as we rearraged the order dimension for stellar age
+    // Need to create a different color variable as we rearraged the order dimension for stellar age
     var stellarAgeChartColors = d3.scale.ordinal()
         .domain(['<= 2,5 Gyr', ']2,5;5] Gyr', ']5;10] Gyr', ']10;15] Gyr'])
         .range(["lightgrey", "lightsteelBlue"]);
@@ -776,7 +768,7 @@ function show_stellar_age(ndx) {
         .barPadding(0.5)
         .clipPadding(15)
         .renderLabel(true)
-        .transitionDuration(500)
+        .transitionDuration(1500)
         .useViewBoxResizing(true)
         .colorAccessor(function(d) {
             return d.key;
@@ -790,20 +782,16 @@ function show_stellar_age(ndx) {
 
 /*--------------------------------------------------------- Correlations -----*/
 
-var keplerFlagColors = d3.scale.ordinal()
-    .domain(["0", "1"])
-    .range(["black", "steelBlue"]);
-
 function show_mass_radius_correlation(ndx) {
 
     var planetMassDim = ndx.dimension(dc.pluck("pl_masse"));
 
-    //To set domain we need to determine Max/Min for Planet Mass
+    // To set domain we need to determine Max/Min for Planet Mass
     var minPlanetMass = planetMassDim.bottom(1)[0].pl_masse;
     var maxPlanetMass = planetMassDim.top(1)[0].pl_masse;
 
     var planetMassRadDim = ndx.dimension(function(d) {
-        //prevents from drawing correlations when we are missing at least one of the two data set
+        // Prevents from drawing correlations when we are missing at least one of the two data set
         if (d.pl_masse == "" || d.pl_rade == "") {
             return "";
         }
@@ -812,7 +800,7 @@ function show_mass_radius_correlation(ndx) {
         }
     });
 
-    //Helper function to create dimension sorted on the Kepler Flag
+    // Helper function to create dimension sorted on the Kepler Flag
     function create_dimension_scatter_plot_kepler(flag) {
         return ndx.dimension(function(d) {
             if (d.pl_kepflag == flag) {
@@ -829,11 +817,11 @@ function show_mass_radius_correlation(ndx) {
         });
     }
 
-    //Create two distinct dimensions 
+    // Create two distinct dimensions 
     var dim0 = create_dimension_scatter_plot_kepler("0");
     var dim1 = create_dimension_scatter_plot_kepler("1");
 
-    //Group the two distinct dimensions
+    // Group the two distinct dimensions
     var scatterGroup0 = remove_blanks(dim0.group(), "");
     var scatterGroup1 = remove_blanks(dim1.group(), "");
 
@@ -843,7 +831,7 @@ function show_mass_radius_correlation(ndx) {
         .width(700)
         .height(300)
         .x(d3.scale.linear().domain([minPlanetMass, maxPlanetMass]))
-        //I intentionally decided to exclude data for Radius > 25.EarthRadius (it only removes 3 planets in the sample) so that the scale is smoother
+        // I intentionally decided to exclude data for Radius > 25.EarthRadius (it only removes 3 planets in the sample) so that the scale is smoother
         .y(d3.scale.linear().domain([0, 25]))
         .xAxisLabel("Planet Mass (Earth Masses)")
         .yAxisLabel("Planet Radius (Earth Radii)")
@@ -854,6 +842,7 @@ function show_mass_radius_correlation(ndx) {
         .clipPadding(1)
         .dimension(planetMassRadDim)
         .legend(dc.legend().x(550).y(15).itemHeight(8).gap(5))
+        .transitionDuration(1500)
         .useViewBoxResizing(true)
         .compose([
             dc.scatterPlot(chart)
@@ -876,7 +865,7 @@ function show_mass_correlation(ndx) {
     var maxPlanetMass = planetMassDim.top(1)[0].pl_masse;
 
     var planetStellarMassDim = ndx.dimension(function(d) {
-        //prevents from drawing correlations when we are missing at least one of the two data set
+        // Prevents from drawing correlations when we are missing at least one of the two data set
         if (d.pl_masse == "" || d.st_mass == "") {
             return "";
         }
@@ -885,7 +874,7 @@ function show_mass_correlation(ndx) {
         }
     });
 
-    //Helper function to create dimension sorted on the Kepler Flag
+    // Helper function to create dimension sorted on the Kepler Flag
     function create_dimension_scatter_plot_kepler(flag) {
         return ndx.dimension(function(d) {
             if (d.pl_kepflag == flag) {
@@ -902,11 +891,11 @@ function show_mass_correlation(ndx) {
         });
     }
 
-    //Create two distinct dimensions 
+    // Create two distinct dimensions 
     var dim0 = create_dimension_scatter_plot_kepler("0");
     var dim1 = create_dimension_scatter_plot_kepler("1");
 
-    //Group the two distinct dimensions
+    // Group the two distinct dimensions
     var scatterGroup0 = remove_blanks(dim0.group(), "");
     var scatterGroup1 = remove_blanks(dim1.group(), "");
 
@@ -916,7 +905,7 @@ function show_mass_correlation(ndx) {
         .width(700)
         .height(300)
         .x(d3.scale.linear().domain([minPlanetMass, maxPlanetMass]))
-        //I intentionally decided to exclude data for Stellar Mass > 4.SolarMass (only removes 3 planets in the sample) so that the scale is smoother
+        // I intentionally decided to exclude data for Stellar Mass > 4.SolarMass (only removes 3 planets in the sample) so that the scale is smoother
         .y(d3.scale.linear().domain([0, 4]))
         .xAxisLabel("Planet Mass (Earth Masses)")
         .yAxisLabel("Stellar Mass (Solar Masses)")
@@ -927,6 +916,7 @@ function show_mass_correlation(ndx) {
         .clipPadding(1)
         .dimension(planetStellarMassDim)
         .legend(dc.legend().x(550).y(15).itemHeight(8).gap(5))
+        .transitionDuration(1500)
         .useViewBoxResizing(true)
         .compose([
             dc.scatterPlot(chart)
@@ -948,7 +938,7 @@ function show_radius_correlation(ndx) {
     var maxPlanetRadius = planetRadiusDim.top(1)[0].pl_rade;
 
     var planetStellarRadiusDim = ndx.dimension(function(d) {
-        //prevents from drawing correlations when we are missing at least one of the two data set
+        // Prevents from drawing correlations when we are missing at least one of the two data set
         if (d.pl_rade == "" || d.st_rad == "") {
             return "";
         }
@@ -957,7 +947,7 @@ function show_radius_correlation(ndx) {
         }
     });
 
-    //Helper function to create dimension sorted on the Kepler Flag
+    // Helper function to create dimension sorted on the Kepler Flag
     function create_dimension_scatter_plot_kepler(flag) {
         return ndx.dimension(function(d) {
             if (d.pl_kepflag == flag) {
@@ -974,11 +964,11 @@ function show_radius_correlation(ndx) {
         });
     }
 
-    //Create two distinct dimensions 
+    // Create two distinct dimensions 
     var dim0 = create_dimension_scatter_plot_kepler("0");
     var dim1 = create_dimension_scatter_plot_kepler("1");
 
-    //Group the two distinct dimensions
+    // Group the two distinct dimensions
     var scatterGroup0 = remove_blanks(dim0.group(), "");
     var scatterGroup1 = remove_blanks(dim1.group(), "");
 
@@ -1000,6 +990,7 @@ function show_radius_correlation(ndx) {
         .dimension(planetStellarRadiusDim)
         .legend(dc.legend().x(550).y(15).itemHeight(8).gap(5))
         .useViewBoxResizing(true)
+        .transitionDuration(1500)
         .compose([
             dc.scatterPlot(chart)
             .symbolSize(2)
@@ -1087,6 +1078,6 @@ function showTable(ndx) {
             return d.pl_hostname;
         })
         .order(d3.ascending)
-        .transitionDuration(500)
+        .transitionDuration(1500)
         .useViewBoxResizing(true);
 }
