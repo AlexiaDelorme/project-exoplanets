@@ -6,10 +6,6 @@ function makeGraphs(error, data) {
 
     var ndx = crossfilter(data);
 
-    data.forEach(function(d) {
-        d.st_age = parseInt(d.st_age);
-    });
-
     //Stats
     display_total_planets_sample(ndx);
     display_average_stellar_age_sample(ndx);
@@ -801,7 +797,7 @@ var keplerFlagColors = d3.scale.ordinal()
 function show_mass_radius_correlation(ndx) {
 
     var planetMassDim = ndx.dimension(dc.pluck("pl_masse"));
-    
+
     //To set domain we need to determine Max/Min for Planet Mass
     var minPlanetMass = planetMassDim.bottom(1)[0].pl_masse;
     var maxPlanetMass = planetMassDim.top(1)[0].pl_masse;
@@ -812,39 +808,32 @@ function show_mass_radius_correlation(ndx) {
             return "";
         }
         else {
-            return [d.pl_masse, d.pl_rade, d.pl_kepflag];
+            return [d.pl_masse, d.pl_rade];
         }
     });
 
-    //Test composite chart to display legends
-    var dim0 = ndx.dimension(function(d) {
-        if (d.pl_kepflag == "0") {
-            if (d.pl_masse == "" || d.pl_rade == "") {
-                return "";
+    //Helper function to create dimension sorted on the Kepler Flag
+    function create_dimension_scatter_plot_kepler(flag) {
+        return ndx.dimension(function(d) {
+            if (d.pl_kepflag == flag) {
+                if (d.pl_masse == "" || d.pl_rade == "") {
+                    return "";
+                }
+                else {
+                    return [d.pl_masse, d.pl_rade];
+                }
             }
             else {
-                return [d.pl_masse, d.pl_rade, d.pl_kepflag];
-            }
-        }
-        else {
-            return "";
-        }
-    });
-
-    var dim1 = ndx.dimension(function(d) {
-        if (d.pl_kepflag == "1") {
-            if (d.pl_masse == "" || d.pl_rade == "") {
                 return "";
             }
-            else {
-                return [d.pl_masse, d.pl_rade, d.pl_kepflag];
-            }
-        }
-        else {
-            return "";
-        }
-    });
+        });
+    }
 
+    //Create two distinct dimensions 
+    var dim0 = create_dimension_scatter_plot_kepler("0");
+    var dim1 = create_dimension_scatter_plot_kepler("1");
+
+    //Group the two distinct dimensions
     var scatterGroup0 = remove_blanks(dim0.group(), "");
     var scatterGroup1 = remove_blanks(dim1.group(), "");
 
@@ -868,13 +857,13 @@ function show_mass_radius_correlation(ndx) {
         .useViewBoxResizing(true)
         .compose([
             dc.scatterPlot(chart)
-            .symbolSize(3)
-            .group(scatterGroup1, "Kepler Scope")
-            .colors("steelblue"),
-            dc.scatterPlot(chart)
-            .symbolSize(3)
+            .symbolSize(2)
             .group(scatterGroup0, "Outside Kepler Scope")
-            .colors("black")
+            .colors("black"),
+            dc.scatterPlot(chart)
+            .symbolSize(2)
+            .group(scatterGroup1, "Kepler Scope")
+            .colors("steelblue")
         ]);
 
 }
@@ -882,83 +871,146 @@ function show_mass_radius_correlation(ndx) {
 function show_mass_correlation(ndx) {
 
     var planetMassDim = ndx.dimension(dc.pluck("pl_masse"));
+
+    var minPlanetMass = planetMassDim.bottom(1)[0].pl_masse;
+    var maxPlanetMass = planetMassDim.top(1)[0].pl_masse;
+
     var planetStellarMassDim = ndx.dimension(function(d) {
         //prevents from drawing correlations when we are missing at least one of the two data set
         if (d.pl_masse == "" || d.st_mass == "") {
             return "";
         }
         else {
-            return [d.pl_masse, d.st_mass, d.pl_kepflag];
+            return [d.pl_masse, d.st_mass];
         }
     });
-    var planetStellarMassDimGroup = remove_blanks(planetStellarMassDim.group(), "");
 
-    var minPlanetMass = planetMassDim.bottom(1)[0].pl_masse;
-    var maxPlanetMass = planetMassDim.top(1)[0].pl_masse;
+    //Helper function to create dimension sorted on the Kepler Flag
+    function create_dimension_scatter_plot_kepler(flag) {
+        return ndx.dimension(function(d) {
+            if (d.pl_kepflag == flag) {
+                if (d.pl_masse == "" || d.st_mass == "") {
+                    return "";
+                }
+                else {
+                    return [d.pl_masse, d.st_mass];
+                }
+            }
+            else {
+                return "";
+            }
+        });
+    }
 
-    dc.scatterPlot("#mass-correlation")
+    //Create two distinct dimensions 
+    var dim0 = create_dimension_scatter_plot_kepler("0");
+    var dim1 = create_dimension_scatter_plot_kepler("1");
+
+    //Group the two distinct dimensions
+    var scatterGroup0 = remove_blanks(dim0.group(), "");
+    var scatterGroup1 = remove_blanks(dim1.group(), "");
+
+    var chart = dc.compositeChart("#mass-correlation");
+
+    chart
         .width(700)
         .height(300)
         .x(d3.scale.linear().domain([minPlanetMass, maxPlanetMass]))
         //I intentionally decided to exclude data for Stellar Mass > 4.SolarMass (only removes 3 planets in the sample) so that the scale is smoother
         .y(d3.scale.linear().domain([0, 4]))
-        .brushOn(false)
-        .symbolSize(2)
-        .clipPadding(1)
         .xAxisLabel("Planet Mass (Earth Masses)")
         .yAxisLabel("Stellar Mass (Solar Masses)")
         .title(function(d) {
             return " Planet Mass = " + d.key[0] + " - Stellar Mass = " + d.key[1];
         })
-        .colorAccessor(function(d) {
-            return d.key[2];
-        })
-        .colors(keplerFlagColors)
-        .useViewBoxResizing(true)
+        .brushOn(false)
+        .clipPadding(1)
         .dimension(planetStellarMassDim)
-        .group(planetStellarMassDimGroup)
-        .margins({ top: 10, right: 50, bottom: 75, left: 75 });
+        .legend(dc.legend().x(550).y(15).itemHeight(8).gap(5))
+        .useViewBoxResizing(true)
+        .compose([
+            dc.scatterPlot(chart)
+            .symbolSize(2)
+            .group(scatterGroup0, "Outside Kepler Scope")
+            .colors("black"),
+            dc.scatterPlot(chart)
+            .symbolSize(2)
+            .group(scatterGroup1, "Kepler Scope")
+            .colors("steelblue")
+        ]);
 }
 
 function show_radius_correlation(ndx) {
 
-    var planetMassDim = ndx.dimension(dc.pluck("pl_rade"));
-    var planetStellarMassDim = ndx.dimension(function(d) {
+    var planetRadiusDim = ndx.dimension(dc.pluck("pl_rade"));
+
+    var minPlanetRadius = planetRadiusDim.bottom(1)[0].pl_rade;
+    var maxPlanetRadius = planetRadiusDim.top(1)[0].pl_rade;
+
+    var planetStellarRadiusDim = ndx.dimension(function(d) {
         //prevents from drawing correlations when we are missing at least one of the two data set
         if (d.pl_rade == "" || d.st_rad == "") {
             return "";
         }
         else {
-            return [d.pl_rade, d.st_rad, d.pl_kepflag];
+            return [d.pl_rade, d.st_rad];
         }
     });
-    var planetStellarMassDimGroup = remove_blanks(planetStellarMassDim.group(), "");
 
-    var minPlanetMass = planetMassDim.bottom(1)[0].pl_rade;
-    var maxPlanetMass = planetMassDim.top(1)[0].pl_rade;
+    //Helper function to create dimension sorted on the Kepler Flag
+    function create_dimension_scatter_plot_kepler(flag) {
+        return ndx.dimension(function(d) {
+            if (d.pl_kepflag == flag) {
+                if (d.pl_rade == "" || d.st_rad == "") {
+                    return "";
+                }
+                else {
+                    return [d.pl_rade, d.st_rad];
+                }
+            }
+            else {
+                return "";
+            }
+        });
+    }
 
-    dc.scatterPlot("#radius-correlation")
+    //Create two distinct dimensions 
+    var dim0 = create_dimension_scatter_plot_kepler("0");
+    var dim1 = create_dimension_scatter_plot_kepler("1");
+
+    //Group the two distinct dimensions
+    var scatterGroup0 = remove_blanks(dim0.group(), "");
+    var scatterGroup1 = remove_blanks(dim1.group(), "");
+
+    var chart = dc.compositeChart("#radius-correlation");
+
+    chart
         .width(700)
         .height(300)
-        .x(d3.scale.linear().domain([minPlanetMass, maxPlanetMass]))
-        //I intentionally decided to exclude data for Stellar Radius > 4.SolarrRadius (only removes 4 planets in the sample) so that the scale is smoother
+        .x(d3.scale.linear().domain([minPlanetRadius, maxPlanetRadius]))
+        //I intentionally decided to exclude data for StellarRadius > 6.SolarRadius (only removes 4 planets in the sample) so that the scale is smoother
         .y(d3.scale.linear().domain([0, 6]))
-        .brushOn(false)
-        .symbolSize(2)
-        .clipPadding(1)
         .xAxisLabel("Planet Radius (Earth Radii)")
         .yAxisLabel("Stellar Radius (Solar Radii)")
         .title(function(d) {
             return " Planet Radius = " + d.key[0] + " - Stellar Radius = " + d.key[1];
         })
-        .colorAccessor(function(d) {
-            return d.key[2];
-        })
-        .colors(keplerFlagColors)
+        .brushOn(false)
+        .clipPadding(1)
+        .dimension(planetStellarRadiusDim)
+        .legend(dc.legend().x(550).y(15).itemHeight(8).gap(5))
         .useViewBoxResizing(true)
-        .dimension(planetStellarMassDim)
-        .group(planetStellarMassDimGroup)
-        .margins({ top: 10, right: 50, bottom: 75, left: 75 });
+        .compose([
+            dc.scatterPlot(chart)
+            .symbolSize(2)
+            .group(scatterGroup0, "Outside Kepler Scope")
+            .colors("black"),
+            dc.scatterPlot(chart)
+            .symbolSize(2)
+            .group(scatterGroup1, "Kepler Scope")
+            .colors("steelblue")
+        ]);
+
 }
 
 /*------------------------------------------------------------ Data Table-----*/
