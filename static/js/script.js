@@ -1,12 +1,28 @@
 $(document).ready(function() {
 
-    // Helper function to reset checkbox button to "checked"
+    // Set default parametres for the page when loaded
+    
+    // By default hide  the data table
+    $("#recap-data").hide();
+    $("#nav-item-table").hide();
+    
+    // By default hide cumulative chart for years of discovery
+    $("#cumulative-chart").hide();
+
+    // Helper function to set checkbox button to "checked"
     function resetButtonChecked(element) {
         if (!$(element).is(':checked')) {
             $(element).click();
         }
     }
-
+    
+    // Helper function to set checkbox button to "unchecked"
+    function resetButtonUnchecked(element) {
+        if ($(element).is(':checked')) {
+            $(element).click();
+        }
+    }
+    
     // Clear all filters on dashboard and modal form to start over
     $('.reset-filters').click(function() {
 
@@ -14,7 +30,7 @@ $(document).ready(function() {
         dc.renderAll();
 
         // Reset modal form to default settings $("input:checkbox")
-        resetButtonChecked("#switchTable");
+        resetButtonUnchecked("#switchTable");
         resetButtonChecked("#switchDataType");
         resetButtonChecked("#switchCorr1");
         resetButtonChecked("#switchCorr2");
@@ -25,7 +41,7 @@ $(document).ready(function() {
     // Automatically redirect user to "discovery" section when clicking modal button
     $('#button-modal').click(function() {
         $('#myModal').modal('hide');
-        $(document).scrollTop($('#discovery').offset().top);
+        $(document).scrollTop($('#intro').offset().top);
     });
 
     // Display/hide "Data Table" section

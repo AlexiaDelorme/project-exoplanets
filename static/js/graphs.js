@@ -786,7 +786,7 @@ function show_mass_radius_correlation(ndx) {
 
     var planetMassDim = ndx.dimension(dc.pluck("pl_masse"));
 
-    // To set domain we need to determine Max/Min for Planet Mass
+    // To set domain we need to determine Max/Min
     var minPlanetMass = planetMassDim.bottom(1)[0].pl_masse;
     var maxPlanetMass = planetMassDim.top(1)[0].pl_masse;
 
@@ -1007,7 +1007,9 @@ function show_radius_correlation(ndx) {
 /*------------------------------------------------------------ Data Table-----*/
 
 function showTable(ndx) {
+    
     var dim = ndx.dimension(dc.pluck("pl_hostname"));
+    
     dc.dataTable("#data-table")
         .dimension(dim)
         .group(function(d) {
