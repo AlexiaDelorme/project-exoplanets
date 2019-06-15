@@ -8,6 +8,7 @@ The interface enables the user to collect diverse information related to the det
 
 The current deployed version can be found at [here](https://alexiadelorme.github.io/project-exoplanets/).
 
+
 ## UX
 
 This dashboard is built for users who have an interest in Astrophysics and specifically exoplanets and would like to quickly analyze and collect information on the most recent and confirmed exoplanets published by the NASA Exoplanet Science Institute. 
@@ -26,6 +27,7 @@ It allows users to refine a large sample of more than 3900 exoplanets thanks to 
 ### Wireframes
 
 <img src="..." align=top width=250>
+ 
  
 ## Features
 
@@ -80,6 +82,7 @@ It allows users to refine a large sample of more than 3900 exoplanets thanks to 
 ###### xxx
 - xxx 
 
+
 ## Technologies Used
 
 ##### [Balsamiq](https://balsamiq.com/) 
@@ -111,7 +114,7 @@ It allows users to refine a large sample of more than 3900 exoplanets thanks to 
 * [jQuery](https://jquery.com/) to simplify the DOM manipulation based on the user input via the modal form or when the reset button is clicked.
 * [JSHint](https://jshint.com/) ??????? IS FOR CHECKING ERROS AND CODE QUALITY ??????? TBD
 
-##### Picasa
+##### [Picasa](https://picasa.google.com/)
 - I used Picasa to resize and change the orientation of my background image.
 
 ##### [ImageOptim](https://imageoptim.com/mac)
@@ -124,17 +127,27 @@ It allows users to refine a large sample of more than 3900 exoplanets thanks to 
 - I used Git for version control. 
 - I used GitHub to store my code in a remote repository, deploy and host my website.
 
+
 ## Testing ####
 
 #### Known Issues
 * xxx
 * xxx
 
+
 ## Deployment
 
-This site is hosted using GitHub and directly deployed using the master branch with a unique contributor being myself. 
-You can access to my deployed website through the following link. 
-You can also access to my source code directly through the repository I have created through the following link.
+I used the Cloud 9 IDE to develop my projecct and used git for version control. I used GitHub as a remote repository to store my code, deploy and host my website.
+- This is where you can access my [deployed website](https://alexiadelorme.github.io/project-exoplanets/)
+- This is where you can access my [repository](https://github.com/AlexiaDelorme/project-exoplanets)
+
+**Steps to deploy my website using GitHub:**
+1. I created a new repository for this project: ["project-exoplanets"](https://github.com/AlexiaDelorme/project-exoplanets).
+2. I pushed my code from Cloud9 to this repository (after linking it to this new repository).
+3. I click on the "Settings" tab (top right menu item of navigation bar).
+4. I scrolled down to "GitHub Pages" section, in the "Source" sub-section, I selected "master branch" in the dropdown box.
+5. Then waited just a minute and was able to access the deployed version of my project following this URL [https://alexiadelorme.github.io/project-exoplanets/](https://alexiadelorme.github.io/project-exoplanets/).
+
 
 ## Credits
 
@@ -142,7 +155,7 @@ You can also access to my source code directly through the repository I have cre
 - The structure of the project and the selection of the data as well as the way they are displayed were entitely done by myself (ie. choice of data, choice of graphs etc...).
 - The content in the introduction section and specifically the definition of exoplanet is excerpted from this [NASA Webpage](https://solarsystem.nasa.gov/planets/in-depth/).
 - The data on which this project was built were obtained thanks to the [NASA Exoplanet Archive](https://exoplanetarchive.ipac.caltech.edu/cgi-bin/TblView/nph-tblView?app=ExoTbls&config=planets).
-- *Comment regarding building my dataset* :
+- *Coments on how I built my dataset:*
     - Before building my own dataset, I analysed each data field provided in the auto-populated "confirmed planets" file directly downloadable on the NASA Exoplanet Archive website. I was able to identify what data were relevant for my project thanks to the very detailed information on table data columns provided [here](https://exoplanetarchive.ipac.caltech.edu/docs/API_exoplanet_columns.html).
     - I was then able to select what data I wanted to use for my project by reviewing all the possible information available from their database. To be honest, this part took me very long and I deeply thank my dad, who is a Physicist, for his patience in going through all the information with me!
     - I received inspiration for the choice of correlation graphs thanks to the pre-generated plots available in the NASA Exoplanet Archive website [here](https://exoplanetarchive.ipac.caltech.edu/exoplanetplots/).
@@ -155,12 +168,12 @@ You can also access to my source code directly through the repository I have cre
 - I used [Font Awesome](https://fontawesome.com/v4.7.0/icons/) for the email and git icons used in the footer.
 
 ### Acknowledgements ####
-- I would like to thank my mentor at Code Institute, Kaushik Barodiya, for his guidance and ideas as well as his patience (especially during the data selection stage!). 
-- Thanks to the Tutor team for their patience and for helping me identify the "known" bug in the DC.js library, where it is not possible to display legends in classical scatter plot graphs. I was therefore able to implement a composite chart and solve this issue thanks to this [example](https://github.com/dc-js/dc.js/blob/master/web/examples/multi-scatter.html) they provided me with. 
-- I would like to also thank the slack community at Code Institute for their support along the way and a special thanks to "Dave L _lead" who held a slack call on data vizualisation (such a good timing as I was working on my milestone project). This session was very helpful for me to overcome some issues I encountered at the end of my project. He also shared his code for his [second milestone project](https://github.com/steview-d/superhero-dashboard) which was also very useful to me and many other students!
-- I deeply thanks the contributors and authors of the [dc.js library](https://dc-js.github.io/dc.js/docs/html/index.html) and this very useful [FAQ page](https://github.com/dc-js/dc.js/wiki/FAQ). These two wepages were basically my encyclopedias while buidling my project!
-
-
-
-
-
+- I would like to thank my mentor at [Code Institute](https://codeinstitute.net/), Kaushik Barodiya, for his guidance and ideas as well as his patience (especially during the data selection stage!). 
+- Many thanks to the Tutor team at [Code Institute](https://codeinstitute.net/) for their patience and for helping me identify the "known" bug in the DC.js library, where it is not possible to display legends in classical scatter plot graphs. I was therefore able to implement a composite chart and solve this issue thanks to this [example](https://github.com/dc-js/dc.js/blob/master/web/examples/multi-scatter.html) they provided me with. 
+- I would like to also thank the slack students community at [Code Institute](https://codeinstitute.net/) for their support along the way and a special thanks to "Dave L _lead" who held a slack call on data vizualisation (such a good timing as I was working on my milestone project). This session was very helpful for me to overcome some issues I encountered at the end of my project. He also shared his code for his [second milestone project](https://github.com/steview-d/superhero-dashboard) which was also very useful to me and many other students!
+- I deeply thank the contributors and authors of the [dc.js library](https://dc-js.github.io/dc.js/docs/html/index.html) and this very useful [FAQ page](https://github.com/dc-js/dc.js/wiki/FAQ). Those were basically my encyclopedia while buidling this project!
+- And finally I would like to thank my dad who shared with me his passion for Astrophysics and inspired me for building this project on exoplanets.
+- **Last but not least** many thanks to all the people that are passionate about Astronomy and have helped me understand so many things on our universe - of course Newton, Einstein, Planck... - but a **special thanks** to:
+    - The NASA agency for providing so many free resources online available to the general public. 
+    - The French physicist Christophe Galfard for writing his amazing book *The Universe in your hand*
+    - The French aerospace engineer Thomas Pesquet for sharing his wonderful experience on the International Space Station and inspiring so many people to dream bigger!
