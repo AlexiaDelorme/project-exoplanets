@@ -1,13 +1,26 @@
 $(document).ready(function() {
 
     // Set default parametres for the page when loaded
-    
+
     // By default hide  the data table
     $("#recap-data").hide();
     $("#nav-item-table").hide();
-    
+
     // By default hide cumulative chart for years of discovery
     $("#cumulative-chart").hide();
+    
+    // By default hide the restart button in the nav bar
+    //$('#nav-restart-button').hide();
+
+    // Testing Show "restart" button when home page no longer visible
+    $(document).scroll(function() {
+        if ($('#home').isOnScreen() == true) {
+            $('#nav-restart-button').hide();
+        }
+        else {
+            $('#nav-restart-button').show();
+        }
+    });
 
     // Helper function to set checkbox button to "checked"
     function resetButtonChecked(element) {
@@ -15,14 +28,14 @@ $(document).ready(function() {
             $(element).click();
         }
     }
-    
+
     // Helper function to set checkbox button to "unchecked"
     function resetButtonUnchecked(element) {
         if ($(element).is(':checked')) {
             $(element).click();
         }
     }
-    
+
     // Clear all filters on dashboard and modal form to start over
     $('.reset-filters').click(function() {
 
@@ -38,7 +51,7 @@ $(document).ready(function() {
 
     });
 
-    // Automatically redirect user to "discovery" section when clicking modal button
+    // Automatically redirect user to "intro" section when clicking modal button
     $('#button-modal').click(function() {
         $('#myModal').modal('hide');
         $(document).scrollTop($('#intro').offset().top);
@@ -102,7 +115,7 @@ $(document).ready(function() {
         }
     });
 
-    //Hide Correlation menu item in navbar when the three checkboxes for correlation graphs have been unchecked
+    // Hide Correlation menu item in navbar when the three checkboxes for correlation graphs have been unchecked
     $(".correlation-checkbox").change(function() {
         if (!$(".correlation-checkbox").is(':checked')) {
             $("#nav-item-correlation").hide();

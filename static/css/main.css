@@ -13,6 +13,10 @@ svg {
   margin-top: -125px;
   padding-top: 125px; }
 
+.style-button {
+  border: 1px solid;
+  margin-right: 5px; }
+
 /*-------------------------------------------------------------- Home Page ---*/
 .home-page {
   background: url("img/bg-1.jpg") no-repeat center center fixed, #999;
