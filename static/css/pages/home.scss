@@ -70,6 +70,10 @@ h6 {
     margin-bottom: 5px;
 }
 
+.sample-date {
+    font-size: 0.7em;
+}
+
 
 /*----------------------------------------------------------------- Charts ---*/
 
@@ -96,7 +100,7 @@ text.barLabel {
 #orbital-period text.barLabel,
 #stellar-age text.barLabel,
 #stellar-distance text.barLabel {
-    font-size: 0.7em;
+    font-size: 0.6em;
 }
 
 .dc-legend {

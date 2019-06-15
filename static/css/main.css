@@ -65,6 +65,9 @@ h6 {
 .paragraph {
   margin-bottom: 5px; }
 
+.sample-date {
+  font-size: 0.7em; }
+
 /*----------------------------------------------------------------- Charts ---*/
 #year-of-discovery .x.axis text,
 #cumulative-year-of-discovery .x.axis text,
@@ -82,7 +85,7 @@ text.barLabel {
 #orbital-period text.barLabel,
 #stellar-age text.barLabel,
 #stellar-distance text.barLabel {
-  font-size: 0.7em; }
+  font-size: 0.6em; }
 
 .dc-legend {
   font-size: 0.5em; }
