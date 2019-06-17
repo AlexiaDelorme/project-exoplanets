@@ -218,20 +218,22 @@ function display_average_stellar_age_sample(ndx) {
     var avStellarAge = ndx.groupAll().reduce(add_item, remove_item, initialise);
 
     function add_item(p, v) {
+        var age = convert_string_to_float(v.st_age);
         p.count++;
-        p.total += parseFloat(v.st_age);
+        p.total += age;
         p.average = p.total / p.count;
         return p;
     }
 
     function remove_item(p, v) {
         p.count--;
+        var age = convert_string_to_float(v.st_age);
         if (p.count == 0) {
             p.total = 0;
             p.average = 0;
         }
         else {
-            p.total -= parseFloat(v.st_age);
+            p.total -= age;
             p.average = p.total / p.count;
         }
         return p;
@@ -358,6 +360,9 @@ function show_discovery_location(ndx) {
 
 function show_discovery_facility(ndx) {
 
+    var pieChartColors = d3.scale.ordinal()
+        .range(["lightSteelBlue", "steelBlue", "lightblue", "orange", "seaGreen", "paleVioletRed", "navy", "oldLace", "lightgrey"]);
+
     var dim = ndx.dimension(dc.pluck('pl_facility'));
     var group = remove_blanks(dim.group(), "");
 
@@ -372,6 +377,7 @@ function show_discovery_facility(ndx) {
             return d.value + " planets discovered by " + d.key;
         })
         .useViewBoxResizing(true)
+        .colors(pieChartColors)
         .on('pretransition', function(chart) {
             chart.selectAll('text.pie-slice').text(function(d) {
                 return show_slice_percent(d.data.key, d.endAngle, d.startAngle);
