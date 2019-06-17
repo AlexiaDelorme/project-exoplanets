@@ -32,27 +32,29 @@ It allows users to refine a large sample of more than 3900 exoplanets thanks to 
 ## Features
 
 ### Current Features
-###### Feature 1 - Navigation bar with "Reset Filters" button 
-- The navigation bar contains (from left to right):
-    * The name of the website that when clicks redirect to the data dashboard.
-    * Each navigation item in the nav menu returns to a specific section in the data dashboard.
-    * The "Reset Filters' button enables the user to reset filters for the entire dashboard as well as setting back to the default parametres for the modal form. 
-- The navigation bar is fixed to the top which enables the user to access any section of the dashboard without scrolling up or down.This is very useful as the dashboard is quite long especially if the user is checking at data on a particular planet in the table and working on a large sample. 
 
-###### Feature 2 - Home page and modal form
+###### Feature 1 - Home page and modal form
 - On the home page, when the button "Start Here" is clicked, a modal form window popped up. 
 - The modal form enables the user to refine its sample by adding filters on various criteria (regarding the detection of the planet).
 - The modal form also enables the user to select if he/she wants to display the data table (gathering individual information on the planets), the type of data to plot (cumulative or non-cumulative), what correlations graph to display. 
 - The "Reset Filters" button on modal form achieves the same goal as the one on the navigation bar (they share the same class). It enables the user to reset filters directly when the modal form is opened. It prevents the user from having to exit the modal form, clicks the reset button, and then reopens the form. 
 - The "Save & Close' button on modal form enables the user to exit the modal and be directly redirected to the dashboard section.
 
+###### Feature 2 - Navigation bar with "Reset Filters" button 
+- The navigation bar contains (from left to right):
+    * The name of the website that when clicks redirect to the data dashboard.
+    * Each navigation item in the nav menu returns to a specific section in the data dashboard.
+    * The "Reset Filters' button enables the user to reset filters for the entire dashboard as well as setting back to the default parametres for the modal form.
+    * The "Restart Here" button enables the user to re-open the modal form when the user has scrolled down and the home page is no longer on screen. This prevents the user from having to click "home", or from scrolling back up to the home section to reopen the modal form. 
+- The navigation bar is fixed to the top which enables the user to access any section of the dashboard without scrolling up or down. This is very useful especially if the user is working on a large sample and checking at particular data in the table.
+
 ###### Feature 3 - Introduction box
 - The introduction jumbotron box provides the user with information regarding exoplanets and definition. 
-- The user can click the "Learn More" button and to read more information on the NASA website.
+- The user can click the "Learn More" button to read more information on the NASA website.
 - The user is also provided with the link of my data source "NASA Exoplanet Archive" to investigate further on available data. 
 
 ###### Feature 4 - Stat on the sample
-- The user is provided with general figures on the sample in an aggregated format which enables him to understand the scope of its sample.
+- The user is provided with general figures on the sample in an aggregated format which enables him/her to understand the scope of its sample.
 - Here is a list of what information are given: 
     * the total number of planets in the sample,
     * the average stellar age, (TO BE FIXED),
@@ -60,7 +62,11 @@ It allows users to refine a large sample of more than 3900 exoplanets thanks to 
     * the percentage of planets that were discovered from space or ground. 
 
 ###### Feature 5 - Discovery section
-- xxx
+The discovery section groups all the charts related to the discovery of the planets.
+- discovery location : this is a pie chart that provides the user with the proportion of planets that were detected from devices loacated on earth, on space, or both. 
+- discovery facility: this is a pie chart that provides the user with the breakdown of planets (in %) by observatory. As the number of observatory entities is quite significant, the chart only shows the top 8 observatory facilities to improve readibility (the rest are flagged under "others"). 
+- detection method: this is a row charts that provides the user with the number of planets that were detected by a specific method. There is a total of 7 distinct detection methods.  
+- detection by year (cumulative or non-cumulative): this is a stacked bar chart that provides the number of planets discovered by year with a breakdown by detection method. To improve user experience, the same colour chart was used for the "detection method" row chart and this "detections by year" bar chart. The user can see the data on a cumulative or non-cumlative basis according to the data type he/she chose in the modal form. By default, it is set to non-cumulative. 
 
 ###### Feature 6 - Features section
 - xxx
@@ -69,12 +75,20 @@ It allows users to refine a large sample of more than 3900 exoplanets thanks to 
 - xxx
 
 ###### Feature 8 - Data Table
-- xxx
+- In the modal form, the user can select if he/she wants to display a table with individual information for each planet in the sample. For a better user experience, the data table is by default unchecked as the original sample contains almost 4000 exoplanets so would be a poor user experience to have an endless page. 
+- The user therefore have the option to display this data table which might be useful to collect information on individual planets for a smaller sample after applying some specific filters. The user has access to the following data:hosting stellar name (there was no need to display the name of the planets has it is the hosting stellar name + a letter), year of discovery, discovery method, orbital period, stellar distance, and stellar age. 
 
 ###### Feature 9 - Footer
-- xxx
+The footer section at the bottom of the page provides the user with my name, email address (automatically open an email application on click), a link to my Git account and the link to the [NASA Exoplanet Archive](https://exoplanetarchive.ipac.caltech.edu/index.html) from which I extracted my data. 
 
 ### Future Features
+
+*DRAFT:*
+- Link to the NASA API
+- Add more data on exoplanets
+- let the user choose the correlation they need
+- add markers to provide a referentiel to the user (Ex: age of the sun, Earth is here, Gaz planets...)
+- make it more interactive and fun to learn from, so that it can be used to a wide range of users  
 
 ###### xxxx
 - xxx
