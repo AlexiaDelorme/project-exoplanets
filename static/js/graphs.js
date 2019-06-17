@@ -847,12 +847,12 @@ function show_mass_radius_correlation(ndx) {
         .compose([
             dc.scatterPlot(chart)
             .symbolSize(2)
-            .group(scatterGroup0, "Outside Kepler Scope")
-            .colors("black"),
+            .group(scatterGroup1, "Kepler Scope")
+            .colors("lightSteelBlue"),
             dc.scatterPlot(chart)
             .symbolSize(2)
-            .group(scatterGroup1, "Kepler Scope")
-            .colors("steelblue")
+            .group(scatterGroup0, "Outside Kepler Scope")
+            .colors("black")
         ]);
 
 }
@@ -921,12 +921,12 @@ function show_mass_correlation(ndx) {
         .compose([
             dc.scatterPlot(chart)
             .symbolSize(2)
-            .group(scatterGroup0, "Outside Kepler Scope")
-            .colors("black"),
+            .group(scatterGroup1, "Kepler Scope")
+            .colors("lightSteelBlue"),
             dc.scatterPlot(chart)
             .symbolSize(2)
-            .group(scatterGroup1, "Kepler Scope")
-            .colors("steelblue")
+            .group(scatterGroup0, "Outside Kepler Scope")
+            .colors("black")
         ]);
 }
 
@@ -994,12 +994,12 @@ function show_radius_correlation(ndx) {
         .compose([
             dc.scatterPlot(chart)
             .symbolSize(2)
-            .group(scatterGroup0, "Outside Kepler Scope")
-            .colors("black"),
+            .group(scatterGroup1, "Kepler Scope")
+            .colors("lightSteelBlue"),
             dc.scatterPlot(chart)
             .symbolSize(2)
-            .group(scatterGroup1, "Kepler Scope")
-            .colors("steelblue")
+            .group(scatterGroup0, "Outside Kepler Scope")
+            .colors("black")
         ]);
 
 }
@@ -1007,9 +1007,9 @@ function show_radius_correlation(ndx) {
 /*------------------------------------------------------------ Data Table-----*/
 
 function showTable(ndx) {
-    
+
     var dim = ndx.dimension(dc.pluck("pl_hostname"));
-    
+
     dc.dataTable("#data-table")
         .dimension(dim)
         .group(function(d) {
