@@ -8,17 +8,20 @@ $(document).ready(function() {
 
     // By default hide cumulative chart for years of discovery
     $("#cumulative-chart").hide();
-    
-    // By default hide the restart button in the nav bar
-    //$('#nav-restart-button').hide();
 
     // Testing Show "restart" button when home page no longer visible
-    $(document).scroll(function() {
-        if ($('#home').isOnScreen() == true) {
-            $('#nav-restart-button').hide();
+
+    // By default hide the restart button in navbar
+    $('#nav-restart-button').hide();
+    var topReachedSection = $("#intro").offset().top;
+
+    $(window).scroll(function() {
+        if ($(window).scrollTop() > topReachedSection) {
+            // Show button when intro section is passed
+            $('#nav-restart-button').show();
         }
         else {
-            $('#nav-restart-button').show();
+            $('#nav-restart-button').hide();
         }
     });
 
