@@ -124,4 +124,18 @@ footer {
     color: orange;
     text-decoration: none; }
 
+/*---------------------------------------------------------- Media Queries ---*/
+@media only screen and (max-width: 600px) {
+  h1.main-header {
+    font-size: 2.5em; }
+
+  h2 {
+    font-size: 1.5em; }
+
+  h4 {
+    font-size: 1.3em; }
+
+  h3 {
+    font-size: 1.1em; } }
+
 /*# sourceMappingURL=main.css.map */
