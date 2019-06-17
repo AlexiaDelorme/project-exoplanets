@@ -218,22 +218,20 @@ function display_average_stellar_age_sample(ndx) {
     var avStellarAge = ndx.groupAll().reduce(add_item, remove_item, initialise);
 
     function add_item(p, v) {
-        var age = convert_string_to_float(v.st_age);
         p.count++;
-        p.total += age;
+        p.total += v.st_age;
         p.average = p.total / p.count;
         return p;
     }
 
     function remove_item(p, v) {
         p.count--;
-        var age = convert_string_to_float(v.st_age);
         if (p.count == 0) {
             p.total = 0;
             p.average = 0;
         }
         else {
-            p.total -= age;
+            p.total -= v.st_age;
             p.average = p.total / p.count;
         }
         return p;
@@ -519,25 +517,32 @@ function show_year_of_discovery(ndx) {
 }
 
 // Testing function to group cumulative data with a custom reducer
-/*
+
 function accumulate_detection_by_year(dimension, detection_method) {
-    
-    if (v.pl_discmethod == detection_method) {
-        return {
-            all: function() {
-                var cumulate = 0;
-                return group.all().map(function(d) {
-                    cumulate += d.value;
-                    return { key: d.key, value: cumulate };
-                });
+
+    return dimension.group().reduce(
+        function(p, v) {
+            p.total++;
+            if (v.pl_discmethod == detection_method) {
+                p.match++;
+                p.sum += p.match;
             }
-        };
-    }
-    else {
-        return "";
-    }
+            return p;
+        },
+        function(p, v) {
+            p.total--;
+            if (v.pl_discmethod == detection_method) {
+                p.match--;
+                p.sum -= p.match;
+            }
+            return p;
+        },
+        function() {
+            return { total: 0, match: 0, sum: 0 };
+        }
+    );
 }
-*/
+
 
 // Create a variable colors to change default colors for bar charts
 var barChartColors = d3.scale.ordinal()
@@ -546,7 +551,9 @@ var barChartColors = d3.scale.ordinal()
 function show_cumulative_year_of_discovery(ndx) {
 
     var dim = ndx.dimension(dc.pluck('pl_disc'));
-    var group = accumulate_group(dim.group());
+    //var group = accumulate_group(dim.group());
+    var transitGroup = accumulate_detection_by_year(dim, "Transit");
+    var radialVelocityGroup = accumulate_detection_by_year(dim, "Radial Velocity");
 
     dc.barChart("#cumulative-year-of-discovery")
         .width(800)
@@ -560,13 +567,25 @@ function show_cumulative_year_of_discovery(ndx) {
         .clipPadding(15)
         .transitionDuration(1500)
         .useViewBoxResizing(true)
-        //.legend(dc.legend().x(80).y(20).itemHeight(8).gap(5))
+        .legend(dc.legend().x(80).y(20).itemHeight(8).gap(5))
+        /*
         .colorAccessor(function(d) {
             return d.key;
         })
+        */
         .colors(barChartColors)
         .dimension(dim)
-        .group(group, "Total");
+        //.group(group, "Total")
+        .group(transitGroup, "Transit")
+        .stack(radialVelocityGroup, "Radial Velocity")
+        .valueAccessor(function(d) {
+            if (d.value.total > 0) {
+                return d.value.sum;
+            }
+            else {
+                return 0;
+            }
+        });
 
 }
 
