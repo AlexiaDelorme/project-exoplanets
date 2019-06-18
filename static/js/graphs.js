@@ -199,7 +199,7 @@ function display_total_planets_sample(ndx) {
     );
 
     dc.numberDisplay('#total-planets')
-        .formatNumber(d3.format('.1'))
+        .formatNumber(d3.format())
         .valueAccessor(function(d) {
             if (d.total == 0) {
                 return 0;
@@ -218,19 +218,23 @@ function display_average_stellar_age_sample(ndx) {
     var avStellarAge = ndx.groupAll().reduce(add_item, remove_item, initialise);
 
     function add_item(p, v) {
-        p.count++;
-        p.total += v.st_age;
-        p.average = p.total / p.count;
+        if (v.st_age == "") {
+            p.total += 0;
+        }
+        else {
+            p.count++;
+            p.total += v.st_age;
+            p.average = p.total / p.count;
+        }
         return p;
     }
 
     function remove_item(p, v) {
-        p.count--;
-        if (p.count == 0) {
-            p.total = 0;
-            p.average = 0;
+        if (v.st_age == "") {
+            p.total -= 0;
         }
         else {
+            p.count--;
             p.total -= v.st_age;
             p.average = p.total / p.count;
         }
@@ -242,9 +246,14 @@ function display_average_stellar_age_sample(ndx) {
     }
 
     dc.numberDisplay('#average-stellar-age')
-        .formatNumber(d3.format('.1'))
+        .formatNumber(d3.format())
         .valueAccessor(function(d) {
-            return d.average;
+            if (d.count == 0) {
+                return 0;
+            }
+            else {
+                return d.average;
+            }
         })
         .group(avStellarAge);
 
