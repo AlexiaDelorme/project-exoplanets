@@ -1,18 +1,19 @@
 $(document).ready(function() {
 
-    // Set default parametres for the page when loaded
+/*---------------------- Set default parametres for the page when loaded -----*/
 
-    // By default hide  the data table
+    // By default hide the data table
     $("#recap-data").hide();
     $("#nav-item-table").hide();
 
     // By default hide cumulative chart for years of discovery
     $("#cumulative-chart").hide();
 
-    // Show "restart" button when home page no longer visible
-
+/*--------------- Show "restart" button when home page no longer visible -----*/
+    
     // By default hide the restart button in navbar
     $('#nav-restart-button').hide();
+    
     var topReachedSection = $("#intro").offset().top;
 
     $(window).scroll(function() {
@@ -25,10 +26,11 @@ $(document).ready(function() {
         }
     });
 
+    
+/*-------------------- Show definition div when question mark is clicked -----*/
 
     // By default hide divs containing definitions
     $('#distance-definition-collapsible').hide();
-    // Show definition div when question mark is clicked
 
     $('#question-parsecs').on({
         mouseenter: function() {
@@ -42,6 +44,7 @@ $(document).ready(function() {
         }
     });
 
+/*----------------------------------------- Setting reset filters button -----*/
 
     // Helper function to set checkbox button to "checked"
     function resetButtonChecked(element) {
@@ -71,6 +74,8 @@ $(document).ready(function() {
         resetButtonChecked("#switchCorr3");
 
     });
+    
+/*------------------------- Setting modal form interactions with the DOM -----*/
 
     // Automatically redirect user to "intro" section when clicking modal button
     $('#button-modal').click(function() {
