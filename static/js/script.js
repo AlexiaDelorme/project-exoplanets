@@ -9,7 +9,7 @@ $(document).ready(function() {
     // By default hide cumulative chart for years of discovery
     $("#cumulative-chart").hide();
 
-    // Testing Show "restart" button when home page no longer visible
+    // Show "restart" button when home page no longer visible
 
     // By default hide the restart button in navbar
     $('#nav-restart-button').hide();
@@ -24,6 +24,24 @@ $(document).ready(function() {
             $('#nav-restart-button').hide();
         }
     });
+
+
+    // By default hide divs containing definitions
+    $('#distance-definition-collapsible').hide();
+    // Show definition div when question mark is clicked
+
+    $('#question-parsecs').on({
+        mouseenter: function() {
+            $(this).css("font-size", "1.5em");
+        },
+        mouseleave: function() {
+            $(this).css("font-size", "1em");
+        },
+        click: function() {
+            $('#distance-definition-collapsible').toggle();
+        }
+    });
+
 
     // Helper function to set checkbox button to "checked"
     function resetButtonChecked(element) {
