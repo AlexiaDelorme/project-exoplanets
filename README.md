@@ -63,16 +63,28 @@ It allows users to refine a large sample of more than 3900 exoplanets thanks to 
 
 ###### Feature 5 - Discovery section
 The discovery section groups all the charts related to the discovery of the planets.
-- discovery location : this is a pie chart that provides the user with the proportion of planets that were detected from devices loacated on earth, on space, or both. 
-- discovery facility: this is a pie chart that provides the user with the breakdown of planets (in %) by observatory. As the number of observatory entities is quite significant, the chart only shows the top 8 observatory facilities to improve readibility (the rest are flagged under "others"). 
-- detection method: this is a row charts that provides the user with the number of planets that were detected by a specific method. There is a total of 7 distinct detection methods.  
-- detection by year (cumulative or non-cumulative): this is a stacked bar chart that provides the number of planets discovered by year with a breakdown by detection method. To improve user experience, the same colour chart was used for the "detection method" row chart and this "detections by year" bar chart. The user can see the data on a cumulative or non-cumlative basis according to the data type he/she chose in the modal form. By default, it is set to non-cumulative. 
+- discovery location - pie chart: it provides the user with the proportion of planets that were detected from devices loacated on earth, on space, or both. 
+- discovery facility - pie chart: it provides the user with the breakdown of planets (in %) by observatory. As the number of observatory entities is quite significant, the chart only shows the top 8 observatory facilities to improve readibility (the rest are flagged under "others"). 
+- detection method - row chart: it provides the user with the number of planets that were detected by a specific method. There is a total of 7 distinct detection methods reprensented. 
+- detection by year (cumulative or non-cumulative) - bar chart: this is a stacked bar chart that provides the number of planets discovered by year with a breakdown by detection method. To improve user experience, the same colour chart was used for the "detection method" row chart and this "detections by year" bar chart. The user can see the data on a cumulative or non-cumlative basis according to the data type he/she chose in the modal form. By default, it is set to non-cumulative. 
 
 ###### Feature 6 - Features section
-- xxx
+The features section groups all the charts related to the features of the planets.
+- orbital period - bar chart: it groups the number of planets according to their orbital period ranging from period < 1 day to > 1 year. 
+- number of planets in system - line graph: this graph shows the number of planets for which we have identified (or not) other planet(s) in the same planetary system. 
+- distance to the planetary system - bar chart: it groups the number of planets according to their distance (distance of the hosting stellar from the solar system). It is expressed in "parsecs" which is a unit of distance used in astronomy. 
+- stellar age - bar chart: it displays the number of planets according to the age of their corresponding hosting stellar. 
 
 ###### Feature 7 - Correlations section
-- xxx
+- This section is composed of three scatter plot charts that provide the user with two-dimensional representation between certain metrics of the planets and its stellar. This enables the user to establish (or not) correlations between some know metrics.
+- For each scatter plot, the user has the possibility to identify planets that were (or not) discovered during the Kepler mission.
+- As previously said, when the user set filters in the modal form, he/she had the possibility to select what correlations graph to display.
+- Axes are labelled and the unit of measure is given to the user so it cannot get confusing. 
+- The user has the possibility to point out to a specific plot and have information for the two dimensions for this specific planet. 
+- The following metrics are represented:
+   * Correlation 1: mass vs radius of the planet, with the mass of the planet reprensented in the x-axis and the radius in the y-axis. Please note that this graph only pertains to planet features. The domain of the x-axis is set using the max and min values but the y-axis was set manually after analysing the data to prevents to avoid the effect of outliers. This increases user readibility and is a process often used in statistical analysis.
+   * Correlation 2: planet mass vs. stellar mass, with the planet mass reprensented in the x-axis and the stellar mass in the y-axis. As it was sone for the previous correlation, the x-axis domain was set using max and min values but the y-axis was set manually to avoir outliers effet. 
+   * Correlation 3: planet radius vs. stellar radius, with the planet radius reprensented in the x-axis and the stellar radius in the y-axis. As it was sone for the previous correlations, the x-axis domain was set using max and min values but the y-axis was set manually to avoir outliers effet. 
 
 ###### Feature 8 - Data Table
 - In the modal form, the user can select if he/she wants to display a table with individual information for each planet in the sample. For a better user experience, the data table is by default unchecked as the original sample contains almost 4000 exoplanets so would be a poor user experience to have an endless page. 
