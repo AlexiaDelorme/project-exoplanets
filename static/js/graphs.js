@@ -6,6 +6,12 @@ function makeGraphs(error, data) {
 
     var ndx = crossfilter(data);
 
+    /* Code provided by tutor team to fix decimal values 
+    not recognised as numbers */
+    for (let d of data) {
+        d.st_age = Number(d.st_age);
+    }
+
     // Sample stats
     display_total_planets_sample(ndx);
     display_average_stellar_age_sample(ndx);
@@ -215,38 +221,32 @@ function display_total_planets_sample(ndx) {
 // Display average stellar age of the sample
 function display_average_stellar_age_sample(ndx) {
 
-    var avStellarAge = ndx.groupAll().reduce(add_item, remove_item, initialise);
-
-    function add_item(p, v) {
-        if (v.st_age == "") {
-            p.total += 0;
+    var avStellarAge = ndx.groupAll().reduce(
+        function(p, v) {
+            /* If statement suggested by tutor team to prevents
+             increasing count when there is a null value */
+            if (v.st_age) {
+                p.count++;
+                p.total += v.st_age;
+                p.average = p.total / p.count;
+            }
+            return p;
+        },
+        function(p, v) {
+            if (v.st_age) {
+                p.count--;
+                p.total -= v.st_age;
+                p.average = p.total / p.count;
+            }
+            return p;
+        },
+        function() {
+            return { count: 0, total: 0, average: 0 };
         }
-        else {
-            p.count++;
-            p.total += v.st_age;
-            p.average = p.total / p.count;
-        }
-        return p;
-    }
-
-    function remove_item(p, v) {
-        if (v.st_age == "") {
-            p.total -= 0;
-        }
-        else {
-            p.count--;
-            p.total -= v.st_age;
-            p.average = p.total / p.count;
-        }
-        return p;
-    }
-
-    function initialise() {
-        return { count: 0, total: 0, average: 0 };
-    }
+    );
 
     dc.numberDisplay('#average-stellar-age')
-        .formatNumber(d3.format())
+        .formatNumber(d3.format(".2s"))
         .valueAccessor(function(d) {
             if (d.count == 0) {
                 return 0;
@@ -256,7 +256,6 @@ function display_average_stellar_age_sample(ndx) {
             }
         })
         .group(avStellarAge);
-
 }
 
 // Display % of planets discovered during the Kepler mission
