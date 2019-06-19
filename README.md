@@ -18,11 +18,11 @@ It allows users to refine a large sample of more than 3900 exoplanets thanks to 
 ### User Stories
  
  * As a user, I want to have access to a clear and simple dashboard for a large sample of exoplanets without having to go through a spreadsheet with equivocal column fields and without any hierarchy in the data. This way I have a glimpse of the general information and trends on exoplanets in an aggregated format. 
+ * As a user, I want to be able to filter according to some features related to either the discovery of the exoplanets (years of discovery, detection method or facility), or analyse data for exoplanets inside/outside the Kepler scope (ie. exoplanets detected during the Kepler mission), choose the type of data, and be able to keep only correlations that are relevant to my analysis. This will enable me to refine my analysis according to some chosen criteria.
  * As a user, I want to easily identify information related to the exoplanet discovery: when was it discovered, how (method of detection), where (from space or from earth), from what entity it was discovered - and also to acess some of their features such as their orbital period and other information related to their planetary system.
  * As a user, I want to be able to access scatter plots on some features of the exoplanets so that I can identify correlations and be able to confirm/infirm some hypothesis on planets.
- * As a user, I want to be able to filter according to some features related to either the discovery of the exoplanets (years of discovery, detection method or facility), or analyse data for exoplanets inside/outside the Kepler scope (ie. exoplanets detected during the Kepler mission), choose the type of data, and be able to keep only correlations that are relevant to my analysis. This will enable me to refine my analysis according to some chosen criteria.
  * As a user, I want to have access to information for individual planets either for the whole sample or for a sample based on some specific criteria.
- * As a user, I want to be able to reset the entire dashboard without having to manually reload the page, reclick on any chart, or re-enter the modal form. 
+ * As a user, I want to be able to reset the entire dashboard without having to manually reload the page, reclick on any chart, or re-enter the modal form. Or, I would like to re-enter the modal form without having to scroll up to the home page. 
 
 ### Wireframes
 
@@ -95,18 +95,18 @@ The footer section at the bottom of the page provides the user with my name, ema
 
 ### Future Features
 
-*DRAFT:*
-- Link to the NASA API
-- Add more data on exoplanets
-- let the user choose the correlation they need
-- add markers to provide a referentiel to the user (Ex: age of the sun, Earth is here, Gaz planets...)
-- make it more interactive and fun to learn from, so that it can be used to a wide range of users  
+Please find below the list of improvements I would like to add to this project:
 
-###### xxxx
-- xxx
+###### Use API for loading data
+- I would like to integrate the NASA API so that the user can update the sample with the latest records available, chose specific coloumn fields for the dataset. 
 
-###### xxx
-- xxx 
+###### Increase interactivity with user
+- Thanks to the previous improvement, I could add more interactivity in the choice of data the user wants to display in the dashboard. For example: instead of chosing between some pre-plotted scatter plots, the user could choose the data he wants to plot for correlations (mass vs. density, orbital period vs. mass etc...). This would add a lot more flexibility and could answer the needs of more advanced audience in Astrophysics.
+
+###### Add indicators on graphs
+- I also would like to add markers/indications to provide a referentiel to the user regarding the data that are being displayed (Example: display the age of the sun in the stellar age graph...)
+
+*All those improvements could make my project even more fun to learn from but also could be useful for a wide range of users.*
 
 
 ## Technologies Used
@@ -138,7 +138,7 @@ The footer section at the bottom of the page provides the user with my name, ema
     * [Crossfilter.js](http://square.github.io/crossfilter/)
 * [D3-queue.js](https://github.com/d3/d3-queue) to load the data field in CSV format.
 * [jQuery](https://jquery.com/) to simplify the DOM manipulation based on the user input via the modal form or when the reset button is clicked.
-* [JSHint](https://jshint.com/) ??????? IS FOR CHECKING ERROS AND CODE QUALITY ??????? TBD
+* [JSHint](https://jshint.com/) was used to check my JS code quality
 
 ##### [Picasa](https://picasa.google.com/)
 - I used Picasa to resize and change the orientation of my background image.
@@ -154,9 +154,64 @@ The footer section at the bottom of the page provides the user with my name, ema
 - I used GitHub to store my code in a remote repository, deploy and host my website.
 
 
-## Testing ####
+## Testing 
 
-#### Known Issues
+This site was thouroughly tested manually for the following:
+- UX stories
+- code quality
+- compatibility and responsiveness
+- Javascript
+
+Please note that all JavaScript files were extensively tested and documented in a separate file that can be found [here](testing/js). 
+
+#### User stories
+
+This project has been tested multiple times against each user stories previously listed in the UX section.
+
+- The user has easy access to aggregated data in a simple a clean fashion: **Successful**
+- The user can set filters to its sample to taylor the dashboard to a specific need or analysis: **Successful**
+- The user easily identify information related to the exoplanet discovery without any issues: **Successful**
+- The user can identify correlations to verify an hypothesis on exoplanet metrics: **Successful**
+- The user can access information on individual planets when choosing to display the data table in modal form: **Successful**
+- The user can reset the entire dashboard at any points: **Successful**
+
+#### Code quality
+
+###### HTML5
+
+index.html file succesfully passed this [HTML code validator](https://validator.w3.org/) by direct input as per screenshot provided down below.
+
+![HTML5 Code Validator](testing/validators/html.jpg)
+
+###### CSS3
+
+main.css file succesfully passed this [CSS code validator](https://jigsaw.w3.org/css-validator/) by direct input as per screenshot provided down below.
+
+![CSS Code Validator](testing/validators/html.jpg)
+
+###### JS
+
+Details about code validation for JS file has been provided in the folder dedicated to JS testing: [testing/js](testing/js). 
+
+#### Compatibility & Responsiveness
+
+This site was tested across multiple browsers to ensure that all functionalities render well in different browsers:
+- Safari
+- Google Chrome
+- Mozilla Firefox
+- Internet Explorer
+- Opera 
+
+The responsiveness of the webiste was tested thanks to Google Chrome developer tool, the following devices size were tested and all elements were display without issued:
+- Galaxy S5 
+- Pixel 2 / Pixel 2 XL 
+- iPhone 5/SE / iPhone X 
+- iPhone 6/7/8 and Plus
+- iPad / iPad Pro 
+
+So I added media-queries to resize the home page section. TO BE UPDATED
+
+### Known Issues
 * xxx
 * xxx
 
