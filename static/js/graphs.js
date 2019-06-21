@@ -559,9 +559,7 @@ var barChartColors = d3.scale.ordinal()
 function show_cumulative_year_of_discovery(ndx) {
 
     var dim = ndx.dimension(dc.pluck('pl_disc'));
-    //var group = accumulate_group(dim.group());
-    var transitGroup = accumulate_detection_by_year(dim, "Transit");
-    var radialVelocityGroup = accumulate_detection_by_year(dim, "Radial Velocity");
+    var group = accumulate_group(dim.group());
 
     dc.barChart("#cumulative-year-of-discovery")
         .width(800)
@@ -575,25 +573,12 @@ function show_cumulative_year_of_discovery(ndx) {
         .clipPadding(15)
         .transitionDuration(1500)
         .useViewBoxResizing(true)
-        .legend(dc.legend().x(80).y(20).itemHeight(8).gap(5))
-        /*
         .colorAccessor(function(d) {
             return d.key;
         })
-        */
         .colors(barChartColors)
         .dimension(dim)
-        //.group(group, "Total")
-        .group(transitGroup, "Transit")
-        .stack(radialVelocityGroup, "Radial Velocity")
-        .valueAccessor(function(d) {
-            if (d.value.total > 0) {
-                return d.value.sum;
-            }
-            else {
-                return 0;
-            }
-        });
+        .group(group);
 
 }
 
