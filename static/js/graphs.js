@@ -1088,7 +1088,13 @@ function showTable(ndx) {
                         return "N/A";
                     }
                     else {
-                        return convert_string_to_float(d.st_age);
+                        var stellarAge = convert_string_to_float(d.st_age);
+                        if (stellarAge == "0.00") {
+                            return "< 1Gyr";
+                        }
+                        else {
+                            return stellarAge;
+                        }
                     }
                 }
             }
