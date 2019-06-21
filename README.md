@@ -17,12 +17,33 @@ It allows users to refine a large sample of more than 3900 exoplanets thanks to 
  
 ### User Stories
  
- * As a user, I want to have access to a clear and simple dashboard for a large sample of exoplanets without having to go through a spreadsheet with equivocal column fields and without any hierarchy in the data. This way I have a glimpse of the general information and trends on exoplanets in an aggregated format. 
- * As a user, I want to be able to filter according to some features related to either the discovery of the exoplanets (years of discovery, detection method or facility), or analyse data for exoplanets inside/outside the Kepler scope (ie. exoplanets detected during the Kepler mission), choose the type of data, and be able to keep only correlations that are relevant to my analysis. This will enable me to refine my analysis according to some chosen criteria.
- * As a user, I want to easily identify information related to the exoplanet discovery: when was it discovered, how (method of detection), where (from space or from earth), from what entity it was discovered - and also to acess some of their features such as their orbital period and other information related to their planetary system.
- * As a user, I want to be able to access scatter plots on some features of the exoplanets so that I can identify correlations and be able to confirm/infirm some hypothesis on planets.
- * As a user, I want to have access to information for individual planets either for the whole sample or for a sample based on some specific criteria.
- * As a user, I want to be able to reset the entire dashboard without having to manually reload the page, reclick on any chart, or re-enter the modal form. Or, I would like to re-enter the modal form without having to scroll up to the home page. 
+###### User story 1
+ 
+ - As a user, I want to have access to a clear and simple dashboard for a large sample of exoplanets without having to go through a spreadsheet with equivocal column fields and without any hierarchy in the data. 
+ - This way I have a glimpse of the general information and trends on exoplanets in an aggregated format. 
+
+###### User story 2
+
+- As a user, I want to be able to filter according to some features related to either the discovery of the exoplanets (years of discovery, detection method or facility), or analyse data for exoplanets inside/outside the Kepler scope (ie. exoplanets detected during the Kepler mission), choose the type of data, and be able to keep only correlations that are relevant to my analysis. 
+- This will enable me to refine my analysis according to some chosen criteria.
+
+###### User story 3
+
+- As a user, I want to easily identify information related to the exoplanet discovery: when was it discovered, how (method of detection), where (from space or from earth), from what entity it was discovered - and also to acess some of their features such as their orbital period and other information related to their planetary system.
+- This will enable me to refine my analysis and extend my knowledge on the exoplanets contained in my sample. 
+
+###### User story 4
+
+ - As a user, I want to be able to access scatter plots on some features of the exoplanets.
+ - This way, I can identify correlations and be able to confirm/infirm some hypothesis on planets.
+
+###### User story 5
+
+- As a user, I want to have access to information for individual planets either for the whole sample or for a sample based on some specific criteria.
+
+###### User story 6
+
+- As a user, I want to be able to reset the entire dashboard without having to manually reload the page, reclick on any chart, or re-enter the modal form. Or, I would like to re-enter the modal form without having to scroll up to the home page. 
 
 ### Wireframes
 
@@ -157,7 +178,7 @@ Please find below the list of improvements I would like to add to this project:
 ## Testing 
 
 This site was thouroughly tested manually for the following:
-- UX stories
+- User stories
 - code quality
 - compatibility and responsiveness
 - Javascript
@@ -166,36 +187,159 @@ Please note that all JavaScript files were extensively tested and documented in 
 
 #### User stories
 
-This project has been tested multiple times against each user stories previously listed in the UX section.
+This project has been tested multiple times against each user stories previously listed in the UX section. 
 
-- The user has easy access to aggregated data in a simple a clean fashion: **Successful**
-- The user can set filters to its sample to taylor the dashboard to a specific need or analysis: **Successful**
-- The user easily identify information related to the exoplanet discovery without any issues: **Successful**
-- The user can identify correlations to verify an hypothesis on exoplanet metrics: **Successful**
-- The user can access information on individual planets when choosing to display the data table in modal form: **Successful**
-- The user can reset the entire dashboard at any points: **Successful**
+
+###### Testing user story 1 
+
+*User story: The user has easy access to aggregated data in a simple a clean fashion.*
+
+Hypothesis: For this test scenario, the user does not filter using the “start here” modal form. This is simply to test the general purpose of the project.
+
+Test scenario:
+-	Go to the home page
+-	Scroll down to navigate the dashboard, or,
+-	Directly click on the “Exoplanets Dashboard” menu item in the navigation bar to be redirected
+-	You should be provided with the source of the data, definition of a exoplanet…
+-	You should be able to identify general information regarding the sample: total number of planets in the sample, average stellar year…
+-	You should be able to identify through the different graphs relevant information regarding the sample. 
+
+Test result: **Successful**
+
+
+###### Testing user story 2
+
+*User story: For this test scenario, the user can set filters to its sample to tailor the dashboard to a specific need or analysis.*
+
+Hypothesis: the user wants to filter data according to the criteria available in the modal form. 
+
+Test scenario:
+- On the home page, click on the “Start Here” button
+- A modal form should open
+- All the dropdown fields should have the first entry that displays “Select all”
+- For the checkboxes, the “Data table” should be by default “disabled” while, the data type should be set to “non-cumulative”. You can enable/disable by clicking on the checkbox.
+- You should be able to select planets based on exclusive criteria for:
+    - Kepler selector
+    - Location of detection
+- You should be able to select multiple fields for the following criteria:
+    - Years of discovery
+    - Discovering facility
+    - Discovery method
+- The three correlation checkboxes should be, by default, activated. It should be possible to enable or disable displaying these charts by clicking on checkbox.
+- You should be able to reset the initial filters of the modal form by clicking on the left white button at the bottom of the modal form “Reset filters”.
+- You should be able to close the modal form by clicking the right black button at the bottom of the form “Save & close”. 
+-	When modal closed, you should be redirected to the “intro” section giving you the statistics of your sample and then able to scroll down to view the charts with the filters you defined in the modal form. 
+- You can also interact on the individual charts themselves if necessary by clicking on them. 
+
+Test result: **Successful**
+
+*Please note that the testing regarding DOM interaction through the modal form is documented in the JS testing.*
+
+
+###### Testing user story 3
+
+*User story: The user easily identify information related to the discovery and features of the exoplanet without any issues.*
+
+Hypothesis: The user already applied the desired filters (if any) and has scrolled to the dashboard already.
+
+Test scenario:
+
+1st part:
+-	Go to the "discovery" section of the dashboard either by scrolling down or clicking on the navigation bar.
+-	For this section you should be able to identify 4 charts:
+    - Chart 1: you should be able to view a pie chart with the breakdown in % for the discovery location (ground, space or both). The legend should be clear and visible. By pointing on a slice of a chart, the number of planets should appear in a box. 
+    - Chart 2 : you should be able to view a pie chart with the breakdown in % for the discovery facility. Information should be displayed only for the 8 top discovery facility. The legend should be visbile and easy to read, the rest of the facility discoveries should be flagged under the label "others". By pointing on a slice of a chart for a specific facility, the number of planets should appear in a box. By clicking the "?" icon, you should be redirected to a link, that opens in a new tab, to the wikipedia page for the different types of detection method for exoplanets.
+    - Chart 3 : you should be able to view a row bar chart with the number of planets by detection method. The same information should also be visible when clicking on a specific bar. 
+    - Chart 4 : 
+        - For non-cumulative data: you should be able to view a stacked bar chart (for non-cumulative data) with the number of detections per year. A breakdown by detection method should also be visible and the colours of the method should be consistent with the previous chart.
+        - For cumulative data: you should be able to view a bar chart with the cumulative number of planets discovered for each year. This bar chart is not stacked as I didn't find a way to stack it with the function used to accumulate the data. This is part of the "know issues" and should be fixed as part of future features.
+
+2nd part:
+- Go to the "features" section of the dashboard either by scrolling down or clicking on the navigation bar.
+- For this section you should be able to identify 4 charts:
+    - Chart 1: you should be able to view a bar chart for orbital period. For each interval period, you should view the total number of planets. By clicking the "?" icon next to the chart title, a small paragraph providing a simple definition of the orbital period should appear after the title. Clicking the icon back should make the paragraph disappear. 
+    - Chart 2: you should be able to view a line chart providing the number of planets associated to each planetary system (ranging from 1 discovered planet in the system to up to 8 planets discovered for an associated planetary system). By pointing on the line chart, you should be able to have the total number of planets apearing in a box. 
+    - Chart 3: you should be able to view a bar chart with the number of planets by interval distance. For each interval, the total number of planets in this tranche should be visible. By clicking the "?" icon next to the chart title, a small paragraph explaining the "parsecs" unit of measure should appear, this paragraph should dispappear when clicked back.
+    - Chart 4: you should be able to view a bar chart with the number of planets by interval age. For each interval, the total number of planets in this tranche should be visible. 
+
+Test result: **Successful**
+
+
+###### Testing user story 4
+
+*User story: The user can identify correlations to verify an hypothesis on exoplanet metrics.*
+
+Hypothesis: The user should not deselect any correlation graphs in the modal form to perform this test. 
+
+Test scenario:
+- Click on the "Correlation" menu item
+- There should be 3 scatter plots
+- For each scatter plot, there should be:
+    - a clear title to identify the metrics
+    - the x-axis and the y-axis should be labelled. The axis labes should also specify the units (examples: in earth masses)
+    - the scales should be linear and easy to read 
+    - there should be a legend to distinguish planets from the Kepler scope and planets outside the Kepler scope
+    - when pointing at a specific plot, there should be a box specifying the two dimensions for this specific planet (example: Planet Mass = 400 - Stellar Mass = 2)
+- The graph should be scaled appropriately 
+- You should be able easily identify if there a correlation can be identified between the two dimensions plotted. 
+
+Test result: **Successful**
+
+
+###### Testing user story 5
+
+*User story: The user can access information on individual planets when choosing to display the data table in modal form.*
+
+Hypothesis: The user does not apply any specific filter to the sample
+
+Test scenario:
+-	Open the modal form by clicking the "Start here" button
+-	Enable the data table and exit the modal form
+-	A data table item should have appeared in the navigation bar
+-	Click on this menu item
+-	You should be redirected to a section named "Information about the selected planets"
+-	Information about each individual planets in the sample should be visible (hosting stellar name, years of discovery, discovery method...)
+-	If a data is missing in the table, it should display "N/A"
+
+Test result: **Successful**
+
+
+###### Testing user story 6
+
+*User story: The user can reset the entire dashboard or re-enter the modal form anytime.*
+
+Hypothesis: The user already applied filters in the modal form. 
+
+Test scenario:
+- Click on the white "Reset filters" button in the right of the fixed navigation bar.
+- This should remove all filters applied to the dashboard that was previously set in the modal form. 
+- Scroll down to pass the home page, as soon as you hit the "intro" section, a black "Resart here" button should appear in the navbar (next to the white button )
+- Clicking this button should enable you to re-open the modal form without scrolling back to the home page.
+
+Test result: **Successful**
+
 
 #### Code quality
 
-###### HTML5
+##### HTML5
 
 index.html file succesfully passed this [HTML code validator](https://validator.w3.org/) by direct input as per screenshot provided down below.
 
 ![HTML5 Code Validator](testing/validators/html.jpg)
 
-###### CSS3
+##### CSS3
 
 main.css file succesfully passed this [CSS code validator](https://jigsaw.w3.org/css-validator/) by direct input as per screenshot provided down below.
 
-![CSS Code Validator](testing/validators/html.jpg)
+![CSS Code Validator](testing/validators/css.jpg)
 
-###### JS
+##### JS
 
-Details about code validation for JS file has been provided in the folder dedicated to JS testing: [testing/js](testing/js). 
+Details about code validation for JS files have been provided in the testing section dedicated to JS, in the following folder: [testing/js](testing/js). 
 
 #### Compatibility & Responsiveness
 
-This site was tested across multiple browsers to ensure that all functionalities render well in different browsers:
+A cross browser testing was performed for each user stories scenario to ensure that all functionalities render well in different browsers:
 - Safari
 - Google Chrome
 - Mozilla Firefox
@@ -211,9 +355,11 @@ The responsiveness of the webiste was tested thanks to Google Chrome developer t
 
 So I added media-queries to resize the home page section. TO BE UPDATED
 
-### Known Issues
-* xxx
-* xxx
+### Known Issues - TO BE DONE
+
+* Number of planets in planetary system: TO BE EXPLAINED - find a way to display number of planetary system and not number of planets
+* Stellar Age chart: the total number of planets displayed in this graph is significantly inferior to the total number of planets in the sample as we were missing the stellar age for almost half of the data in the sample. 
+* Stellar age roundings in data table: it only displays 2 decimals but since the measure of units is Giga Year, for young stellars, it displays "0.00". 
 
 
 ## Deployment
