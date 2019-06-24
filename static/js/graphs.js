@@ -9,7 +9,14 @@ function makeGraphs(error, data) {
     /* Code provided by tutor team to fix decimal values 
     not recognised as numbers */
     for (let d of data) {
+        d.pl_orbper = Number(d.pl_orbper);
+        d.st_dist = Number(d.st_dist);
         d.st_age = Number(d.st_age);
+        d.pl_masse = Number(d.pl_masse);
+        d.pl_rade = Number(d.pl_rade);
+        d.st_mass = Number(d.st_mass);
+        d.st_rad = Number(d.st_rad);
+
     }
 
     // Sample stats
@@ -344,11 +351,13 @@ function show_discovery_location(ndx) {
     var group = remove_blanks(dim.group(), "");
 
     dc.pieChart('#discovery-location')
-        .height(330)
+        .height(300)
         .radius(90)
         .innerRadius(40)
+        .cx(260)
+        .cy(120)
         .transitionDuration(1500)
-        .legend(dc.legend().x(5).y(10).itemHeight(8).gap(5))
+        .legend(dc.legend().x(5).y(5).itemHeight(8).gap(5))
         .title(function(d) {
             return d.value + " planets discovered from " + d.key;
         })
@@ -373,11 +382,13 @@ function show_discovery_facility(ndx) {
     var group = remove_blanks(dim.group(), "");
 
     dc.pieChart('#discovery-facility')
-        .height(330)
+        .height(300)
         .radius(90)
         .innerRadius(40)
+        .cx(260)
+        .cy(120)
         .transitionDuration(1500)
-        .legend(dc.legend().x(5).y(10).itemHeight(8).gap(5))
+        .legend(dc.legend().x(5).y(5).itemHeight(8).gap(5))
         .slicesCap(8)
         .title(function(d) {
             return d.value + " planets discovered by " + d.key;
@@ -414,7 +425,7 @@ function show_discovery_method(ndx) {
     var group = dim.group();
 
     dc.rowChart('#discovery-method')
-        .width(600)
+        .width(500)
         .height(300)
         .margins({ top: 10, right: 20, bottom: 40, left: 20 })
         .useViewBoxResizing(true)
@@ -923,8 +934,7 @@ function show_mass_correlation(ndx) {
         .width(700)
         .height(300)
         .x(d3.scale.linear().domain([minPlanetMass, maxPlanetMass]))
-        // I intentionally decided to exclude data for Stellar Mass > 4.SolarMass (only removes 3 planets in the sample) so that the scale is smoother
-        .y(d3.scale.linear().domain([0, 4]))
+        .y(d3.scale.linear().domain([0, 4.5]))
         .xAxisLabel("Planet Mass (Earth Masses)")
         .yAxisLabel("Stellar Mass (Solar Masses)")
         .title(function(d) {
@@ -995,9 +1005,8 @@ function show_radius_correlation(ndx) {
     chart
         .width(700)
         .height(300)
-        .x(d3.scale.linear().domain([minPlanetRadius, maxPlanetRadius]))
-        //I intentionally decided to exclude data for StellarRadius > 6.SolarRadius (only removes 4 planets in the sample) so that the scale is smoother
-        .y(d3.scale.linear().domain([0, 6]))
+        .x(d3.scale.linear().domain([minPlanetRadius, 25]))
+        .y(d3.scale.linear().domain([0, 7]))
         .xAxisLabel("Planet Radius (Earth Radii)")
         .yAxisLabel("Stellar Radius (Solar Radii)")
         .title(function(d) {

@@ -1,23 +1,29 @@
 svg {
-  margin-bottom: 20px; }
+  margin-bottom: 20px;
+}
 
 /*----------------------------------------------------------------- Navbar ---*/
+
 .section {
   /* Prevents fixed navbar from hiding top of the content */
   margin-top: -84.75px;
-  padding-top: 84.75px; }
+  padding-top: 84.75px;
+}
 
 #intro,
 #discovery {
   /*Adjusted dimension for discovery and intro sections */
   margin-top: -125px;
-  padding-top: 125px; }
+  padding-top: 125px;
+}
 
 .style-button {
   border: 1px solid;
-  margin-right: 5px; }
+  margin-right: 5px;
+}
 
 /*-------------------------------------------------------------- Home Page ---*/
+
 .home-page {
   background: url("img/bg-1.jpg") no-repeat center center fixed, #999;
   -webkit-background-size: cover;
@@ -28,113 +34,151 @@ svg {
   background-attachment: fixed;
   height: 100vh;
   width: 100%;
-  color: white; }
+  color: white;
+}
 
 .main-header {
   color: white;
-  font-size: 3rem; }
+  font-size: 3rem;
+}
 
 .section-header {
-  padding-top: 15px; }
+  padding-top: 15px;
+}
 
 .text-align {
   text-align: center;
-  padding-top: 50vh; }
+  padding-top: 50vh;
+}
 
 .jumbotron {
-  padding-bottom: 20px; }
+  padding-bottom: 20px;
+}
 
 div#dashboard {
-  margin-top: 20px; }
+  margin-top: 20px;
+}
 
 h4 {
-  margin: 15px 0; }
+  margin: 15px 0;
+}
 
 h6 {
-  margin: 15px 0; }
+  margin: 15px 0;
+}
 
 #myModal legend {
-  font-size: 1.2rem; }
+  font-size: 1.2rem;
+}
 
 /* Format figures section */
+
 .figures {
   margin: 0px 5px 15px 2px;
   font-weight: 700;
-  color: #495057; }
+  color: #495057;
+}
 
 .paragraph {
-  margin-bottom: 5px; }
+  margin-bottom: 5px;
+}
 
 .sample-date {
-  font-size: 0.7em; }
+  font-size: 0.7em;
+}
 
 /*----------------------------------------------------------------- Charts ---*/
+
 #year-of-discovery .x.axis text,
 #cumulative-year-of-discovery .x.axis text,
 #linear-chart-year .x.axis text {
   text-anchor: end !important;
-  transform: rotate(-45deg); }
+  transform: rotate(-45deg);
+}
 
 .dc-chart g.row text,
 .dc-chart .pie-slice {
-  fill: black; }
+  fill: black;
+}
 
 text.barLabel {
-  font-size: 0.5em; }
+  font-size: 0.5em;
+}
 
 #orbital-period text.barLabel,
 #stellar-age text.barLabel,
 #stellar-distance text.barLabel {
-  font-size: 0.6em; }
+  font-size: 0.6em;
+}
 
 .dc-legend {
-  font-size: 0.5em; }
+  font-size: 0.5em;
+}
 
+#discovery-facility .dc-legend,
 #discovery-location .dc-legend {
-  font-size: 0.8em; }
+  font-size: 0.8em;
+}
 
 /* Format Table */
+
 table#data-table {
   font-size: 0.7rem;
   border-collapse: collapse;
-  width: 100%; }
+  width: 100%;
+}
 
 th {
   color: #343a40;
-  padding-bottom: 10px; }
+  padding-bottom: 10px;
+}
 
 th,
 td {
   text-align: left;
-  padding: 8px; }
+  padding: 8px;
+}
 
 tr:nth-child(even) {
-  background-color: #f2f2f2; }
+  background-color: #f2f2f2;
+}
 
 /*----------------------------------------------------------------- Footer ---*/
+
 footer {
   text-align: center;
   background-color: black;
   color: white;
-  padding-top: 15px; }
-  footer a {
-    color: white; }
-  footer a:hover {
-    color: orange;
-    text-decoration: none; }
+  padding-top: 15px;
+}
+
+footer a {
+  color: white;
+}
+
+footer a:hover {
+  color: orange;
+  text-decoration: none;
+}
 
 /*---------------------------------------------------------- Media Queries ---*/
+
 @media only screen and (max-width: 600px) {
   h1.main-header {
-    font-size: 2.5em; }
+    font-size: 2.5em;
+  }
 
   h2 {
-    font-size: 1.5em; }
+    font-size: 1.5em;
+  }
 
   h4 {
-    font-size: 1.3em; }
+    font-size: 1.3em;
+  }
 
   h3 {
-    font-size: 1.1em; } }
+    font-size: 1.1em;
+  }
+}
 
 /*# sourceMappingURL=main.css.map */
