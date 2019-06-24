@@ -47,8 +47,6 @@ It allows users to refine a large sample of more than 3900 exoplanets thanks to 
 
 ### Wireframes
 
-<img src="..." align=top width=250>
- 
  
 ## Features
 
@@ -189,7 +187,6 @@ Please note that all JavaScript files were extensively tested and documented in 
 
 This project has been tested multiple times against each user stories previously listed in the UX section. 
 
-
 ###### Testing user story 1 
 
 *User story: The user has easy access to aggregated data in a simple a clean fashion.*
@@ -205,7 +202,6 @@ Test scenario:
 -	You should be able to identify through the different graphs relevant information regarding the sample. 
 
 Test result: **Successful**
-
 
 ###### Testing user story 2
 
@@ -235,7 +231,6 @@ Test result: **Successful**
 
 *Please note that the testing regarding DOM interaction through the modal form is documented in the JS testing.*
 
-
 ###### Testing user story 3
 
 *User story: The user easily identify information related to the discovery and features of the exoplanet without any issues.*
@@ -264,7 +259,6 @@ Test scenario:
 
 Test result: **Successful**
 
-
 ###### Testing user story 4
 
 *User story: The user can identify correlations to verify an hypothesis on exoplanet metrics.*
@@ -285,7 +279,6 @@ Test scenario:
 
 Test result: **Successful**
 
-
 ###### Testing user story 5
 
 *User story: The user can access information on individual planets when choosing to display the data table in modal form.*
@@ -302,7 +295,6 @@ Test scenario:
 -	If a data is missing in the table, it should display "N/A"
 
 Test result: **Successful**
-
 
 ###### Testing user story 6
 
@@ -353,7 +345,10 @@ The responsiveness of the webiste was tested thanks to Google Chrome developer t
 - iPhone 6/7/8 and Plus
 - iPad / iPad Pro 
 
-So I added media-queries to resize the home page section. TO BE UPDATED
+
+#### JS Testing
+
+There is an entire section dedicated to the testing of JS files [here](testing/js/JSTEST.md). 
 
 ### Known Issues - TO BE DONE
 
