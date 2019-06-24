@@ -96,7 +96,7 @@ $(document).ready(function() {
 
     /*--------------------- Setting modal form interactions with the DOM -----*/
 
-    // Automatically redirect user to "intro" section when clicking modal button
+    // Automatically redirect user to "intro" section when exiting modal
     $('#button-modal').click(function() {
         $('#myModal').modal('hide');
         $(document).scrollTop($('#intro').offset().top);
