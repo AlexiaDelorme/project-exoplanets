@@ -1,3 +1,5 @@
+// jshint esversion: 6
+
 queue()
     .defer(d3.csv, "data/static-exo.csv")
     .await(makeGraphs);
@@ -6,16 +8,19 @@ function makeGraphs(error, data) {
 
     var ndx = crossfilter(data);
 
-    /* Code provided by tutor team to fix decimal values 
-    not recognised as numbers */
-    for (let d of data) {
+    // Code used to fix decimal values not recognised as numbers */
+    for (var d of data) {
+
         d.pl_orbper = Number(d.pl_orbper);
         d.st_dist = Number(d.st_dist);
-        d.st_age = Number(d.st_age);
         d.pl_masse = Number(d.pl_masse);
         d.pl_rade = Number(d.pl_rade);
         d.st_mass = Number(d.st_mass);
         d.st_rad = Number(d.st_rad);
+
+        /* Tutor team suggested the use of this code for stellar 
+        age to fix average stelage age function displaying NaN */
+        d.st_age = Number(d.st_age);
 
     }
 
@@ -963,7 +968,7 @@ function show_radius_correlation(ndx) {
     var planetRadiusDim = ndx.dimension(dc.pluck("pl_rade"));
 
     var minPlanetRadius = planetRadiusDim.bottom(1)[0].pl_rade;
-    var maxPlanetRadius = planetRadiusDim.top(1)[0].pl_rade;
+    //var maxPlanetRadius = planetRadiusDim.top(1)[0].pl_rade;
 
     var planetStellarRadiusDim = ndx.dimension(function(d) {
         // Prevents from drawing correlations when we are missing at least one of the two data set
