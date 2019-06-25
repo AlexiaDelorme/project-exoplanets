@@ -59,7 +59,7 @@ See below the first wireframe I drew before starting my project. It was very gen
 
 This wireframe was built at mid-point of this project just after my mid-review session with my mentor. It is much closer to the final result as the layout was already implemented in my project. But since there was a lot of new features I wanted to implement (modal form, new graphs), I decided to make a more detailed wireframe.
 
-<img src="static/wireframes/balsamiq/home.png" alt="home">
+<img src="static/wireframes/balsamiq/wf2-home.png" alt="home">
 <img src="static/wireframes/balsamiq/wf2-form.png" alt="form">
 <img src="static/wireframes/balsamiq/wf2-discovery.png" alt="discovery">
 <img src="static/wireframes/balsamiq/wf2-features.png" alt="features">
