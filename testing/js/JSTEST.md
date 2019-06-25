@@ -214,7 +214,7 @@ Same as the function before, the attribution of exoplanets detection can be chec
     
 **Test scenario:**
 - In the website, refer to the first pie chart named "discovery location". 
-- Go to the "pie chart 1" tab of the testing file and compare that the two graphs, they should be identical. 
+- Go to the "pie chart 1" tab of the testing file and compare the two graphs, they should be identical. 
 - You can also perform additional sanity checks by adding filters to the sample.
  
 Test result: **Successful**
@@ -241,10 +241,30 @@ cf. tab "bar chart 4.2" in the testing excel file
 
 #### Features charts
 
+Please find below the instance of a test scenario that was used to check charts for the features section. To avoid repetition, the test scenario is detailed below for the "show_orbital_period" function, but all other charts were tested following the same procedure.
+
+Also please note that for all the bar charts of this section, I could not use pivot charts since I used custom dimension to sort the data by intervals. Those charts were therefore built "manually" in Excel. 
+
 ###### show_orbital_period
+
+**Test scenario:**
+- In the website, refer to the first bar chart of the features section named "orbital period"
+- Go to the "bar chart 5" tab of the testing file and compare the two graphs, they should be identical. 
+- Check that the "Grand Total" matches the total number of planets in the sample. 
+
+Test result: **Successful**
+
 ###### show_planetary_system
+
+cf. tab "line chart 6" in the testing excel file
+
 ###### show_stellar_distance
+
+cf. tab "bar chart 7" in the testing excel file
+
 ###### show_stellar_age
+
+cf. tab "bar chart 8" in the testing excel file
 
 #### Correlation charts
     
