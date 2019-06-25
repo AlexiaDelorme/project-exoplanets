@@ -47,11 +47,24 @@ It allows users to refine a large sample of more than 3900 exoplanets thanks to 
 
 ### Wireframes
 
-- First wireframe
+- Pen & Pencils wireframe
 
-Please find below the wireframe that I drew before starting my project. It was very general and is far from the final results but really helped me staying focus. 
+See below the first wireframe I drew before starting my project. It was very general and is far from the final results but really helped me staying focus. 
 
-<img src="static/wireframes/pen/wf1-home.png" alt="Image" height="70" width="47">
+<img src="static/wireframes/pen/wf1-home.png" alt="home">
+<img src="static/wireframes/pen/wf1-graphs.png" alt="graphs">
+<img src="static/wireframes/pen/wf1-correlations.png" alt="correlations">
+
+- Balsamiq wireframe
+
+This wireframe was built at mid-point of this project just after my mid-review session with my mentor. It is much closer to the final result as the layout was already implemented in my project. But since there was a lot of new features I wanted to implement (modal form, new graphs), I decided to make a more detailed wireframe.
+
+<img src="static/wireframes/balsamiq/home.png" alt="home">
+<img src="static/wireframes/balsamiq/wf2-form.png" alt="form">
+<img src="static/wireframes/balsamiq/wf2-discovery.png" alt="discovery">
+<img src="static/wireframes/balsamiq/wf2-features.png" alt="features">
+<img src="static/wireframes/balsamiq/wf2-correlations.png" alt="correlation">
+<img src="static/wireframes/balsamiq/wf2-table.png" alt="table">
  
 ## Features
 
