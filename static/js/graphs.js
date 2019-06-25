@@ -19,10 +19,17 @@ function makeGraphs(error, data) {
         d.st_rad = Number(d.st_rad);
 
         /* Tutor team suggested the use of this code for stellar 
-        age to fix average stelage age function displaying NaN */
+        age to fix average stelage age function */
         d.st_age = Number(d.st_age);
 
     }
+
+    // Selectors
+    show_kepler_selector(ndx);
+    show_location_selector(ndx);
+    show_facility_selector(ndx);
+    show_discovery_selector(ndx);
+    show_discovery_year_selector(ndx);
 
     // Sample stats
     display_total_planets_sample(ndx);
@@ -31,13 +38,6 @@ function makeGraphs(error, data) {
     display_kepler_percent(ndx, "0", "#not-kepler-flagged");
     display_location_percent(ndx, "Space", "#location-space");
     display_location_percent(ndx, "Ground", "#location-ground");
-
-    // Selectors
-    show_kepler_selector(ndx);
-    show_location_selector(ndx);
-    show_facility_selector(ndx);
-    show_discovery_selector(ndx);
-    show_discovery_year_selector(ndx);
 
     // Discovery charts
     show_discovery_location(ndx);
