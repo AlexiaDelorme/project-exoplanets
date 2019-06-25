@@ -152,10 +152,11 @@ Please find below the list of improvements I would like to add to this project:
 
 ##### [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 - I used the following JS libraries combined with some core JS to create data-visualization elements:
-    * [D3.js](https://d3js.org/)
-    * [DC.js](https://dc-js.github.io/dc.js/)
-    * [Crossfilter.js](http://square.github.io/crossfilter/)
-* [D3-queue.js](https://github.com/d3/d3-queue) to load the data field in CSV format.
+    * [D3.js](https://d3js.org/) is a library used to create charts using SVG and HTML.
+    * [Crossfilter.js](http://square.github.io/crossfilter/) is used for handling the dataset.
+    * [DC.js](https://dc-js.github.io/dc.js/) is used in combination of crossfilter to leverage on d3 library and add interactivity to charts.
+    
+* [D3-queue.js](https://github.com/d3/d3-queue) is used to load the dataset in CSV format.
 * [jQuery](https://jquery.com/) to simplify the DOM manipulation based on the user input via the modal form or when the reset button is clicked.
 * [JSHint](https://jshint.com/) was used to check my JS code quality
 

@@ -9,19 +9,21 @@ This section documents the manual tests that were performed on the [script.js](.
 
 This file uses jQuery to simplify DOM manipulation mostly to handle interactions with user input through the modal form. 
 
-#### Code Quality
+### Code Quality
 
 [script.js](../../static/js/script.js) was passed through [JSHint](https://jshint.com/) by direct input to check for any issues in the JS code such as compatibility.
 
-You can find below the output of this code quality check. 2 undefined variables were identified but refers to external libraries:
+You can find below the output of this code quality check. 2 undefined variables were identified but refer to external libraries:
 - **"$"** as I used jQuery for DOM manipulation
 - **"dc"** which is used to reset the charts when the "reset filter" button is clicked
 
-[JS Hint](../validators/jsscript.jpg)
+No further issues were identified. 
 
-#### DOM Interaction testing
+![JS Hint](../validators/jsscript.jpg)
 
-- ###### Testing case 1
+### DOM Interaction testing
+
+###### Testing case 1
 
 *Check default DOM parametres when page has loaded*
 
@@ -38,7 +40,7 @@ Test scenario:
 
 Test result: **Successful**
 
-- ###### Testing case 2
+###### Testing case 2
 
 *Testing the "restart" button*
 
@@ -51,7 +53,7 @@ Test scenario:
 
 Test result: **Successful**
 
-- ###### Testing case 3
+###### Testing case 3
 
 *Testing icon definition*
 
@@ -65,7 +67,7 @@ Test scenario:
 
 Test result: **Successful**
 
-- ###### Testing case 4
+###### Testing case 4
 
 *Testing the modal form interaction with the DOM*
 
@@ -91,7 +93,7 @@ Test scenario:
 
 Test result: **Successful**
 
-- ###### Testing case 5
+###### Testing case 5
 
 *Setting reset filters button*
 
@@ -115,4 +117,76 @@ Test result: **Successful**
 This section documents all the manual tests that were performed on the [graphs.js](../../static/js/graphs.js) file. 
 
 
-#### Code Quality
+### Code Quality
+
+[graphs.js](../../static/js/graphs.js) was passed through [JSHint](https://jshint.com/) by direct input to check for any issues in the JS code such as compatibility.
+
+You can find below the output of this code quality check. 
+
+4 undefined variables were identified but refer to external libraries:
+- **"queue"** is used to load the data
+- **"crossfilter"** is used for handling the dataset
+- **"d3"** is used for data vizualisation
+- **"dc"** is used to leverage on d3
+
+There were two warnings highlighted by JS Hint regarding the use of new ES6 syntax:
+- 'let' is available in ES6 (use 'esversion: 6') or Mozilla JS extensions (use moz).
+- 'for of' is available in ES6 (use 'esversion: 6') or Mozilla JS extensions (use moz).
+
+To fix this, I decided to change the use of "let" by "var" and then included the following comment at the beginning of my file: " // jshint esversion: 6 " for the second warning. 
+
+No further issues were mentioned apart from an unused variable that was created only for testing purposes but that was then commented out. 
+
+![JS Hint](../validators/jsgraph.jpg)
+
+
+### Data consistency testing
+
+For this section, I am going to go through each functions that are used to create data vizualisation and check their consistency using my testing file (using excel) that you can access [here](PATH TO ADD). 
+
+I have indeed used this excel file to write my code and build graphs incrementally throughout this project. 
+
+To simplify this testing protocol and prevent from missing any issues, I will follow the same order as my code is written in this file.
+
+**Important notes on how to use this file:**
+- The file is organized by tabs, each corresponding to testing the different section of the data dashboard by recreating the same graphs with excel. 
+- The first tab is dedicated to testing the consistency of the data at sample level but is also used to test the selectors within the modal form. 
+- The other tabs refer to each graphs in the data dashboard and are arranged by order of appearance within the website. Example: "pie chart 1" tab refers to the first pie chart in the dashboard which is the "discovery location" chart. 
+- I tried to automate as much as Excel would allow me by using pivot tables and pivot charts. But sometimes the use of custom dimension forced me to build the graphs manually in excel. 
+
+#### Helper functions
+
+TRY AND AUTOMATE THIS PART USING JASMINE
+
+###### function remove_blanks
+
+###### function show_slice_percent
+  
+###### function accumulate_group
+
+###### function convert_string_to_float
+
+#### Selectors to filter charts
+
+The data source contains 3972 rows which correspond to the instances of the 3972 discovered exoplanets in the file. This can easily be checked by comparing the number of exoplanets displayed in the data dashboard ("stats on our sample" in the intro section) when no filter is applied and the "count of pl_name" in the "Data sample" tab of my excel testing file. 
+
+Please find below the instance of a test scenario that was used to check the consistency of data when filtering them using the modal form. To avoid repetition in this file, the test scenario is detailed below for the "show_kepler_selector" function, but all functions used to filter the sample went through the exact same testing procedure. 
+
+###### function show_kepler_selector
+
+**Test scenario:**
+- In the website open the modal form, in the dropdown box for "Kepler selector", select "Exclude Kepler Scope". 
+- Close the form and compare the "total number of exoplanets" displayed in the intro section (stats on our sample) with the "count of pl_name" in the "Data sample" tab of the testing file after applying filtering on 0 "pl_kepflag". 
+- Follow the same steps to check the number of exoplanets that are within the Kepler scope. 
+- Figures should be consistent and should add up to the total number of exoplanets in the sample. 
+
+Test result: **Successful**
+
+Same test scenario was applied to test the following functions and they were all succesfull. 
+- ###### function show_location_selector(ndx) 
+- ###### function show_facility_selector(ndx) 
+- ###### function show_discovery_selector(ndx) 
+- ###### function show_discovery_year_selector(ndx) 
+ 
+#### Sample Satistics
+
