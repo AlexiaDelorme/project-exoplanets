@@ -168,8 +168,6 @@ TRY AND AUTOMATE THIS PART USING JASMINE
 
 #### Selectors to filter charts
 
-The data source contains 3972 rows which correspond to the instances of the 3972 discovered exoplanets in the file. This can easily be checked by comparing the number of exoplanets displayed in the data dashboard ("stats on our sample" in the intro section) when no filter is applied and the "count of pl_name" in the "Data sample" tab of my excel testing file. 
-
 Please find below the instance of a test scenario that was used to check the consistency of data when filtering them using the modal form. To avoid repetition in this file, the test scenario is detailed below for the "show_kepler_selector" function, but all functions used to filter the sample went through the exact same testing procedure. 
 
 ###### function show_kepler_selector
@@ -178,15 +176,82 @@ Please find below the instance of a test scenario that was used to check the con
 - In the website open the modal form, in the dropdown box for "Kepler selector", select "Exclude Kepler Scope". 
 - Close the form and compare the "total number of exoplanets" displayed in the intro section (stats on our sample) with the "count of pl_name" in the "Data sample" tab of the testing file after applying filtering on 0 "pl_kepflag". 
 - Follow the same steps to check the number of exoplanets that are within the Kepler scope. 
-- Figures should be consistent and should add up to the total number of exoplanets in the sample. 
+- Figures should be consistent and should add up to the total number of exoplanets in the sample (ie. 3972). 
 
 Test result: **Successful**
 
 Same test scenario was applied to test the following functions and they were all succesfull. 
-- ###### function show_location_selector(ndx) 
-- ###### function show_facility_selector(ndx) 
-- ###### function show_discovery_selector(ndx) 
-- ###### function show_discovery_year_selector(ndx) 
+- function show_location_selector 
+- function show_facility_selector 
+- function show_discovery_selector
+- function show_discovery_year_selector
  
 #### Sample Satistics
 
+###### function display_total_planets_sample
+
+The data source contains 3972 rows which correspond to the instances of the 3972 discovered exoplanets in the file. This can easily be checked by comparing the number of exoplanets displayed in the data dashboard ("stats on our sample" in the intro section) when no filter is applied and the "count of pl_name" in the "Data sample" tab of the excel testing file. 
+
+###### function display_average_stellar_age_sample
+
+This function displays the average stellar age and can be checked by comparing the age displayed in the data dashboard with the one that can be found in the first tab of the testing file. For the whole sample, the average age is consistent and succesfully displays 4.18. Other sanity checks can be performed by adding filters and turn out to be all consistent. 
+
+Please note I struggled a bit with this function, at first my custom reducer was incorrectly passing the "initialize", "add_item" and "remove_item" functions causing a "NaN" issue as the average value could not be accessed. I also then realised that the value for the average stellar age was way below the expected value of 4.18 Gyr for the whole sample. Thanks to the tutor team I was able to correct this issue by first parsing the data to avoid issues with floating point numbers, but also by adding an "if" statement so that null values are not accounted for. This was causing a huge difference as there were a lot of missing data for stellar age (2006 planets were missing that information). 
+
+###### function display_kepler_percent
+
+This function displays the percentage of exoplanets that were discovered (or not) during the famous Kepler mission. 
+
+As it was done for the previous functions, the % displayed in the data dashboard can be checked using testing file. In the "Data sample" tab, we see that the attribution of exoplanets detection percentages match the ones in the dashboard (50.2% within Kepler scope vs. 40.8% outside Kepler scope). 
+
+###### function display_location_percent
+
+Same as the function before, the attribution of exoplanets detection can be checked using the first tab of the testing file and results are consistent. 
+
+#### Discovery charts
+
+###### show_discovery_location
+    
+**Test scenario:**
+- In the website, refer to the first pie chart named "discovery location". 
+- Go to the "pie chart 1" tab of the testing file and compare that the two graphs, they should be identical. 
+- You can also perform additional sanity checks by adding filters to the sample.
+ 
+Test result: **Successful**
+
+###### show_discovery_facility
+
+cf. tab "pie chart 2" in the testing excel file
+
+This chart was tested following the same steps as the test scenario detailed above. Please note that for this chart, I manually built a second chart to be have a sanity check for the "Others" since I used the "slicesCap(8)" method to avoid unreadable clustering. 
+
+For all the functions below, the same procedure was followed as well and all the graphs displayed in the dashboard were consistent with the testing file.  
+
+###### show_discovery_method
+
+cf. tab "row chart 3" in the testing excel file
+
+###### show_year_of_discovery
+
+cf. tab "bar chart 4.2" in the testing excel file
+
+###### show_cumulative_year_of_discovery
+
+cf. tab "bar chart 4.2" in the testing excel file
+
+#### Features charts
+
+###### show_orbital_period
+###### show_planetary_system
+###### show_stellar_distance
+###### show_stellar_age
+
+#### Correlation charts
+    
+###### show_mass_radius_correlation
+###### show_mass_correlation
+###### show_radius_correlation
+
+#### Data table
+
+###### function showTable
