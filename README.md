@@ -47,6 +47,11 @@ It allows users to refine a large sample of more than 3900 exoplanets thanks to 
 
 ### Wireframes
 
+- First wireframe
+
+Please find below the wireframe that I drew before starting my project. It was very general and is far from the final results but really helped me staying focus. 
+
+<img src="static/wireframes/pen/wf1-home.png" alt="Image" height="70" width="47">
  
 ## Features
 
