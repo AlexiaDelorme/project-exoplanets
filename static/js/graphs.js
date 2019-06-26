@@ -865,7 +865,8 @@ function show_mass_radius_correlation(ndx) {
         .width(700)
         .height(300)
         .x(d3.scale.linear().domain([minPlanetMass, maxPlanetMass]))
-        // I intentionally decided to exclude data for Radius > 25.EarthRadius (it only removes 3 planets in the sample) so that the scale is smoother
+        /* Setting the max to 25 for radius enables a better scale  
+           for the graph and only removes 1 plots from the sample.*/
         .y(d3.scale.linear().domain([0, 25]))
         .xAxisLabel("Planet Mass (Earth Masses)")
         .yAxisLabel("Planet Radius (Earth Radii)")
@@ -939,6 +940,8 @@ function show_mass_correlation(ndx) {
         .width(700)
         .height(300)
         .x(d3.scale.linear().domain([minPlanetMass, maxPlanetMass]))
+        /* Setting the max to 4.5 for stellar mass enables a better scale  
+           for the graph and only removes 1 plot from the sample.*/
         .y(d3.scale.linear().domain([0, 4.5]))
         .xAxisLabel("Planet Mass (Earth Masses)")
         .yAxisLabel("Stellar Mass (Solar Masses)")
@@ -1010,7 +1013,11 @@ function show_radius_correlation(ndx) {
     chart
         .width(700)
         .height(300)
+        /* Setting the max to 25 for planet radius enables a better scale  
+           for the graph and only only removes 1 plot from the sample.*/
         .x(d3.scale.linear().domain([minPlanetRadius, 25]))
+        /* Setting the max to 7 for the stellar radius does not exclude
+            any plot */
         .y(d3.scale.linear().domain([0, 7]))
         .xAxisLabel("Planet Radius (Earth Radii)")
         .yAxisLabel("Stellar Radius (Solar Radii)")

@@ -268,10 +268,51 @@ cf. tab "bar chart 8" in the testing excel file
 
 #### Correlation charts
     
+Please find below the instance of a test scenario that was used to test the scatter plots. To avoid repetition, the test scenario is detailed below for the first correlation "show_mass_radius_correlation" function, but the other scatter plots were tested following the same procedure. 
+
+Please note that the scatter plots within the excel testing files were set to prevent from plotting any points for which we were missing at least one of the two dimensions. This can be checked by right-clicking on the scatter plot, then select "Select Data...", at the bottom of the window we see "Show empty cells as gaps". In the dashboard, I used the "remove_blanks" function to avoid this issue, otherwise it would plot empty values as zero and we don't want that.
+
 ###### show_mass_radius_correlation
+
+**Test scenario:**
+- In the website, refer to the first scatter plot of the correlation section named "mass vs. radius of the planet"
+- Go to the "scatter plots 1" tab of the testing file. The x-axis and y-axis were intentionally left to default.
+- You should notice two plots flagged in red, those two plots should be the only ones missing from the scatter plot in the dashboard.
+- In the dashboard, the domain for the y-axis (planet radius) was manually set to 25 to increase readibility of the graph. 
+- In the pivot table on the right of the scatter plot, still in the testing file:
+    - for "pl_masse" deselect "(blank)" data 
+    - for "pl_rade" deselect "(blank)" data and data > 25
+- There should only be 2 counts in "Count of pl_name" which corresponds to the data flagged in red. 
+
+Test result: **Successful**
+
 ###### show_mass_correlation
+
+cf. tab "scatter plots 2" in the testing excel file
+
+For this scatter plot, we notice one plot is flagged in red and really stands out from the rest of the data. Indeed, for this specific planet, the stellar mass is 23.56 times the solar mass, whereas for the rest of the sample, stellar masses are all between 0 and 5. The domain for the y-axis, stellar mass, was therefore set manually to a max of 4.5 which corrects "outlier" effect in the sample. 
+
 ###### show_radius_correlation
+
+cf. tab "scatter plots 3" in the testing excel file
+
+As it was done in the first scatter plot, the maximum for the planet radius (now in the x-axis) is set to 25, only excluding one point with (planet radius = 39.79) from plotting. 
 
 #### Data table
 
 ###### function showTable
+
+**Test scenario:**
+- In the website, open the modal form, enable "Data Table" and in the "discovery method" dropdown menu, select "Astrometry". 
+- Close the modal form and go to the "Data Table" section, you should have only one planet for this detection method. 
+- In the testing excel file, go to "static-exo" tab and in the "F" column labelled "pl_discmethod", add filter and select as well "Astrometry".
+- Compare the data in the dashboard table and in the excel file, everything should be identical. 
+- Please find below corresponding fields for the excel file (if necessary):
+    - Hosting stellar name: "pl_hostname"
+    - Year of discovery: "pl_disc"
+    - Discovery method: "pl_discmethod"
+    - Orbital period: "pl_orbper"
+    - Stellar distance: "st_dist"
+    - Stellar age: "st_age"
+
+Test result: **Successful**
