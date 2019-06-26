@@ -84,7 +84,7 @@ function show_slice_percent(key, endAngle, startAngle) {
     // Return the % of each pie slice as a string to be displayed on the slice itself
     var percent = dc.utils.printSingleValue((endAngle - startAngle) / (2 * Math.PI) * 100);
     if (percent >= 5) {
-        return key + ': ' + Math.round(percent) + '%';
+        return Math.round(percent) + '%';
     }
     else if (percent > 0) {
         return "";
@@ -390,7 +390,7 @@ function show_discovery_facility(ndx) {
         .height(300)
         .radius(90)
         .innerRadius(40)
-        .cx(260)
+        .cx(300)
         .cy(120)
         .transitionDuration(1500)
         .legend(dc.legend().x(5).y(5).itemHeight(8).gap(5))
