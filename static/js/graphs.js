@@ -359,7 +359,7 @@ function show_discovery_location(ndx) {
         .height(300)
         .radius(90)
         .innerRadius(40)
-        .cx(260)
+        .cx(300)
         .cy(120)
         .transitionDuration(1500)
         .legend(dc.legend().x(5).y(5).itemHeight(8).gap(5))
