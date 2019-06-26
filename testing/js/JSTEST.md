@@ -231,6 +231,13 @@ For all the functions below, the same procedure was followed as well and all the
 
 cf. tab "row chart 3" in the testing excel file
 
+**Note:** The three following detection methods are flagged under the same label "Timing Variations": 
+- "Eclipse Timing Variations"
+- "Transit Timing Variations"
+- "Pulsar Timing"
+- "Pulsation Timing Variations"
+Those 4 detection methods should add up (in the testing excel file) to the "Timing variations" in the data dashbaord. 
+
 ###### show_year_of_discovery
 
 cf. tab "bar chart 4.2" in the testing excel file
