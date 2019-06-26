@@ -160,11 +160,20 @@ TRY AND AUTOMATE THIS PART USING JASMINE
 
 ###### function remove_blanks
 
+Manual testing 
+Try Jasmine but might fail
+
 ###### function show_slice_percent
+
+Jasmine
   
 ###### function accumulate_group
 
+manual testing -> function succesfully tested later 
+
 ###### function convert_string_to_float
+
+Jasmine
 
 #### Selectors to filter charts
 
