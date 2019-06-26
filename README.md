@@ -134,16 +134,19 @@ The footer section at the bottom of the page provides the user with my name, ema
 
 Please find below the list of improvements I would like to add to this project:
 
+###### Cumulative stacked bar chart (for detections per year)
+- As it is discussed in the "known issues" of the testing section, I was not able to implement a cumulative stacked bar chart to display cumulative detections per year with the breakdown by discovery method
+- I would like to add this feature in the near future
+
 ###### Use API for loading data
-- I would like to integrate the NASA API so that the user can update the sample with the latest records available, chose specific coloumn fields for the dataset. 
+- I would like to integrate the NASA API so that the user can update the sample with the latest records available, chose specific column fields for the dataset. 
 
 ###### Increase interactivity with user
-- Thanks to the previous improvement, I could add more interactivity in the choice of data the user wants to display in the dashboard. For example: instead of chosing between some pre-plotted scatter plots, the user could choose the data he wants to plot for correlations (mass vs. density, orbital period vs. mass etc...). This would add a lot more flexibility and could answer the needs of more advanced audience in Astrophysics.
+- Thanks to the previous improvement, I could add more interactivity in the choice of data the user can display in the dashboard. For example: instead of chosing between some pre-plotted scatter plots, the user could choose the data he wants to plot for correlations (mass vs. density, orbital period vs. mass etc...). 
+- This would add a lot more flexibility and could answer the needs of more advanced audience in Astrophysics.
 
 ###### Add indicators on graphs
 - I also would like to add markers/indications to provide a referentiel to the user regarding the data that are being displayed (Example: display the age of the sun in the stellar age graph...)
-
-*All those improvements could make my project even more fun to learn from but also could be useful for a wide range of users.*
 
 
 ## Technologies Used
@@ -369,11 +372,11 @@ The responsiveness of the webiste was tested thanks to Google Chrome developer t
 
 There is an entire section dedicated to the testing of JS files [here](testing/js/JSTEST.md). 
 
-### Known Issues - TO BE DONE
+### Known Issues
 
-* Number of planets in planetary system: TO BE EXPLAINED - find a way to display number of planetary system and not number of planets
-* Stellar Age chart: the total number of planets displayed in this graph is significantly inferior to the total number of planets in the sample as we were missing the stellar age for almost half of the data in the sample. 
-* Stellar age roundings in data table: it only displays 2 decimals but since the measure of units is Giga Year, for young stellars, it displays "0.00". 
+* The "cumulative detections per year" graph is a classical bar chart but, unlike the non-cumulative chart, it does not display the breakdown by discovery method. I struggled for very long on this issue and I was not able to find any answer on whether cumulative stacked bar chart are supported by the dc library. My issue was mostly due to the combination of the "accumulate_group" function with a custom reducer to stack the chart by detection method. Nonetheless, I would like to find a solution to this issue and therefore added this point to my list of future features to this project. 
+* The line graph named "Number (known) of planets in planetary system" is not very easy to interpret. It actually provides the number of planets associated to a planetary system for which one or more planets have been yet discovered. I think it is important to emphazise on the fact that it does not display the number of systems. That is why for instance, there are 8 planets associated to a 8-planet system but that means there is only one planetary system for which (at least) 8 planets have been discovered in it. Even though it is a bit misleading, I think it is still a very relevant information to have within the dashboard. 
+*For the "Stellar Age" chart we are missing around 2005 data as it was pointed out in the JS testing file. Nonetheless, I decided to display this information as this is a very important feature for an exoplanet. Also as a user, I would be very frustrated not to have this information. Even though for a smaller sample it might not be relevant, it is very interesting to have the age of the hosting stellar and compare it with the age of the sun (4.6 Gyr). 
 
 
 ## Deployment
