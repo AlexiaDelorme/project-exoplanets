@@ -540,7 +540,8 @@ function show_year_of_discovery(ndx) {
 
 }
 
-// Testing function to group cumulative data with a custom reducer
+/* Testing function to group cumulative data with a custom reducer
+   I kept to work on as a development point left for this project.
 
 function accumulate_detection_by_year(dimension, detection_method) {
 
@@ -566,7 +567,7 @@ function accumulate_detection_by_year(dimension, detection_method) {
         }
     );
 }
-
+*/
 
 // Create a variable colors to change default colors for bar charts
 var barChartColors = d3.scale.ordinal()

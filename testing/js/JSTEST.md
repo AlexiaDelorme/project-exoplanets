@@ -160,20 +160,36 @@ TRY AND AUTOMATE THIS PART USING JASMINE
 
 ###### function remove_blanks
 
-Manual testing 
-Try Jasmine but might fail
+This function is pre-emptively used in many graphs to prevent from plotting null data. There are several instances where this function is very useful:
+- orbital period 
+- distance to the planetary system
+- age of the hosting stellar
+- correlations
+
+Whenever this function was used I added a "null data" cell in my testing file to sum all the missing data for the corresponding dimension. By comparing the total number of planets displayed in the dashboard graph, the difference should match the null data in the excel file. 
+
+For instance, for the orbital period graph, we see that the total number of planets displayed in the bar chart equals 3'868, so we have 104 data that are missing (as the total number of planets in the sample is 3972). This matches the null data cell in my testing file (cf tab bar chart 5). Since we are going through each function graph in the following section, the function remove_blanks was then verified anytime it was used. 
 
 ###### function show_slice_percent
 
-Jasmine
+Jasmine ??
   
 ###### function accumulate_group
 
-manual testing -> function succesfully tested later 
+This function is used in "Cumulative detections per year" graph to create a group cumulate the data within the dimension . Please refer to this "function show_cumulative_year_of_discovery(ndx)" in the graphs.js file. 
+
+The graph is checked in the following section of this testing procedure but a quick scenario can be used to check whether the accumulate_group function works succesfully.
+
+**Test scenario:**
+- In the website open the modal form, click the checkbox "Type of data" to set the data to "Cumulative". Close the form and then scroll down to the "Cumulative detection per year" bar chart. 
+- In the testing excel file go to the tab "bar chart 4.2", in the table check the "Cumulative Count" column. This manually recreates this accumulate_group function by summing data for all the previous year. 
+- Compare the "Cumulative Count" for each year with the count displayed in dashbaord graph, everything should be identical. 
+
+Test result: **Successful**
 
 ###### function convert_string_to_float
 
-Jasmine
+This function is very simple but I decided to use a quick automated test using Jasmine framework. You can find [here](jasmine/tests.html) the file to run for these automated tests. All tests passed succesfully. 
 
 #### Selectors to filter charts
 
