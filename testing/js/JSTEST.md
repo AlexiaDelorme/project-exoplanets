@@ -142,7 +142,7 @@ No further issues were mentioned apart from an unused variable that was created 
 
 ### Data consistency testing
 
-For this section, I am going to go through each functions that are used to create data vizualisation and check their consistency using my testing file (using excel) that you can access [here](PATH TO ADD). 
+For this section, I am going to go through each functions that are used to create data vizualisation and check their consistency using my testing file (using excel) that you can access [here](testing-file.xlsm). 
 
 I have indeed used this excel file to write my code and build graphs incrementally throughout this project. 
 
