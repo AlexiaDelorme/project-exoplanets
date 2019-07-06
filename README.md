@@ -213,9 +213,9 @@ This project has been tested multiple times against each user stories previously
 
 *User story: The user has easy access to aggregated data in a simple and clean fashion.*
 
-<u>Hypothesis:</u> For this scenario, the user does not filter using the “start here” modal form. This is simply to test the general purpose of the project.
+<u> Hypothesis: </u> For this scenario, the user does not filter using the “start here” modal form. This is simply to test the general purpose of the project.
 
-<u>Test scenario:</u>
+<u> Test scenario: </u>
 -	Go to the home page
 -	Scroll down to navigate the dashboard, or,
 -	Directly click on the “Exoplanets Dashboard” menu item in the navigation bar to be redirected
@@ -223,15 +223,15 @@ This project has been tested multiple times against each user stories previously
 -	You should be able to identify general information regarding the sample: total number of planets in the sample, average stellar year…
 -	You should be able to identify through the different graphs relevant information regarding the sample. 
 
-<u>Test result:</u> **Successful**
+<u> Test result:< /u> **Successful**
 
 ###### Testing user story 2
 
 *User story: For this scenario, the user can set filters to its sample to tailor the dashboard to a specific need or analysis.*
 
-<u>Hypothesis:</u> the user wants to filter data according to the criteria available in the modal form. 
+<u> Hypothesis: </u> the user wants to filter data according to the criteria available in the modal form. 
 
-<u>Test scenario:</u>
+<u> Test scenario: </u>
 - On the home page, click on the “Start Here” button
 - A modal form should open
 - All the dropdown fields should have the first entry that displays “Select all”
@@ -249,7 +249,7 @@ This project has been tested multiple times against each user stories previously
 -	When modal closed, you should be redirected to the “intro” section giving you the statistics of your sample and then able to scroll down to view the charts with the filters you defined in the modal form. 
 - You can also interact on the individual charts themselves if necessary by clicking on them. 
 
-<u>Test result:</u> **Successful**
+<u> Test result: </u> **Successful**
 
 *Please note that the testing regarding DOM interaction through the modal form is documented in the JS testing.*
 
@@ -257,9 +257,9 @@ This project has been tested multiple times against each user stories previously
 
 *User story: The user easily identify information related to the discovery and features of the exoplanet without any issues.*
 
-<u>Hypothesis:</u> The user already applied the desired filters (if any) and has scrolled down to the dashboard already.
+<u> Hypothesis: </u> The user already applied the desired filters (if any) and has scrolled down to the dashboard already.
 
-<u>Test scenario:</u>
+<u> Test scenario: </u>
 
 **1st part:**
 -	Go to the "discovery" section of the dashboard either by scrolling down or clicking on the navigation bar
@@ -279,15 +279,15 @@ This project has been tested multiple times against each user stories previously
     - Chart 3: you should be able to view a bar chart with the number of planets by interval distance. For each interval, the total number of planets in this tranche should be visible. By clicking the "?" icon next to the chart title, a small paragraph explaining the "parsecs" unit of measure should appear, this paragraph should dispappear when clicked back.
     - Chart 4: you should be able to view a bar chart with the number of planets by interval age. For each interval, the total number of planets in this tranche should be visible. 
 
-<u>Test result:</u> **Successful**
+<u> Test result: </u> **Successful**
 
 ###### Testing user story 4
 
 *User story: The user can identify correlations to verify an hypothesis on exoplanet metrics.*
 
-<u>Hypothesis:</u> The user should not deselect any correlation graphs in the modal form to perform this test. 
+<u> Hypothesis: </u> The user should not deselect any correlation graphs in the modal form to perform this test. 
 
-<u>Test scenario:</u>
+<u> Test scenario: </u>
 - Click on the "Correlation" menu item
 - There should be 3 scatter plots
 - For each scatter plot, there should be:
@@ -299,15 +299,15 @@ This project has been tested multiple times against each user stories previously
 - The graph should be scaled appropriately 
 - You should be able to easily identify if there is a correlation between the two dimensions plotted. 
 
-<u>Test result:</u> **Successful**
+<u> Test result: </u> **Successful**
 
 ###### Testing user story 5
 
 *User story: The user can access information on individual planets when choosing to display the data table in modal form.*
 
-<u>Hypothesis:</u> The user does not apply any specific filter to the sample.
+<u> Hypothesis: </u> The user does not apply any specific filter to the sample.
 
-<u>Test scenario:</u>
+<u> Test scenario: </u>
 -	Open the modal form by clicking the "Start here" button
 -	Enable the data table and exit the modal form
 -	A data table item should have appeared in the navigation bar
@@ -316,21 +316,21 @@ This project has been tested multiple times against each user stories previously
 -	Information about each individual planets in the sample should be visible (hosting stellar name, years of discovery, discovery method...)
 -	If a data is missing in the table, it should display "N/A"
 
-<u>Test result:</u> **Successful**
+<u> Test result: </u> **Successful**
 
 ###### Testing user story 6
 
 *User story: The user can reset the entire dashboard or re-enter the modal form anytime.*
 
-<u>Hypothesis:</u> The user already applied filters in the modal form. 
+<u> Hypothesis: </u> The user already applied filters in the modal form. 
 
-<u>Test scenario:</u>
+<u> Test scenario: </u>
 - Click on the white "Reset filters" button in the right of the fixed navigation bar
 - This should remove all filters applied to the dashboard that was previously set in the modal form
 - Scroll down to pass the home page, as soon as you hit the "intro" section, a black "Resart here" button should appear in the navbar (next to the white button)
 - Clicking this button should enable you to re-open the modal form without scrolling back to the home page
 
-<u>Test result:</u> **Successful**
+<u> Test result: </u> **Successful**
 
 
 #### Code quality
