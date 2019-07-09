@@ -1,5 +1,3 @@
-// jshint esversion: 6
-
 queue()
     .defer(d3.csv, "data/static-exo.csv")
     .await(makeGraphs);
@@ -9,7 +7,7 @@ function makeGraphs(error, data) {
     var ndx = crossfilter(data);
 
     // Code used to fix decimal values not recognised as numbers */
-    for (var d of data) {
+    data.forEach(function(d) {
 
         d.pl_orbper = Number(d.pl_orbper);
         d.st_dist = Number(d.st_dist);
@@ -22,7 +20,7 @@ function makeGraphs(error, data) {
         age to fix average stelage age function */
         d.st_age = Number(d.st_age);
 
-    }
+    });
 
     // Selectors
     show_kepler_selector(ndx);
