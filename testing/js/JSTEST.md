@@ -170,7 +170,16 @@ For instance, for the orbital period graph, we see that the total number of plan
 
 ###### function show_slice_percent
 
-Jasmine ??
+This function is used in the "Discovery location" and "Discovery facility" pie charts to display the percentage for each corresponding category. 
+
+The graph is tested in the following section of this procedure but a quick scenario can be used to check that the function is working properly.
+
+**Test scenario:**
+- Go to the discovery section and check the first pie chart "Discovery location".
+- In the testing file, go to the tab "pie chart 1" and compare the percentage being displayed for the corresponding category (Ground, Space...).
+- Follow the same steps for the "Discovery facility" pie chart by comparing it with the tab "pie chart 2" of the testing file. 
+
+Test result: **Successful**
   
 ###### function accumulate_group
 
@@ -180,7 +189,7 @@ The graph is checked in the following section of this testing procedure but a qu
 
 **Test scenario:**
 - In the website open the modal form, click the checkbox "Type of data" to set the data to "Cumulative". Close the form and then scroll down to the "Cumulative detection per year" bar chart. 
-- In the testing excel file go to the tab "bar chart 4.2", in the table check the "Cumulative Count" column. This manually recreates this accumulate_group function by summing data for all the previous year. 
+- In the testing file go to the tab "bar chart 4.2", in the table check the "Cumulative Count" column. This manually recreates this accumulate_group function by summing data for all the previous year. 
 - Compare the "Cumulative Count" for each year with the count displayed in dashbaord graph, everything should be identical. 
 
 Test result: **Successful**
