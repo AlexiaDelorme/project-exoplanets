@@ -196,7 +196,9 @@ Test result: **Successful**
 
 ###### function convert_string_to_float
 
-This function is very simple but I decided to use a quick automated test using Jasmine framework. You can find [here](jasmine/tests.html) the file to run for these automated tests. All tests passed succesfully. 
+This function is very simple but I decided to use a quick automated test using Jasmine framework. You can find [here](jasmine/spec.js) the file to run for these automated tests. All tests passed succesfully.
+
+![Jasmine](../validators/jasmine.jpg)
 
 #### Selectors to filter charts
 
