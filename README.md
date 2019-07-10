@@ -419,5 +419,5 @@ I used the Cloud 9 IDE to develop my project and used git for version control. I
 - And finally I would like to thank my dad who shared with me his passion for Astrophysics and inspired me for building this project on exoplanets.
 - **Last but not least** many thanks to all the people that are passionate about Astronomy and have helped me understand so many things on our universe - of course Newton, Einstein, Planck... - but a **special thanks** to:
     - The NASA agency for providing so many free resources online available to the general public. 
-    - The French physicist Christophe Galfard for writing his amazing book *The Universe in your hand*
+    - The French physicist Christophe Galfard for writing his amazing book *The Universe in your hand*.
     - The French aerospace engineer Thomas Pesquet for sharing his wonderful experience on the International Space Station and inspiring so many people to dream bigger!

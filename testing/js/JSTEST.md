@@ -74,17 +74,18 @@ No further issues were identified.
 <u> Hypothesis: </u> The user should go to the modal form either by clicking the "Start Here" button on the home page or the "Restart Here" button on the navigation bar.
 
 <u> Test scenario: </u>
-- In the modal form, perform the following tests:
-**- 1st part:**
+
+In the modal form, perform the following tests:
+- **1st part:**
     - enable the "Data Table" checkbox and exit modal form
     - a new menu item in the navigation bar "Data Table" should have appeared
     - click it to get to the section and check that the table is appearing properly
     - double check that when you re-enter the modal form, and disable the "Data Table", the section and menu item should disappear
-**- 2nd part:**
+- **2nd part:**
     - tick the "Type of Data" checkbox to cumulative and exit modal form
     - scroll down to the "detections per year" graph and check that the data are now on a cumulative basis
     - double check that when you re-enter the modal form, and put the data back to non-cumulative, the graph is back to displaying non-cumlative data
-**- 3rd part:**
+- **3rd part:**
     - in the "Correlations Data" section of the modal form (at the very bottom), disable the first scatter plot "Mass vs. Radius Planet"
     - exit modal form and check in the correlation section that this corresponding scatter plot is no longer displayed in the dashboard
     - perform the same test for the other two scatter plots
@@ -142,7 +143,7 @@ No further issues were mentioned apart from an unused variable that was created 
 
 ### Data consistency testing
 
-For this section, I will go through each function used to create data vizualisation and check their consistency using my testing file (on excel) that you can access [here](testing-file.xlsm). 
+For this section, I will go through each function used to create data vizualisation and check their consistency using my testing file (on excel) that you can access [here](testing-file.xlsm), click on "view raw" to download the file on your desktop. 
 
 I have indeed used this excel file to write my code and build graphs incrementally throughout this project. 
 
