@@ -179,7 +179,7 @@ Please find below the list of improvements I would like to add to this project:
     
 * [D3-queue.js](https://github.com/d3/d3-queue) is used to load the dataset in CSV format.
 * [jQuery](https://jquery.com/) was used to simplify the DOM manipulation based on the user input via the modal form or when the reset button is clicked.
-* [JSHint](https://jshint.com/) was used to check my JS code quality
+* [JSHint](https://jshint.com/) was used to check my JS code quality.
 
 ##### [Picasa](https://picasa.google.com/)
 - I used Picasa to resize and change the orientation of my background image.
@@ -223,7 +223,7 @@ This project has been tested multiple times against each user stories previously
 -	You should be able to identify general information regarding the sample: total number of planets in the sample, average stellar year…
 -	You should be able to identify through the different graphs relevant information regarding the sample. 
 
-<u> Test result:< /u> **Successful**
+<u> Test result: </u> **Successful**
 
 ###### Testing user story 2
 
