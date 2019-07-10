@@ -133,7 +133,7 @@ There were two warnings highlighted by JS Hint regarding the use of new ES6 synt
 - 'let' is available in ES6 (use 'esversion: 6') or Mozilla JS extensions (use moz).
 - 'for of' is available in ES6 (use 'esversion: 6') or Mozilla JS extensions (use moz).
 
-To fix this, I decided to change the use of "let" by "var" and then included the following comment at the beginning of my file: " // jshint esversion: 6 " for the second warning. 
+When loading the data dashboard using IE 11, my script "graphs.js" was not loading properly and therefore no graphs were displayed. To fix this, I decided to change the use of "let" for "var" and instead of a "for of" loop, I used the function "data.forEach". These slight changes fixed the issue I had on IE. 
 
 No further issues were mentioned apart from an unused variable that was created only for testing purposes but that was then commented out. 
 
